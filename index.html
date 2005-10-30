@@ -3,35 +3,124 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>The Seasar Project: Default Page</title>
+<meta name="author" content="Jun Futagawa" />
+<meta name="title" content="S2Directory" />
+<meta name="keywords" content="S2Directory,LDAP,Seasar,S2Dao,SMBLDAP-TOOLS Addons,smbldap-tools" />
+<meta name="description" content="S2Directoryは、ディレクトリサーバとの接続を容易にするためのコネクション管理機能と、ディレクトリサーバのエントリ・属性とオブジェクトを結びつけるO/D マッピング ( Object / Directory Mapping ) のフレームワーク機能を提供します。" />
+<link rev="made" href="mailto:jfut ___＠___ featia.net" />
+<link rel="index" title="index" href="http://s2directory.sandbox.seasar.org/" />
+<link rel="stylesheet" type="text/css" href="theme/main.css" />
+<title>S2Directory</title>
 </head>
 
 <body>
 
-<h1>The Seasar Project: Default Page</h1>
+<!-- header -->
+<div class="header">
+<h1>S2Directory</h1>
+</div>
 
-<h2>Project</h2>
-<ul>
-<li>URL
-	<ul><li>http://projectname.seasar.org/</li></ul>
-</li>
-<li>SVN Path
-	<ul><li>https://www.seasar.org/svn/projectname/</li></ul>
-</li>
-</ul>
+<hr />
 
-<h2>Sandbox Project</h2>
-<ul>
-<li>URL
-	<ul><li>http://projectname.sandbox.seasar.org/</li></ul>
-</li>
-<li>SVN Path
-	<ul><li>https://www.seasar.org/svn/sandbox/projectname/</li></ul>
-</li>
-</ul>
+<!-- menu -->
+<div class="submenu">
+<div class="subtitle">Menu</div>
+<div class="list">
+	<ul><li>[Home]</li>
+		<li>News</li>
+		<li><a href="http://www.seasar.org/websvn/">Repository</a></li>
+		<li>Download</li>
+	</ul>
+</div>
 
-<p>* wwwディレクトリ以下に配置したものがコミット時にサイトに反映されます。</p>
+<div class="subtitle">Documents</div>
+<div class="list">
+	<ul><li>[Introduction]</li>
+		<li>Required</li>
+	</ul>
+</div>
+
+<div class="subtitle">Seasar Family</div>
+<div class="list">
+	<ul><li><a href="http://www.seasar.org/">Foundation</a></li>
+		<li><a href="https://www.seasar.org/mailman/listinfo/">Malling Lists</a></li>
+		<li><a href="http://www.seasar.org/websvn/">WebSVN</a></li>
+		<li><a href="https://www.seasar.org/svn/">SVN</a></li>
+	</ul>
+</div>
+
+</div>
+
+<!-- article -->
+<div class="article">
+
+<div class="section">
+	<h2>Introduction</h2>
+	<div class="update">最終更新日時: $Revision: 22 $ $Date:: 2005-10-02 14:07:48 +0900 $</div>
+	<p>S2Directoryは、ディレクトリサーバとの接続を容易にするためのコネクション管理機能と、ディレクトリサーバのエントリ・属性とオブジェクトを結びつけるO/D マッピング ( Object / Directory Mapping ) のフレームワーク機能を提供します。もっと簡単に一言で言い表しますと、<a href="http://s2dao.seasar.org/">S2Dao</a>のDao対象がリレーショナルデータベースからディレクトリサーバになったものです。</p>
+
+</div>
+
+<div class="section">
+	<h2>Directory Server</h2>
+	<p>ディレクトリは主にIDの一元管理のために利用されているものです。Seasar.orgサーバでもユーザ・プロジェクト管理に使用されています。主なディレクトリサーバの実装は、次に挙げる通りです。</p>
+
+	<h3>主なディレクトリサーバ一覧</h3>
+	<ul>
+		<li><a href="http://www.openldap.org/">OpenLDAPServer</a></li>
+		<li><a href="http://directory.apache.org/">Apache Directory Server</a></li>
+		<li><a href="http://www.redhat.com/software/rha/directory/">Red Hat Directory Server</a></li>
+		<li><a href="http://directory.fedora.redhat.com/">Fedora Directory Server</a></li>
+		<li><a href="http://www.microsoft.com/japan/windowsserver2003/technologies/directory/default.mspx">Microsoft Active Directory Server</a></li>
+		<li><a href="http://jp.sun.com/products/software/identity/directory_srvr_ee/">Sun Java System Directory Server</a></li>
+		<li><a href="http://www-6.ibm.com/jp/software/tivoli/products/directserver.html">IBM Tivoli Directory Server</a></li>
+		<li><a href="http://www.novell.com/products/edirectory/">Novell eDirectory Server</a></li>
+	</ul>
+</div>
+
+<div class="section">
+	<h2>Latest News</h2>
+	<div class="day">2005-10-30: サイト更新</div>
+	<p>プロジェクトサイトをオープンしました。</p>
+
+	<div class="footnote">Old News</div>
+</div>
+
+<div class="section">
+	<h2>Status</h2>
+	<h3>実装済み</h3>
+	<ul><li>SASL (Simple Authentication and Security Layer) 認証</li>
+		<li>読み出し機能</li>
+		<li>多重属性対応</li>
+	</ul>
+
+	<h3>未実装</h3>
+	<ul><li>新規追加/更新/削除機能</li>
+		<li>バイナリデータ対応</li>
+		<li>SSL/TLS対応</li>
+	</ul>
+</div>
+
+<div class="section">
+	<h2>Developer</h2>
+	<h3>プロジェクトリーダ</h3>
+	<ul><li>Jun Futagawa</li> &lt;jfut _＠_ featia.net&gt;</ul>
+</div>
+
+<div class="section">
+	<h2>License</h2>
+	<p><a href="http://www.apache.org/licenses/LICENSE-2.0">The Apache Software License, Version 2.0</a></p>
+</div>
+
+</div>
+
+<!-- footer -->
+<div class="footer">
+<hr />
+<div class="address">
+	<address>Copyright &#169; 2004-2005 the Seasar Project and the others. all rights reserved.</address>
+</div>
+</div>
 
 </body>
 </html>
-
