@@ -29,7 +29,7 @@
 	<ul><li>[Home]</li>
 		<li>News</li>
 		<li><a href="http://www.seasar.org/websvn/">Repository</a></li>
-		<li>Download</li>
+		<li><a href="downloads">Download</a></li>
 	</ul>
 </div>
 
@@ -58,28 +58,13 @@
 	<h2>Introduction</h2>
 	<div class="update">最終更新日時: $Date::                           $</div>
 	<p>S2Directoryは、ディレクトリサーバとの接続を容易にするためのコネクション管理機能と、ディレクトリサーバのエントリ・属性とオブジェクトを結びつけるO/D マッピング ( Object / Directory Mapping ) のフレームワーク機能を提供します。もっと簡単に一言で言い表しますと、<a href="http://s2dao.seasar.org/">S2Dao</a>のDao対象がリレーショナルデータベースからディレクトリサーバになったものです。</p>
-
-</div>
-
-<div class="section">
-	<h2>Directory Server</h2>
-	<p>ディレクトリは主にIDの一元管理のために利用されているものです。Seasar.orgサーバでもユーザ・プロジェクト管理に使用されています。主なディレクトリサーバの実装は、次に挙げる通りです。</p>
-
-	<h3>主なディレクトリサーバ一覧</h3>
-	<ul>
-		<li><a href="http://www.openldap.org/">OpenLDAPServer</a></li>
-		<li><a href="http://directory.apache.org/">Apache Directory Server</a></li>
-		<li><a href="http://www.redhat.com/software/rha/directory/">Red Hat Directory Server</a></li>
-		<li><a href="http://directory.fedora.redhat.com/">Fedora Directory Server</a></li>
-		<li><a href="http://www.microsoft.com/japan/windowsserver2003/technologies/directory/default.mspx">Microsoft Active Directory Server</a></li>
-		<li><a href="http://jp.sun.com/products/software/identity/directory_srvr_ee/">Sun Java System Directory Server</a></li>
-		<li><a href="http://www-6.ibm.com/jp/software/tivoli/products/directserver.html">IBM Tivoli Directory Server</a></li>
-		<li><a href="http://www.novell.com/products/edirectory/">Novell eDirectory Server</a></li>
-	</ul>
 </div>
 
 <div class="section">
 	<h2>Latest News</h2>
+	<div class="day">2005-12-30: S2Directory 0.1 Released</div>
+	<p>S2Directory 0.1をリリースしました。</p>
+
 	<div class="day">2005-10-30: サイト更新</div>
 	<p>プロジェクトサイトをオープンしました。</p>
 
@@ -91,14 +76,62 @@
 	<h3>実装済み</h3>
 	<ul><li>SASL (Simple Authentication and Security Layer) 認証</li>
 		<li>読み出し機能</li>
+		<li>更新機能</li>
+		<li>削除機能</li>
+		<li>バイナリデータ対応</li>
+		<li>パスワード対応 (MD5 SMD5 SHA SSHA)</li>
 		<li>多重属性対応</li>
 	</ul>
 
 	<h3>未実装</h3>
-	<ul><li>新規追加/更新/削除機能</li>
-		<li>バイナリデータ対応</li>
+	<ul><li>新規エントリ作成機能</li>
 		<li>SSL/TLS対応</li>
 	</ul>
+</div>
+
+<div class="section">
+	<h2>Directory Server</h2>
+	<p>ディレクトリは主にIDの一元管理のために利用されているものです。Seasar.orgサーバでもユーザ・プロジェクト管理に使用されています。主なディレクトリサーバの実装は、次に挙げる通りです。</p>
+
+	<h3>主なディレクトリサーバ一覧</h3>
+	<table class="list" summary="主なディレクトリサーバ一覧">
+		<tr>
+			<th width="150">製品名</th>
+			<th width="150">Support</th>
+		</tr>
+		<tr class="a">
+			<td><a href="http://www.openldap.org/">OpenLDAP Server</a></td>
+			<td>YES</td>
+		</tr>
+		<tr class="b">
+			<td><a href="http://directory.apache.org/">Apache Directory Server</a></td>
+			<td>Unknown</td>
+		</tr>
+		<tr class="a">
+			<td><a href="http://www.redhat.com/software/rha/directory/">Red Hat Directory Server</a></td>
+			<td>Unknown</td>
+		</tr>
+		<tr class="b">
+			<td><a href="http://directory.fedora.redhat.com/">Fedora Directory Server</a></td>
+			<td>Unknown</td>
+		</tr>
+		<tr class="a">
+			<td><a href="http://www.microsoft.com/japan/windowsserver2003/technologies/directory/default.mspx">Microsoft Active Directory Server</a></td>
+			<td>Unknown</td>
+		</tr>
+		<tr class="b">
+			<td><a href="http://jp.sun.com/products/software/identity/directory_srvr_ee/">Sun Java System Directory Server</a></td>
+			<td>Unknown</td>
+		</tr>
+		<tr class="a">
+			<td><a href="http://www-6.ibm.com/jp/software/tivoli/products/directserver.html">IBM Tivoli Directory Server</a></td>
+			<td>Unknown</td>
+		</tr>
+		<tr class="b">
+			<td><a href="http://www.novell.com/products/edirectory/">Novell eDirectory Server</a></td>
+			<td>Unknown</td>
+		</tr>
+	</table>
 </div>
 
 <div class="section">
