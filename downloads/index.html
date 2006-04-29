@@ -41,9 +41,31 @@
 
 <div class="section">
 	<h2>Download</h2>
-	<div class="day">Release Date: 2005-12-30</div>
+	<div class="day">Release Date: 2006-04-30</div>
 	<ul>
-		<li><a href="s2-directory-0.1.zip">S2Directory 0.1</a> (unstable)</li>
+		<li><a href="s2-directory-0.2.zip">S2Directory 0.2</a> (beta)</li>
+	</ul>
+
+	<div class="day">Old Release</div>
+	<ul>
+		<li>2005-12-30: <a href="s2-directory-0.1.zip">S2Directory 0.1</a> (unstable)</li>
+	</ul>
+	
+	<h3>Changes</h3>
+	<h4>0.1 -> 0.2</h4>
+	<ul>
+		<li>新規エントリ作成機能追加</li>
+		<li>String型での複数の属性値を読み出し機能改善</li>
+		<li>String型で複数の属性値の書き込み機能追加</li>
+		<li>List型での複数の属性値を読み出し機能改善</li>
+		<li>List型で複数の属性値の書き込み機能追加</li>
+		<li>更新時に追加する値が null の場合に更新されなかったバグ修正</li>
+		<li>String型での複数の属性値のための区切り文字設定値追加</li>
+		<li>平文パスワードサポート</li>
+		<li>パスワードの変換方式を表す設定値 passwordType を passwordAlgorithm に設定名変更</li>
+		<li>org.seasar.directory.crypt パッケージを org.seasar.directory.digest に変更</li>
+		<li>一連の動作テスト用サンプルクラス追加</li>
+		<li>その他、ソースコードの整理</li>
 	</ul>
 </div>
 
@@ -54,7 +76,7 @@
 
 	<h3>必須</h3>
 	<ul>
-		<li>s2-directory-0.1.jar</li>
+		<li>s2-directory-X.X.jar</li>
 		<li><a href="http://s2container.seasar.org/">S2Container</a> (未付属)</li>
 	</ul>
 
@@ -91,38 +113,13 @@
 	<p>toString()関数生成のバグ修正</p>
 </div>
 
-<div class="section">
-	<h2>Status</h2>
-	<p>Note: 現在開発中のため、将来的にAPI等が変わる可能性があります。</p>
-	<h3>実装済み</h3>
-	<ul><li>SASL (Simple Authentication and Security Layer) 認証</li>
-		<li>ユーザモード接続</li>
-		<li>読み出し機能</li>
-		<li>更新機能</li>
-		<li>削除機能</li>
-		<li>バイナリデータ対応</li>
-		<li>パスワード対応 (MD5 SMD5 SHA SSHA)</li>
-		<li>多重属性対応</li>
-	</ul>
-
-	<h3>未実装</h3>
-	<ul><li>新規エントリ作成機能</li>
-		<li>SSL/TLS対応</li>
-	</ul>
-</div>
-
-<div class="section">
-	<h2>License</h2>
-	<p><a href="http://www.apache.org/licenses/LICENSE-2.0">The Apache Software License, Version 2.0</a></p>
-</div>
-
 </div>
 
 <!-- footer -->
 <div class="footer">
 <hr />
 <div class="address">
-	<address>Copyright &#169; 2004-2006 the Seasar Project and the others. all rights reserved.</address>
+	<address>Copyright &#169; 2005-2006 the Seasar Project and the others. all rights reserved.</address>
 </div>
 </div>
 
