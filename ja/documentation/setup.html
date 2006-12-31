@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="author" content="Jun Futagawa" />
+<link rev="made" href="mailto:jfut ___＠___ featia.net" />
+<link rel="index" title="index" href="http://s2directory.sandbox.seasar.org/" />
+<link rel="stylesheet" type="text/css" href="../../theme/main.css" />
+<link rel="stylesheet" type="text/css" href="../../theme/print.css" media="print" />
+<title>S2Directory - Setup</title>
+</head>
+
+<body>
+
+<div id="wrapper">
+
+<div id="header">
+
+<div class="line"><span class="hide">spacer</span></div>
+
+<div id="logo"><h2 id="h01" class="hide">S2Directory - Setup</h2><img src="../../images/seasar_logo_blue.gif" alt="The Seasar Project" width="390" height="180" /></div>
+
+<div id="tool">
+
+<h2><a href="http://search.seasar.org/">Seasar Search</a></h2>
+
+<form id="search" name="search" action="http://search.seasar.org/">
+<div>
+	<input id="search_phrase" type="text" name="phrase" size="20" />
+	<input type="hidden" name="perpage" value="30" />
+	<input type="hidden" name="enc" value="UTF-8" />
+	<input id="search_go" type="submit" value="Search" />
+</div>
+</form>
+
+<h2>Seasar Banner</h2>
+
+<p><a href="../../images/seasar_banner.gif"><img src="../../images/seasar_banner.gif" alt="Seasar Banner" title="Seasar Banner" width="146" height="33" /></a></p>
+
+</div>
+
+<div class="line"><span class="hide">spacer</span></div>
+
+<div id="navi">
+<p><a href="../../en/">English</a> | Japanese</p>
+</div>
+
+</div><!-- header -->
+
+<div id="contents_left">
+
+<h2>Menu</h2>
+
+<ul><li><a href="../">Home</a></li>
+	<li><a href="../news.html">News</a></li>
+	<li><a href="../license.html">License</a></li>
+	<li><a href="../downloads.html">Downloads</a></li>
+	<li>SVN Repository
+		<ul><li><a href="https://www.seasar.org/svn/sandbox/s2directory/">SVN</a></li>
+			<li><a href="http://svn.seasar.org/browse/?root=sandbox.s2directory">Browse</a></li>
+		</ul>
+	</li>
+	<li><a href="https://www.seasar.org/issues/browse/DIRECTORY">Tracking</a></li>
+	<li><a href="http://www.seasar.org/feed/">RSS Feed</a></li>
+	<li><a href="http://maven.seasar.org/">Maven Repository</a></li>
+</ul>
+
+<h2>Documentation</h2>
+
+<ul><li><a href="./">Introduction</a></li>
+	<li><a href="tutorial.html">Tutorial</a></li>
+	<li><a href="demo.html">Demo</a></li>
+	<li>[Setup]</li>
+	<li><a href="configuration.html">Configuration</a></li>
+	<li><a href="smart_deploy.html">SMART Deploy</a></li>
+	<li><a href="entity.html">Entity</a></li>
+	<li><a href="directorydao.html">DirectoryDao</a></li>
+	<li><a href="digest.html">Digest</a></li>
+</ul>
+
+</div><!-- contents_left -->
+
+<div id="contents_center">
+
+<div id="article">
+
+<div class="section">
+	<h2 id="h02">S2Directoryを動かすのに必要なライブラリ</h2>
+
+	<div class="update">最終更新日時: $Date::                           $</div>
+
+	<p>S2Directoryを動かすには次のライブラリが必要です。</p>
+
+	<h3>s2-directory-X.X.X.jar</h3>
+	<p><a href="../downloads.html">ダウンロード</a>からs2-directory-X.X.X.zipをダウンロードして解凍してください。解凍すると <strong>s2directory</strong> というディレクトリが作成されるので、 <strong>lib\s2-directory-X.X.X.jar</strong> をS2Directoryを使うあなたのプロジェクトのライブラリ置き場にコピーしてください。</p>
+
+	<h3>S2Container (未付属)</h3>
+	<p>S2Directoryは<a href="http://s2container.seasar.org/ja/">S2Container</a>に付属するDIやAOPなどの様々な機能を利用してその機能を実現しています。<a href="http://s2container.seasar.org/ja/">S2Container</a>のサイトより必要なライブラリをダウンロードし、あなたのプロジェクトのライブラリ置き場にコピーしてください。</p>
+
+	<h4>最低限必要なライブラリ: S2Container 2.4.6の場合</h4>
+	<ul>
+		<li>aopalliance-1.0.jar</li>
+		<li>commons-logging-1.1.jar</li>
+		<li>geronimo-jta_1.0.1B_spec-1.0.jar</li>
+		<li>javassist-3.3.ga.jar</li>
+		<li>log4j-1.2.13.jar</li>
+		<li>ognl-2.6.7.jar</li>
+		<li>s2-extension-2.4.6.jar</li>
+		<li>s2-framework-2.4.6.jar</li>
+	</ul>
+</div>
+
+<div class="section">
+	<h2 id="h02">S2Directoryを動かすのに必要な設定</h2>
+
+	<p>S2Directoryに必要な設定ファイルの詳細を学ぶには、<a href="configuration.html">Configuration</a>を読んでください。</p>
+</div>
+
+</div><!-- article -->
+
+</div><!-- contents_center -->
+
+<div id="footer">
+<address>Copyright &#169; 2005-2006 the Seasar Project and the others. all rights reserved.</address>
+<div class="line"><span class="hide">spacer</span></div>
+</div><!-- footer -->
+
+</div><!-- wrapper -->
+
+</body>
+</html>

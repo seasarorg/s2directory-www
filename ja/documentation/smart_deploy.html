@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="author" content="Jun Futagawa" />
+<link rev="made" href="mailto:jfut ___＠___ featia.net" />
+<link rel="index" title="index" href="http://s2directory.sandbox.seasar.org/" />
+<link rel="stylesheet" type="text/css" href="../../theme/main.css" />
+<link rel="stylesheet" type="text/css" href="../../theme/print.css" media="print" />
+<title>S2Directory - SMART Deploy</title>
+</head>
+
+<body>
+
+<div id="wrapper">
+
+<div id="header">
+
+<div class="line"><span class="hide">spacer</span></div>
+
+<div id="logo"><h2 id="h01" class="hide">S2Directory - SMART Deploy</h2><img src="../../images/seasar_logo_blue.gif" alt="The Seasar Project" width="390" height="180" /></div>
+
+<div id="tool">
+
+<h2><a href="http://search.seasar.org/">Seasar Search</a></h2>
+
+<form id="search" name="search" action="http://search.seasar.org/">
+<div>
+	<input id="search_phrase" type="text" name="phrase" size="20" />
+	<input type="hidden" name="perpage" value="30" />
+	<input type="hidden" name="enc" value="UTF-8" />
+	<input id="search_go" type="submit" value="Search" />
+</div>
+</form>
+
+<h2>Seasar Banner</h2>
+
+<p><a href="../../images/seasar_banner.gif"><img src="../../images/seasar_banner.gif" alt="Seasar Banner" title="Seasar Banner" width="146" height="33" /></a></p>
+
+</div>
+
+<div class="line"><span class="hide">spacer</span></div>
+
+<div id="navi">
+<p><a href="../../en/">English</a> | Japanese</p>
+</div>
+
+</div><!-- header -->
+
+<div id="contents_left">
+
+<h2>Menu</h2>
+
+<ul><li><a href="../">Home</a></li>
+	<li><a href="../news.html">News</a></li>
+	<li><a href="../license.html">License</a></li>
+	<li><a href="../downloads.html">Downloads</a></li>
+	<li>SVN Repository
+		<ul><li><a href="https://www.seasar.org/svn/sandbox/s2directory/">SVN</a></li>
+			<li><a href="http://svn.seasar.org/browse/?root=sandbox.s2directory">Browse</a></li>
+		</ul>
+	</li>
+	<li><a href="https://www.seasar.org/issues/browse/DIRECTORY">Tracking</a></li>
+	<li><a href="http://www.seasar.org/feed/">RSS Feed</a></li>
+	<li><a href="http://maven.seasar.org/">Maven Repository</a></li>
+</ul>
+
+<h2>Documentation</h2>
+
+<ul><li><a href="./">Introduction</a></li>
+	<li><a href="tutorial.html">Tutorial</a></li>
+	<li><a href="demo.html">Demo</a></li>
+	<li><a href="setup.html">Setup</a></li>
+	<li><a href="configuration.html">Configuration</a></li>
+	<li>[SMART Deploy]</li>
+	<li><a href="entity.html">Entity</a></li>
+	<li><a href="directorydao.html">DirectoryDao</a></li>
+	<li><a href="digest.html">Digest</a></li>
+</ul>
+
+</div><!-- contents_left -->
+
+<div id="contents_center">
+
+<div id="article">
+
+<div class="section">
+	<h2 id="smartdeploy">SMART Deploy</h2>
+
+	<div class="update">最終更新日時: $Date::                           $</div>
+
+	<p>S2Container 2.4.x以降に導入されたSMART Deploy機能を利用したS2Directoryの設定方法を紹介します。なお、SMART Deployの詳細な説明については、<a href="http://s2container.seasar.org/ja/">S2Container</a>のドキュメントを読んでください。</p>
+
+</div>
+
+<div class="section">
+	<h2 id="convention">S2Directoryに関連するルートパッケージ直下のSMART Deployのための要素</h2>
+
+	<p>S2Directoryに関連するルートパッケージ直下の要素は次のとおりです。</p>
+
+	<table class="list" summary="S2Directoryに関連するルートパッケージ直下のSMART Deployのための要素一覧">
+		<tr>
+			<th>個別パッケージ</th>
+			<th>クラスの命名規約</th>
+			<th>説明</th>
+		</tr>
+		<tr class="a">
+			<td>directorydao</td>
+			<td>任意の名前 + DirectoryDao</td>
+			<td>ディレクトリにアクセスするためのインタフェースです。インタフェースにメソッドを書いておくだけで、データアクセスのロジックは、アスペクトが自動生成します。実装部分を作る必要はありません。</td>
+		</tr>
+
+	</table>
+
+	<h3>例</h3>
+	<ul><li>org.example.directorydao.PosixAccountDirectoryDao</li>
+		<li>org.example.directorydao.PosixGroupDirectoryDao</li></ul>
+</div>
+
+<div class="section">
+	<h2 id="example"><a href="http://s2struts.seasar.org/ja/">S2Struts</a>を使ったWEBアプリケーションでのに組み合わせたSMART Deploy設定例</h2>
+
+	<p>下図は<a href="http://s2struts.seasar.org/ja/">S2Struts</a>を使ったWEBアプリケーションにS2Directoryを組み合わせたSMART Deploy時のパッケージ構成例です。WEB-INF/src/main/java と WEB-INF/src/main/resources は、WEB-INF/classes 以下にコンパイルされたクラスファイルと設定ファイルとして出力されます。</p>
+
+	<p>既に構成されたアプリケーションに対して、S2Directoryのために新たに設定する必要があるdiconファイルは次の4つです。</p>
+
+	<ul><li><a href="#app.dicon">app.dicon</a></li>
+		<li><a href="#customizer.dicon">customizer.dicon</a></li>
+		<li><a href="#creator.dicon">creator.dicon</a></li>
+		<li><a href="#directory.dicon">directory.dicon</a></li>
+	</ul>
+
+	<div class="figure">
+		<img width="344" height="647" src="../../images/documentation/getting_started_smart_deploy_layout.png"/>
+		<p>S2Strutsを使ったSMART Deploy時のWEBアプリケーションでのパッケージ構成例</p>
+	</div>
+
+	<p>上図で登場するdiconファイルについて説明します。S2Directoryのために新たに設定する必要がある箇所はボールド体になっています。</p>
+
+	<h4 id="app.dicon">app.dicon</h4>
+	<p>アプリケーションを構成するルートとなるdiconファイルです。S2Directoryの基本機能を提供するためのシステム設定(DI設定、AOP定義)を有効にするためにdirectorydao.diconファイルをincludeします。</p>
+
+	<ul class="see"><li>See Also: <a href="http://s2container.seasar.org/ja/DIContainer.html#app.dicon">[S2Container] DIContainer - app.diconの役割</a></li>
+	</ul>
+
+<pre>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN"
+    "http://www.seasar.org/dtd/components24.dtd"&gt;
+&lt;components&gt;
+    &lt;include path="convention.dicon"/&gt;
+    &lt;include path="aop.dicon"/&gt;
+    <strong>&lt;include path="directorydao.dicon"/&gt;</strong>
+    &lt;include condition="#ENV != 'ut'" path="s2struts.dicon"/&gt;
+    &lt;include condition="#ENV == 'ut'" path="s2struts-hotdeploy.dicon"/&gt;
+&lt;/components&gt;
+</pre>
+
+	<h4 id="application.properties">application_ja.properties, application.properties</h4>
+	<p>S2Strutsで使用するリソース定義ファイルです。主にエラーメッセージなどを記載しておきます。詳細については、S2Sturtsのドキュメントを読んでください。</p>
+
+	<ul class="see"><li>See Also: <a href="http://s2struts.seasar.org/ja/s2struts.html#Usage">[S2Struts] S2Strutsリファレンス - 基本的な使い方</a></li>
+	</ul>
+
+	<h4 id="convention.dicon">convention.dicon</h4>
+	<p>アプリケーションのネーミング規約を定義するdiconファイルです。SMART deployを利用する場合に必要となります。</p>
+
+	<ul class="see"><li>See Also: <a href="http://s2container.seasar.org/ja/S2.4SmartDeploy.html">[S2Container] Seasar2.4新機能 - SMART deploy</a></li>
+	</ul>
+
+<pre>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN"
+    "http://www.seasar.org/dtd/components24.dtd"&gt;
+&lt;components&gt;
+    &lt;component class="org.seasar.framework.convention.impl.NamingConventionImpl"&gt;
+        &lt;initMethod name="addRootPackageName"&gt;
+            &lt;arg&gt;"org.seasar.server.members"&lt;/arg&gt;
+        &lt;/initMethod&gt;
+    &lt;/component&gt;
+&lt;/components&gt;
+</pre>
+
+	<h4 id="creator.dicon">creator.dicon</h4>
+	<p>ネーミング規約に基づいてコンポーネント定義を作成するCreatorを定義するdiconファイルです。SMART deployを利用する場合に必要となります。S2DirectoryのためのDirectoryDaoインタフェースをネーミング規約に従いコンポーネント定義するために org.seasar.directory.dao.creator.DirectoryDaoCreator を追加します。</p>
+
+	<ul class="see"><li>See Also: <a href="http://s2container.seasar.org/ja/S2.4SmartDeploy.html">[S2Container] Seasar2.4新機能 - SMART deploy</a></li>
+	</ul>
+
+<pre>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN"
+    "http://www.seasar.org/dtd/components24.dtd"&gt;
+&lt;components&gt;
+    &lt;include path="convention.dicon"/&gt;
+    &lt;include path="customizer.dicon"/&gt;
+
+    &lt;component class="org.seasar.framework.container.creator.ActionCreator"/&gt;
+    <strong>&lt;component class="org.seasar.directory.dao.creator.DirectoryDaoCreator"/&gt;</strong>
+    &lt;component class="org.seasar.framework.container.creator.DtoCreator"&gt;
+        &lt;property name="instanceDef"&gt;
+            @org.seasar.framework.container.deployer.InstanceDefFactory@PROTOTYPE
+        &lt;/property&gt;
+    &lt;/component&gt;
+    &lt;component class="org.seasar.framework.container.creator.LogicCreator"/&gt;
+    &lt;component class="org.seasar.framework.container.creator.ServiceCreator"/&gt;
+    &lt;component class="org.seasar.framework.container.creator.InterceptorCreator"/&gt;
+&lt;!--
+    &lt;component class="org.seasar.framework.container.creator.DaoCreator"/&gt;
+    &lt;component class="org.seasar.framework.container.creator.DxoCreator"/&gt;
+    &lt;component class="org.seasar.framework.container.creator.HelperCreator"/&gt;
+    &lt;component class="org.seasar.framework.container.creator.PageCreator"/&gt;
+    &lt;component class="org.seasar.framework.container.creator.ValidatorCreator"/&gt;
+    &lt;component class="org.seasar.framework.container.creator.ConverterCreator"/&gt;
+--&gt;
+&lt;/components&gt;
+</pre>
+
+	<h4 id="customizer.dicon">customizer.dicon</h4>
+	<p>Creatorが作成したコンポーネント定義をカスタマイズするCustomizerを定義するdiconファイルです。SMART deployを利用する場合に必要となります。S2DirectoryのためのDirectoryDaoインタフェースにS2Directoryのインタセプターを適用するのにdirectoryDaoAspectCustomizerに関する設定を追加します。</p>
+
+	<ul class="see"><li>See Also: <a href="http://s2container.seasar.org/ja/S2.4SmartDeploy.html">[S2Container] Seasar2.4新機能 - SMART deploy</a></li>
+	</ul>
+
+<pre>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN"
+    "http://www.seasar.org/dtd/components24.dtd"&gt;
+&lt;components&gt;
+    &lt;include path="default-customizer.dicon"/&gt;
+
+    &lt;!-- AspectCustomizer --&gt;
+    <strong>&lt;component name="directoryDaoAspectCustomizer"
+        class="org.seasar.framework.container.customizer.AspectCustomizer"&gt;
+        &lt;property name="interceptorName"&gt;"directorydao.interceptor"&lt;/property&gt;
+    &lt;/component&gt;</strong>
+
+    &lt;!-- CustomizerChain --&gt;
+    &lt;component name="txAspectCustomizer"
+        class="org.seasar.framework.container.customizer.AspectCustomizer"&gt;
+        &lt;property name="interceptorName"&gt;"j2ee.requiredTx"&lt;/property&gt;
+    &lt;/component&gt;
+
+    &lt;component name="actionCustomizer"
+        class="org.seasar.framework.container.customizer.CustomizerChain"&gt;
+        &lt;initMethod name="addCustomizer"&gt;
+            &lt;arg&gt;traceCustomizer&lt;/arg&gt;
+        &lt;/initMethod&gt;
+    &lt;/component&gt;
+&lt;--
+    &lt;component name="daoCustomizer"
+        class="org.seasar.framework.container.customizer.CustomizerChain"&gt;
+        &lt;initMethod name="addCustomizer"&gt;
+            &lt;arg&gt;traceCustomizer&lt;/arg&gt;
+        &lt;/initMethod&gt;
+        &lt;initMethod name="addCustomizer"&gt;
+            &lt;arg&gt;s2DaoCustomizer&lt;/arg&gt;
+        &lt;/initMethod&gt;
+    &lt;/component&gt;
+--&gt;
+    <strong>&lt;component name="directoryDaoCustomizer"
+        class="org.seasar.framework.container.customizer.CustomizerChain"&gt;
+        &lt;initMethod name="addCustomizer"&gt;
+            &lt;arg&gt;traceCustomizer&lt;/arg&gt;
+        &lt;/initMethod&gt;
+        &lt;initMethod name="addCustomizer"&gt;
+            &lt;arg&gt;directoryDaoAspectCustomizer&lt;/arg&gt;
+        &lt;/initMethod&gt;
+    &lt;/component&gt;</strong>
+&lt;!--
+    &lt;component name="dxoAspectCustomizer"
+        class="org.seasar.framework.container.customizer.AspectCustomizer"&gt;
+        &lt;property name="interceptorName"&gt;"dxo.interceptor"&lt;/property&gt;
+    &lt;/component&gt;
+    &lt;component name="dxoCustomizer"
+        class="org.seasar.framework.container.customizer.CustomizerChain"&gt;
+        &lt;initMethod name="addCustomizer"&gt;
+            &lt;arg&gt;traceCustomizer&lt;/arg&gt;
+        &lt;/initMethod&gt;
+        &lt;initMethod name="addCustomizer"&gt;
+            &lt;arg&gt;dxoAspectCustomizer&lt;/arg&gt;
+        &lt;/initMethod&gt;
+    &lt;/component&gt;
+--&gt;
+    &lt;component name="logicCustomizer"
+        class="org.seasar.framework.container.customizer.CustomizerChain"&gt;
+        &lt;initMethod name="addCustomizer"&gt;
+            &lt;arg&gt;traceCustomizer&lt;/arg&gt;
+        &lt;/initMethod&gt;
+        &lt;initMethod name="addCustomizer"&gt;
+            &lt;arg&gt;txAspectCustomizer&lt;/arg&gt;
+        &lt;/initMethod&gt;
+    &lt;/component&gt;
+
+    &lt;component name="serviceCustomizer"
+        class="org.seasar.framework.container.customizer.CustomizerChain"&gt;
+        &lt;initMethod name="addCustomizer"&gt;
+            &lt;arg&gt;traceCustomizer&lt;/arg&gt;
+        &lt;/initMethod&gt;
+        &lt;initMethod name="addCustomizer"&gt;
+            &lt;arg&gt;txAspectCustomizer&lt;/arg&gt;
+        &lt;/initMethod&gt;
+    &lt;/component&gt;
+&lt;/components&gt;
+</pre>
+
+	<h4 id="directory.dicon">directory.dicon</h4>
+	<p>ディレクトリサーバに接続するための各種設定情報を定義するdiconファイルです。詳細については、<a href="configuration.html#directory.dicon">Configurationのdirectory.diconについての説明</a>を読んでください。</p>
+
+	<ul class="see"><li>See Also: <a href="configuration.html#directory.dicon">[S2Directory] Configuration - directory.dicon: ディレクトリサーバに接続するための各種設定</a></li>
+	</ul>
+
+<pre>
+<strong>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE components PUBLIC "-//SEASAR2.1//DTD S2Container//EN"
+    "http://www.seasar.org/dtd/components21.dtd"&gt;
+&lt;components namespace="directory"&gt;
+    &lt;component name="directoryControlProperty"
+        class="org.seasar.directory.impl.DirectoryControlPropertyImpl"
+        instance="prototype"&gt;
+        &lt;property name="initialContextFactory"&gt;
+            "com.sun.jndi.ldap.LdapCtxFactory"
+        &lt;/property&gt;
+        &lt;property name="url"&gt;
+            "ldap://localhost:389"
+        &lt;/property&gt;
+        &lt;property name="baseDn"&gt;"dc=seasar,dc=org"&lt;/property&gt;
+        &lt;property name="user"&gt;"cn=Manager"&lt;/property&gt;
+        &lt;property name="password"&gt;"secret"&lt;/property&gt;
+        &lt;!-- Other options and each default value.
+        &lt;property name="passwordAlgorithm"&gt;"SSHA"&lt;/property&gt;
+        &lt;property name="userSuffix"&gt;"ou=Users"&lt;/property&gt;
+        &lt;property name="userAttributeName"&gt;"uid"&lt;/property&gt;
+        &lt;property name="groupSuffix"&gt;"ou=Groups"&lt;/property&gt;
+        &lt;property name="groupAttributeName"&gt;"memberUid"&lt;/property&gt;
+        &lt;property name="multipleValueDelimiter"&gt;","&lt;/property&gt;
+        --&gt;
+    &lt;/component&gt;
+&lt;/components&gt;</strong>
+</pre>
+
+	<h4 id="env.txt">env.txt</h4>
+	<p>SMART deployの種類を定義するテキストファイルです。開発中はHOT deployで動かすためutと記述し、リリース時はCOOL deployで動かすためにproductと記述します。</p>
+
+	<ul class="see"><li>See Also: <a href="http://s2container.seasar.org/ja/S2.4SmartDeploy.html">[S2Container] Seasar2.4新機能 - SMART deploy</a></li>
+	</ul>
+
+<pre>
+ut
+</pre>
+
+	<h4 id="log4j.properties">log4j.properties</h4>
+	<p>log4Jのための設定ファイルです。デバッグ情報が必要な場合は、log4j.category.org.seasarの値をDEBUG, Cに、不要な場合は、INFO, Cに設定します。</p>
+
+	<ul class="see"><li>See Also: <a href="http://logging.apache.org/log4j/docs/">[log4j] log4j documentation</a></li>
+	</ul>
+
+<pre>
+log4j.category.org.seasar=DEBUG, C
+#log4j.category.org.seasar=INFO, C
+log4j.additivity.org.seasar=false
+
+log4j.appender.C=org.apache.log4j.ConsoleAppender
+log4j.appender.C.Target=System.out
+log4j.appender.C.ImmediateFlush=true
+log4j.appender.C.layout=org.apache.log4j.PatternLayout
+log4j.appender.C.layout.ConversionPattern=%-5p %d [%t] %m%n
+
+log4j.rootLogger=INFO, A1
+log4j.appender.A1=org.apache.log4j.ConsoleAppender
+log4j.appender.A1.layout=org.apache.log4j.PatternLayout
+log4j.appender.A1.layout.ConversionPattern=%d [%t] %-5p %c - %m%n
+</pre>
+
+	<h4 id="s2container.dicon">s2container.dicon</h4>
+	<p>S2コンテナをカスタマイズするための設定を定義するdiconファイルです。SMART deployを利用する場合に必要となります。</p>
+
+	<ul class="see"><li>See Also: <a href="http://s2container.seasar.org/ja/S2.4SmartDeploy.html">[S2Container] Seasar2.4新機能 - SMART deploy</a></li>
+	</ul>
+
+<pre>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN"
+    "http://www.seasar.org/dtd/components24.dtd"&gt;
+&lt;components&gt;
+    &lt;include condition="#ENV == 'ut'" path="hotdeploy.dicon"/&gt;
+    &lt;include condition="#ENV == 'ct' || #ENV == 'it'" path="warmdeploy.dicon"/&gt;
+    &lt;include condition="#ENV == 'product'" path="cooldeploy.dicon"/&gt;
+&lt;/components&gt;
+</pre>
+
+</div>
+
+
+<div class="section">
+	<h2 id="development">設定後の開発</h2>
+
+	<p>SMART Deploy用の設定は一度設定してしまえば、開発中変更する必要はありません。設定後は通常と同じ使い方でS2Directoryを使うことができます。</p>
+</div>
+
+</div><!-- article -->
+
+</div><!-- contents_center -->
+
+<div id="footer">
+<address>Copyright &#169; 2005-2006 the Seasar Project and the others. all rights reserved.</address>
+<div class="line"><span class="hide">spacer</span></div>
+</div><!-- footer -->
+
+</div><!-- wrapper -->
+
+</body>
+</html>

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="author" content="Jun Futagawa" />
+<link rev="made" href="mailto:jfut ___＠___ featia.net" />
+<link rel="index" title="index" href="http://s2directory.sandbox.seasar.org/" />
+<link rel="stylesheet" type="text/css" href="../../theme/main.css" />
+<link rel="stylesheet" type="text/css" href="../../theme/print.css" media="print" />
+<title>S2Directory - Document</title>
+</head>
+
+<body>
+
+<div id="wrapper">
+
+<div id="header">
+
+<div class="line"><span class="hide">spacer</span></div>
+
+<div id="logo"><h2 id="h01" class="hide">S2Directory - Document</h2><img src="../../images/seasar_logo_blue.gif" alt="The Seasar Project" width="390" height="180" /></div>
+
+<div id="tool">
+
+<h2><a href="http://search.seasar.org/">Seasar Search</a></h2>
+
+<form id="search" name="search" action="http://search.seasar.org/">
+<div>
+	<input id="search_phrase" type="text" name="phrase" size="20" />
+	<input type="hidden" name="perpage" value="30" />
+	<input type="hidden" name="enc" value="UTF-8" />
+	<input id="search_go" type="submit" value="Search" />
+</div>
+</form>
+
+<h2>Seasar Banner</h2>
+
+<p><a href="../../images/seasar_banner.gif"><img src="../../images/seasar_banner.gif" alt="Seasar Banner" title="Seasar Banner" width="146" height="33" /></a></p>
+
+</div>
+
+<div class="line"><span class="hide">spacer</span></div>
+
+<div id="navi">
+<p><a href="../../en/">English</a> | Japanese</p>
+</div>
+
+</div><!-- header -->
+
+<div id="contents_left">
+
+<h2>Menu</h2>
+
+<ul><li><a href="../">Home</a></li>
+	<li><a href="../news.html">News</a></li>
+	<li><a href="../license.html">License</a></li>
+	<li><a href="../downloads.html">Downloads</a></li>
+	<li>SVN Repository
+		<ul><li><a href="https://www.seasar.org/svn/sandbox/s2directory/">SVN</a></li>
+			<li><a href="http://svn.seasar.org/browse/?root=sandbox.s2directory">Browse</a></li>
+		</ul>
+	</li>
+	<li><a href="https://www.seasar.org/issues/browse/DIRECTORY">Tracking</a></li>
+	<li><a href="http://www.seasar.org/feed/">RSS Feed</a></li>
+	<li><a href="http://maven.seasar.org/">Maven Repository</a></li>
+</ul>
+
+<h2>Documentation</h2>
+
+<ul><li>[Introduction]</li>
+	<li><a href="tutorial.html">Tutorial</a></li>
+	<li><a href="demo.html">Demo</a></li>
+	<li><a href="setup.html">Setup</a></li>
+	<li><a href="configuration.html">Configuration</a></li>
+	<li><a href="smart_deploy.html">SMART Deploy</a></li>
+	<li><a href="entity.html">Entity</a></li>
+	<li><a href="directorydao.html">DirectoryDao</a></li>
+	<li><a href="digest.html">Digest</a></li>
+</ul>
+
+</div><!-- contents_left -->
+
+<div id="contents_center">
+
+<div id="article">
+
+<div class="section">
+	<h2 id="h02">S2Directoryとは？</h2>
+
+	<div class="update">最終更新日時: $Date::                           $</div>
+
+	<p>S2Directoryは、ディレクトリサーバとの接続を容易にするためのコネクション管理機能と、ディレクトリサーバのエントリ・属性とオブジェクトを結びつけるO/D Mapping ( Object / Directory Mapping )、もしくは、O/L Mapping ( Object / LDAP Mapping ) のフレームワーク機能を提供します。もっと簡単に一言で言い表すと、<a href="http://s2dao.seasar.org/ja/">S2Dao</a>のDao対象がリレーショナルデータベースからディレクトリサーバになったものです。</p>
+
+	<p>上記のとおりS2Directoryは、その実装を行うに際して<a href="http://s2dao.seasar.org/ja/">S2Dao</a>を多大に参考にしています。S2Daoのコミッタの皆さんに感謝いたします！</p>
+
+	<p>S2Directoryの使い方を学ぶには、まずは<a href="tutorial.html">Tutorial</a>を読んでください。</p>
+</div>
+
+<div class="section">
+	<h2>特徴</h2>
+
+	<h3>JNDIの知識が不要</h3>
+	<p>ディレクトリサーバへの接続・切断、問い合わせ結果であるNamingEnumerationの分解、オブジェクトへの変換ロジックを記述する必要がありません。</p>
+
+	<h3>問い合わせフィルタの自動生成</h3>
+	<p>命名規約に従って関数を作成することで、ディレクトリへの問い合わせフィルタを自動的に生成します。</p>
+
+	<h3>インタフェース定義だけでデータの読み書きが可能</h3>
+	<p>命名規則に従ったインタフェースを定義するだけで、実際の処理を実装せずにディレクトリ上のエントリを操作することができます。</p>
+
+	<h3>多重属性に対応</h3>
+	<p>複数の属性値を配列型もしくはjava.util.List型で表すことで、単一属性と同じようにエントリを操作することができます。</p>
+
+	<h3>認証機能</h3>
+	<p>ディレクトリサービスの特徴である認証機能をインタフェースを定義するだけで提供できます。</p>
+
+	<h3>ユーザモードでの実行</h3>
+	<p>ディレクトリサーバとの接続をディレクトリサービスのもつ認証機能を用いて、ユーザごとにコネクションを生成し、接続することができます。</p>
+
+	<h3>ユーザパスワードの管理</h3>
+	<p>ディレクトリサーバ上のユーザパスワードは、暗号化された状態に加えてバイナリ形式の属性で保存されています。S2Directoryを用いた場合、平文パスワードを値に設定するだけで自動的にパスワードを検証し、パスワードが更新されている場合は指定した暗号形式に従い暗号化処理を施し更新することができます。対応している暗号形式は、一般的なディレクトリサーバで利用できる認証方式からCryptを除いた、MD5、SMD5、SHA、SSHA、PLAINです。</p>
+</div>
+
+<div class="section">
+	<h2>主な機能</h2>
+
+	<h3>実装済み</h3>
+	<ul><li>SASL (Simple Authentication and Security Layer) 認証</li>
+		<li>ユーザモード接続</li>
+		<li>新規エントリ作成機能</li>
+		<li>読み出し機能</li>
+		<li>更新機能</li>
+		<li>削除機能</li>
+		<li>バイナリデータ対応</li>
+		<li>パスワード対応 (PLAIN, MD5, SMD5, SHA, SSHA)</li>
+		<li>複数の属性値の読み書きに対応 (java.lang.String, java.util.List)</li>
+	</ul>
+
+	<h3>未実装</h3>
+	<ul>
+		<li>独自認証局でのSSL/TLS対応</li>
+	</ul>
+</div>
+
+</div><!-- article -->
+
+</div><!-- contents_center -->
+
+<div id="footer">
+<address>Copyright &#169; 2005-2006 the Seasar Project and the others. all rights reserved.</address>
+<div class="line"><span class="hide">spacer</span></div>
+</div><!-- footer -->
+
+</div><!-- wrapper -->
+
+</body>
+</html>

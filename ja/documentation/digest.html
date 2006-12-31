@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="author" content="Jun Futagawa" />
+<link rev="made" href="mailto:jfut ___＠___ featia.net" />
+<link rel="index" title="index" href="http://s2directory.sandbox.seasar.org/" />
+<link rel="stylesheet" type="text/css" href="../../theme/main.css" />
+<link rel="stylesheet" type="text/css" href="../../theme/print.css" media="print" />
+<title>S2Directory - Digest</title>
+</head>
+
+<body>
+
+<div id="wrapper">
+
+<div id="header">
+
+<div class="line"><span class="hide">spacer</span></div>
+
+<div id="logo"><h2 id="h01" class="hide">S2Directory - Digest</h2><img src="../../images/seasar_logo_blue.gif" alt="The Seasar Project" width="390" height="180" /></div>
+
+<div id="tool">
+
+<h2><a href="http://search.seasar.org/">Seasar Search</a></h2>
+
+<form id="search" name="search" action="http://search.seasar.org/">
+<div>
+	<input id="search_phrase" type="text" name="phrase" size="20" />
+	<input type="hidden" name="perpage" value="30" />
+	<input type="hidden" name="enc" value="UTF-8" />
+	<input id="search_go" type="submit" value="Search" />
+</div>
+</form>
+
+<h2>Seasar Banner</h2>
+
+<p><a href="../../images/seasar_banner.gif"><img src="../../images/seasar_banner.gif" alt="Seasar Banner" title="Seasar Banner" width="146" height="33" /></a></p>
+
+</div>
+
+<div class="line"><span class="hide">spacer</span></div>
+
+<div id="navi">
+<p><a href="../../en/">English</a> | Japanese</p>
+</div>
+
+</div><!-- header -->
+
+<div id="contents_left">
+
+<h2>Menu</h2>
+
+<ul><li><a href="../">Home</a></li>
+	<li><a href="../news.html">News</a></li>
+	<li><a href="../license.html">License</a></li>
+	<li><a href="../downloads.html">Downloads</a></li>
+	<li>SVN Repository
+		<ul><li><a href="https://www.seasar.org/svn/sandbox/s2directory/">SVN</a></li>
+			<li><a href="http://svn.seasar.org/browse/?root=sandbox.s2directory">Browse</a></li>
+		</ul>
+	</li>
+	<li><a href="https://www.seasar.org/issues/browse/DIRECTORY">Tracking</a></li>
+	<li><a href="http://www.seasar.org/feed/">RSS Feed</a></li>
+	<li><a href="http://maven.seasar.org/">Maven Repository</a></li>
+</ul>
+
+<h2>Documentation</h2>
+
+<ul><li><a href="./">Introduction</a></li>
+	<li><a href="tutorial.html">Tutorial</a></li>
+	<li><a href="demo.html">Demo</a></li>
+	<li><a href="setup.html">Setup</a></li>
+	<li><a href="configuration.html">Configuration</a></li>
+	<li><a href="smart_deploy.html">SMART Deploy</a></li>
+	<li><a href="entity.html">Entity</a></li>
+	<li><a href="directorydao.html">DirectoryDao</a></li>
+	<li>[Digest]</li>
+</ul>
+
+</div><!-- contents_left -->
+
+<div id="contents_center">
+
+<div id="article">
+
+<div class="section">
+	<h2 id="digest">Digest</h2>
+
+	<div class="update">最終更新日時: $Date::                           $</div>
+
+	<p>S2Directoryには暗号化ハッシュを生成、検証する便利な機能があります。この機能はディレクトリサーバを使わない環境においても、独立して使うことで簡単に暗号化ハッシュを生成、検証することが出来ます。</p>
+
+	<h3>利用例</h3>
+	<ul><li>暗号化パスワードの生成と検証</li>
+		<li>CSRF対策のために使うhidden属性に設定する一時キー生成と検証</li>
+	</ul>
+
+	<h3>対応している暗号化ハッシュ</h3>
+
+	<p>対応している暗号化ハッシュは、一般的なディレクトリサーバで利用できる認証方式からCryptを除いた、MD5、SMD5、SHA、SSHA、PLAINです。</p>
+	<table class="list" summary="S2DirectoryのDigest機能が対応している暗号化ハッシュ一覧">
+		<tr>
+			<th>形式</th>
+			<th>説明</th>
+		</tr>
+		<tr class="a">
+			<td><a href="#plain">PLAIN</a></td>
+			<td>平文 (暗号化されません)</td>
+		</tr>
+		<tr class="b">
+			<td><a href="#md5">MD5</a></td>
+			<td>MD5形式の暗号化ハッシュ</td>
+		</tr>
+		<tr class="a">
+			<td><a href="#smd5">SMD5</a></td>
+			<td>SMD5形式の暗号化ハッシュ</td>
+		</tr>
+		<tr class="b">
+			<td><a href="#sha">SHA</a></td>
+			<td>SHA形式の暗号化ハッシュ</td>
+		</tr>
+		<tr class="a">
+			<td><a href="#ssha">SSHA</a></td>
+			<td>SSHA形式の暗号化ハッシュ (推奨)</td>
+		</tr>
+	</table>
+
+	<h3>動かすのに必要なもの</h3>
+
+	<ul><li>S2Directory (適当なバージョン)</li>
+		<li><a href="http://s2container.seasar.org/ja/">S2Container</a> (適当なバージョン)</li>
+	</ul>
+</div>
+
+<div class="section">
+	<h2>使い方</h2>
+
+	<h3 id="plain">PLAIN</h3>
+<pre>
+public void testPlainDigest() throws NoSuchAlgorithmException {
+    String pass = "secret";
+    String hash = "secret";
+    Digest digest = DigestFactory.getDigest(hash);
+    assertEquals(true, digest.verify(hash, pass));
+    hash = digest.create(pass);
+    assertEquals(true, digest.verify(hash, pass));
+    digest = DigestFactory.getDigest("PLAIN");
+    assertEquals(true, digest.verify(hash, pass));
+}
+</pre>
+
+	<h3 id="md5">MD5</h3>
+<pre>
+public void testMD5Digest() throws NoSuchAlgorithmException {
+    String pass = "secret";
+    String hash = "{MD5}Xr4ilOzQ4PCOq3aQ0qbuaQ==";
+    Digest digest = DigestFactory.getDigest(hash);
+    assertEquals(true, digest.verify(hash, pass));
+    hash = digest.create(pass);
+    assertEquals(true, digest.verify(hash, pass));
+    digest = DigestFactory.getDigest("MD5");
+    assertEquals(true, digest.verify(hash, pass));
+}
+</pre>
+
+	<h3 id="smd5">SMD5</h3>
+<pre>
+public void testSMD5Digest() throws NoSuchAlgorithmException {
+    String pass = "secret";
+    String hash = "{SMD5}KNaOGWWWmCgJou1M6cUgt0l1QyA=";
+    Digest digest = DigestFactory.getDigest(hash);
+    assertEquals(true, digest.verify(hash, pass));
+    hash = digest.create(pass);
+    assertEquals(true, digest.verify(hash, pass));
+    digest = DigestFactory.getDigest("SMD5");
+    assertEquals(true, digest.verify(hash, pass));
+}
+</pre>
+
+	<h3 id="sha">SHA</h3>
+<pre>
+public void testSHADigest() throws NoSuchAlgorithmException {
+    String pass = "secret";
+    String hash = "{SHA}5en6G6MezRroT3XKqkdPOmY/BfQ=";
+    Digest digest = DigestFactory.getDigest(hash);
+    assertEquals(true, digest.verify(hash, pass));
+    hash = digest.create(pass);
+    assertEquals(true, digest.verify(hash, pass));
+    digest = DigestFactory.getDigest("SHA");
+    assertEquals(true, digest.verify(hash, pass));
+}
+</pre>
+
+	<h3 id="ssha">SSHA</h3>
+<pre>
+public void testSSHADigest() throws NoSuchAlgorithmException {
+    String pass = "secret";
+    String hash = "{SSHA}DeqCMzuWq1PMxsXCjLgEc3llb8Kmr1UK";
+    Digest digest = DigestFactory.getDigest(hash);
+    assertEquals(true, digest.verify(hash, pass));
+    hash = digest.create(pass);
+    assertEquals(true, digest.verify(hash, pass));
+    digest = DigestFactory.getDigest("SSHA");
+    assertEquals(true, digest.verify(hash, pass));
+}
+</pre>
+
+	<h3 id="ssha">未対応形式の例外処理</h3>
+<pre>
+public void testUnknownDigest1() {
+    try {
+        Digest digest = DigestFactory.getDigest("{UNKNOWN}");
+        digest.create("secret");
+    } catch (NoSuchAlgorithmException e) {
+        assertTrue(true);
+        return;
+    }
+    assertTrue(false);
+}
+</pre>
+
+</div>
+
+</div><!-- article -->
+
+</div><!-- contents_center -->
+
+<div id="footer">
+<address>Copyright &#169; 2005-2006 the Seasar Project and the others. all rights reserved.</address>
+<div class="line"><span class="hide">spacer</span></div>
+</div><!-- footer -->
+
+</div><!-- wrapper -->
+
+</body>
+</html>

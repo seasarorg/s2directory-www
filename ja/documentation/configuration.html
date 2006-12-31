@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="author" content="Jun Futagawa" />
+<link rev="made" href="mailto:jfut ___＠___ featia.net" />
+<link rel="index" title="index" href="http://s2directory.sandbox.seasar.org/" />
+<link rel="stylesheet" type="text/css" href="../../theme/main.css" />
+<link rel="stylesheet" type="text/css" href="../../theme/print.css" media="print" />
+<title>S2Directory - Configuration</title>
+</head>
+
+<body>
+
+<div id="wrapper">
+
+<div id="header">
+
+<div class="line"><span class="hide">spacer</span></div>
+
+<div id="logo"><h2 id="h01" class="hide">S2Directory - Configuration</h2><img src="../../images/seasar_logo_blue.gif" alt="The Seasar Project" width="390" height="180" /></div>
+
+<div id="tool">
+
+<h2><a href="http://search.seasar.org/">Seasar Search</a></h2>
+
+<form id="search" name="search" action="http://search.seasar.org/">
+<div>
+	<input id="search_phrase" type="text" name="phrase" size="20" />
+	<input type="hidden" name="perpage" value="30" />
+	<input type="hidden" name="enc" value="UTF-8" />
+	<input id="search_go" type="submit" value="Search" />
+</div>
+</form>
+
+<h2>Seasar Banner</h2>
+
+<p><a href="../../images/seasar_banner.gif"><img src="../../images/seasar_banner.gif" alt="Seasar Banner" title="Seasar Banner" width="146" height="33" /></a></p>
+
+</div>
+
+<div class="line"><span class="hide">spacer</span></div>
+
+<div id="navi">
+<p><a href="../../en/">English</a> | Japanese</p>
+</div>
+
+</div><!-- header -->
+
+<div id="contents_left">
+
+<h2>Menu</h2>
+
+<ul><li><a href="../">Home</a></li>
+	<li><a href="../news.html">News</a></li>
+	<li><a href="../license.html">License</a></li>
+	<li><a href="../downloads.html">Downloads</a></li>
+	<li>SVN Repository
+		<ul><li><a href="https://www.seasar.org/svn/sandbox/s2directory/">SVN</a></li>
+			<li><a href="http://svn.seasar.org/browse/?root=sandbox.s2directory">Browse</a></li>
+		</ul>
+	</li>
+	<li><a href="https://www.seasar.org/issues/browse/DIRECTORY">Tracking</a></li>
+	<li><a href="http://www.seasar.org/feed/">RSS Feed</a></li>
+	<li><a href="http://maven.seasar.org/">Maven Repository</a></li>
+</ul>
+
+<h2>Documentation</h2>
+
+<ul><li><a href="./">Introduction</a></li>
+	<li><a href="tutorial.html">Tutorial</a></li>
+	<li><a href="demo.html">Demo</a></li>
+	<li><a href="setup.html">Setup</a></li>
+	<li>[Configuration]</li>
+	<li><a href="smart_deploy.html">SMART Deploy</a></li>
+	<li><a href="entity.html">Entity</a></li>
+	<li><a href="directorydao.html">DirectoryDao</a></li>
+	<li><a href="digest.html">Digest</a></li>
+</ul>
+
+</div><!-- contents_left -->
+
+<div id="contents_center">
+
+<div id="article">
+
+<div class="section">
+	<h2 id="h02">Configuration</h2>
+
+	<div class="update">最終更新日時: $Date::                           $</div>
+
+	<p>S2Directoryを動かすに必要なdiconファイルの詳細について説明します。事前に<a href="setup.html">Setup</a>に従い、必要なライブラリをあなたのプロジェクトに配置しておいてください。</p>
+</div>
+
+<div class="section">
+	<h2>S2Directoryを動かすのに必要なdiconファイル</h2>
+
+	<p>S2Directoryのためのdiconファイルには次のものがあります。</p>
+
+	<table class="list" summary="S2Directoryのためのdiconファイル一覧">
+		<tr>
+			<th>ファイル名</th>
+			<th>説明</th>
+			<th>独自定義の必要性</th>
+		</tr>
+		<tr class="a">
+			<td><a href="#directory.dicon">directory.dicon</a></td>
+			<td>ディレクトリサーバに接続するための各種設定情報を記載します。</td>
+			<td>必須</td>
+		</tr>
+		<tr class="b">
+			<td><a href="#directorydao.dicon">directorydao.dicon</a></td>
+			<td>S2Directoryの基本機能を提供するためのシステム設定を記載します。独自定義することでS2Direcotryを拡張することが出来ます。</td>
+			<td>機能拡張時に必要</td>
+		</tr>
+	</table>
+
+<pre>* diconファイル(ダイコンファイル)とはS2Containerで使用する設定ファイルです。
+* diconファイルの詳細については、<a href="http://s2container.seasar.org/ja/">S2Container</a>のドキュメントを見てください。</pre>
+
+</div>
+
+<div class="section">
+	<h2 id="directory.dicon">directory.dicon: ディレクトリサーバに接続するための各種設定</h2>
+
+	<p>directory.diconは、ディレクトリサーバに接続するための各種設定情報を定義するdiconファイルです。</p>
+
+	<h3>設定例</h3>
+<pre>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE components PUBLIC "-//SEASAR2.1//DTD S2Container//EN"
+    "http://www.seasar.org/dtd/components21.dtd"&gt;
+&lt;components namespace="directory"&gt;
+    &lt;component name="directoryControlProperty"
+        class="org.seasar.directory.impl.DirectoryControlPropertyImpl"
+        instance="prototype"&gt;
+        &lt;property name="initialContextFactory"&gt;
+            "com.sun.jndi.ldap.LdapCtxFactory"
+        &lt;/property&gt;
+        &lt;property name="url"&gt;
+            "ldap://localhost:389"
+        &lt;/property&gt;
+        &lt;property name="baseDn"&gt;"dc=seasar,dc=org"&lt;/property&gt;
+        &lt;property name="user"&gt;"cn=Manager"&lt;/property&gt;
+        &lt;property name="password"&gt;"secret"&lt;/property&gt;
+        &lt;!-- Other options and each default value.
+        &lt;property name="passwordAlgorithm"&gt;"SSHA"&lt;/property&gt;
+        &lt;property name="userSuffix"&gt;"ou=Users"&lt;/property&gt;
+        &lt;property name="userAttributeName"&gt;"uid"&lt;/property&gt;
+        &lt;property name="groupSuffix"&gt;"ou=Groups"&lt;/property&gt;
+        &lt;property name="groupAttributeName"&gt;"memberUid"&lt;/property&gt;
+        &lt;property name="multipleValueDelimiter"&gt;","&lt;/property&gt;
+        --&gt;
+    &lt;/component&gt;
+&lt;/components&gt;
+</pre>
+
+	<h4>設定例の説明</h4>
+	<table class="list" summary="directory.diconの設定例の説明">
+		<tr>
+			<th>設定項目</th>
+			<th>説明</th>
+			<th>必須設定</th>
+			<th>設定例の値</th>
+			<th>デフォルトの値</th>
+		</tr>
+		<tr class="a">
+			<td>initialContextFactory</td>
+			<td>ディレクトリサーバ接続に使用するコンテキストファクトリ</td>
+			<td>任意</td>
+			<td>com.sun.jndi.ldap.LdapCtxFactory<br />
+				(Sun JDK標準付属)</td>
+			<td>com.sun.jndi.ldap.LdapCtxFactory<br />
+				(Sun JDK標準付属)</td>
+		</tr>
+		<tr class="b">
+			<td>url</td>
+			<td>接続先ディレクトリサーバのプロトコル://アドレス:ポート番号</td>
+			<td>必須</td>
+			<td>ldap://localhost:389</td>
+			<td>null</td>
+		</tr>
+		<tr class="a">
+			<td>baseDn</td>
+			<td>ディレクトリツリーのベースDN</td>
+			<td>必須</td>
+			<td>dc=seasar,dc=org</td>
+			<td>null</td>
+		</tr>
+		<tr class="b">
+			<td>user</td>
+			<td>標準で使用するディレクトリツリーへの接続ユーザ</td>
+			<td>必須</td>
+			<td>cn=Manager<br />
+				(cn=Manager,dc=seasar,dc=orgと同意)</td>
+			<td>null</td>
+		</tr>
+		<tr class="a">
+			<td>password</td>
+			<td>標準で使用するディレクトリツリーへの接続ユーザのパスワード</td>
+			<td>必須</td>
+			<td>secret</td>
+			<td>null</td>
+		</tr>
+		<tr class="b">
+			<td>passwordAlgorithm</td>
+			<td>ユーザパスワードを管理するのに使用するの暗号化方式<br />
+				対応している方式: MD5、SMD5、SHA、SSHA、PLAIN</td>
+			<td>任意</td>
+			<td>デフォルトの値</td>
+			<td>SSHA</td>
+		</tr>
+		<tr class="a">
+			<td>userSuffix</td>
+			<td>ユーザエントリのルートとなるDN。baseDnを含まない場合、自動的に補完されます。</td>
+			<td>任意</td>
+			<td>デフォルトの値</td>
+			<td>ou=Users<br />
+				(ou=Users,dc=seasar,dc=orgと同意)</td>
+		</tr>
+		<tr class="b">
+			<td>userAttributeName</td>
+			<td>ユーザエントリを特定するための属性名</td>
+			<td>任意</td>
+			<td>デフォルトの値</td>
+			<td>uid</td>
+		</tr>
+		<tr class="a">
+			<td>groupSuffix</td>
+			<td>グループエントリのルートとなるDN。baseDnを含まない場合、自動的に補完されます。</td>
+			<td>任意</td>
+			<td>デフォルトの値</td>
+			<td>ou=Groups<br />
+				(ou=Groups,dc=seasar,dc=orgと同意)</td>
+		</tr>
+		<tr class="b">
+			<td>groupAttributeName</td>
+			<td>グループエントリを特定するための属性名</td>
+			<td>任意</td>
+			<td>デフォルトの値</td>
+			<td>memberUid</td>
+		</tr>
+		<tr class="a">
+			<td>multipleValueDelimiter</td>
+			<td>複数値のための区切り文字</td>
+			<td>任意</td>
+			<td>デフォルトの値</td>
+			<td>, (カンマ)</td>
+		</tr>
+	</table>
+</div>
+
+<div class="section">
+	<h2 id="directorydao.dicon">directorydao.dicon: S2Directoryの基本機能を提供するためのシステム設定</h2>
+
+	<p>directorydao.diconは、S2Directoryの基本機能を提供するためのシステム設定を定義するdiconファイルです。独自定義することでS2Direcotryを拡張することが出来ます。S2Directoryの機能を拡張したい方以外はこの設定ファイルの詳細を知る必要はありません。</p>
+
+<pre>
+* S2Directoryの標準機能を使う場合はこのファイルを用意する必要はありません。
+* 独自に用意されていない場合、s2-directory-X.X.X.jar ファイル内の標準設定が自動的に使われます。
+</pre>
+
+	<h3>標準設定</h3>
+<pre>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE components PUBLIC "-//SEASAR2.1//DTD S2Container//EN"
+    "http://www.seasar.org/dtd/components21.dtd"&gt;
+&lt;components namespace="directorydao"&gt;
+    &lt;include path="directory.dicon"/&gt;
+    &lt;!-- value type --&gt;
+    &lt;component class="org.seasar.directory.impl.DirectoryValueTypeFactoryImpl"/&gt;
+    &lt;!-- attribute handlers --&gt;
+    &lt;component name="defaultHandler" class="org.seasar.directory.attribute.DefaultAttributeHandler"/&gt;
+    &lt;component class="org.seasar.directory.attribute.DistinguishedNameAttributeHandler"&gt;
+        &lt;property name="attributeNameList"&gt;{"dn"}&lt;/property&gt;
+    &lt;/component&gt;
+    &lt;component class="org.seasar.directory.attribute.UserPasswordAttributeHandler"&gt;
+        &lt;property name="attributeNameList"&gt;{"userPassword", "alternativeUserPassword"}&lt;/property&gt;
+    &lt;/component&gt;
+    &lt;component class="org.seasar.directory.impl.DirectoryAttributeHandlerFactoryImpl"&gt;
+        &lt;property name="ignoreCase"&gt;true&lt;/property&gt;
+        &lt;property name="defaultAttributeHandler"&gt;defaultHandler&lt;/property&gt;
+        &lt;property name="attributeHandlers"&gt;
+            container.findComponents(@org.seasar.directory.attribute.AttributeHandler@class)
+        &lt;/property&gt;
+    &lt;/component&gt;
+    &lt;component class="org.seasar.directory.dao.impl.DirectoryAnnotationReaderFactoryImpl"/&gt;
+    &lt;component class="org.seasar.directory.dao.impl.DirectoryDaoMetaDataFactoryImpl"/&gt;
+    &lt;component name="interceptor"
+        class="org.seasar.directory.dao.interceptors.S2DirectoryDaoInterceptor"/&gt;
+&lt;/components&gt;
+</pre>
+
+	<h4>標準設定の説明</h4>
+	<table class="list" summary="directory.diconの設定例の説明">
+		<tr>
+			<th>設定項目</th>
+			<th>説明</th>
+		</tr>
+		<tr class="a">
+			<td>&lt;include path="directory.dicon"/&gt;</td>
+			<td>ディレクトリサーバ接続情報が書かれた設定ファイルを読み込む</td>
+		</tr>
+		<tr class="b">
+			<td>org.seasar.directory.impl.DirectoryValueTypeFactoryImpl</td>
+			<td>属性値を読み書きする際の型変換ファクトリ</td>
+		</tr>
+		<tr class="a">
+			<td>org.seasar.directory.attribute.DefaultAttributeHandler</td>
+			<td>属性名に応じて属性値を比較、変換する際の標準属性ハンドラ</td>
+		</tr>
+		<tr class="b">
+			<td>org.seasar.directory.attribute.DistinguishedNameAttributeHandler</td>
+			<td>属性DNのための属性値を比較、変換する際の属性ハンドラ</td>
+		</tr>
+		<tr class="a">
+			<td>org.seasar.directory.attribute.UserPasswordAttributeHandler</td>
+			<td>属性userPasswordのための属性値を比較、変換する際の属性ハンドラ<br />
+				暗号化されているパスワードの検証や、暗号化パスワードを生成します</td>
+		</tr>
+		<tr class="b">
+			<td>org.seasar.directory.impl.DirectoryAttributeHandlerFactoryImpl</td>
+			<td>属性名に応じて属性値を比較、変換する際の属性ハンドラファクトリ</td>
+		</tr>
+		<tr class="a">
+			<td>org.seasar.directory.dao.impl.DirectoryAnnotationReaderFactoryImpl</td>
+			<td>アノテーションリーダファクトリ</td>
+		</tr>
+		<tr class="b">
+			<td>org.seasar.directory.dao.impl.DirectoryDaoMetaDataFactoryImpl</td>
+			<td>メタオブジェクトファクトリ</td>
+		</tr>
+		<tr class="a">
+			<td>org.seasar.directory.dao.interceptors.S2DirectoryDaoInterceptor</td>
+			<td>S2AOPのためのインタセプター</td>
+		</tr>
+	</table>
+</div>
+
+</div><!-- article -->
+
+</div><!-- contents_center -->
+
+<div id="footer">
+<address>Copyright &#169; 2005-2006 the Seasar Project and the others. all rights reserved.</address>
+<div class="line"><span class="hide">spacer</span></div>
+</div><!-- footer -->
+
+</div><!-- wrapper -->
+
+</body>
+</html>

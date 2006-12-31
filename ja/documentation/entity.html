@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="author" content="Jun Futagawa" />
+<link rev="made" href="mailto:jfut ___＠___ featia.net" />
+<link rel="index" title="index" href="http://s2directory.sandbox.seasar.org/" />
+<link rel="stylesheet" type="text/css" href="../../theme/main.css" />
+<link rel="stylesheet" type="text/css" href="../../theme/print.css" media="print" />
+<title>S2Directory - Entity</title>
+</head>
+
+<body>
+
+<div id="wrapper">
+
+<div id="header">
+
+<div class="line"><span class="hide">spacer</span></div>
+
+<div id="logo"><h2 id="h01" class="hide">S2Directory - Entity</h2><img src="../../images/seasar_logo_blue.gif" alt="The Seasar Project" width="390" height="180" /></div>
+
+<div id="tool">
+
+<h2><a href="http://search.seasar.org/">Seasar Search</a></h2>
+
+<form id="search" name="search" action="http://search.seasar.org/">
+<div>
+	<input id="search_phrase" type="text" name="phrase" size="20" />
+	<input type="hidden" name="perpage" value="30" />
+	<input type="hidden" name="enc" value="UTF-8" />
+	<input id="search_go" type="submit" value="Search" />
+</div>
+</form>
+
+<h2>Seasar Banner</h2>
+
+<p><a href="../../images/seasar_banner.gif"><img src="../../images/seasar_banner.gif" alt="Seasar Banner" title="Seasar Banner" width="146" height="33" /></a></p>
+
+</div>
+
+<div class="line"><span class="hide">spacer</span></div>
+
+<div id="navi">
+<p><a href="../../en/">English</a> | Japanese</p>
+</div>
+
+</div><!-- header -->
+
+<div id="contents_left">
+
+<h2>Menu</h2>
+
+<ul><li><a href="../">Home</a></li>
+	<li><a href="../news.html">News</a></li>
+	<li><a href="../license.html">License</a></li>
+	<li><a href="../downloads.html">Downloads</a></li>
+	<li>SVN Repository
+		<ul><li><a href="https://www.seasar.org/svn/sandbox/s2directory/">SVN</a></li>
+			<li><a href="http://svn.seasar.org/browse/?root=sandbox.s2directory">Browse</a></li>
+		</ul>
+	</li>
+	<li><a href="https://www.seasar.org/issues/browse/DIRECTORY">Tracking</a></li>
+	<li><a href="http://www.seasar.org/feed/">RSS Feed</a></li>
+	<li><a href="http://maven.seasar.org/">Maven Repository</a></li>
+</ul>
+
+<h2>Documentation</h2>
+
+<ul><li><a href="./">Introduction</a></li>
+	<li><a href="tutorial.html">Tutorial</a></li>
+	<li><a href="demo.html">Demo</a></li>
+	<li><a href="setup.html">Setup</a></li>
+	<li><a href="configuration.html">Configuration</a></li>
+	<li><a href="smart_deploy.html">SMART Deploy</a></li>
+	<li>[Entity]</li>
+	<li><a href="directorydao.html">DirectoryDao</a></li>
+	<li><a href="digest.html">Digest</a></li>
+</ul>
+
+</div><!-- contents_left -->
+
+<div id="contents_center">
+
+<div id="article">
+
+<div class="section">
+	<h2 id="entity">Entity</h2>
+
+	<div class="update">最終更新日時: $Date::                           $</div>
+
+	<p>S2Direcotryでは、ディレクトリのエントリを写像するエンティティを利用してエントリの値を読み書きします。エンティティはフィールドとsetter/getterメソッドを定義した単純なPOJO(Plain Old Java Object)で構成されます。また、エンティティにS2Directoryのための情報を定義しておきたい場合はアノテーションを書くことが出来ます。</p>
+</div>
+
+<div class="section">
+	<h2 id="generator">Directory POJO Generator</h2>
+
+	<p>S2Directoryのためのエンティティは、<a href="../downloads.html#generator">Directory POJO Generator</a>を利用することで、稼働中のディレクトリサーバからスキーマ情報を取得し、POJOクラスを生成することが出来ます。</p>
+
+	<h3 id="generator_how_to_use">使い方</h3>
+	<p>実行したディレクトリにentityディレクトリが作成され、そのディレクトリにPOJOクラスが出力されます。</p>
+
+	<ul><li>localhost のポート 389 に接続する場合 (Default)</li></ul>
+<pre>
+java -jar s2-directory-generator-X.X.X.jar
+</pre>
+
+	<ul><li>ldap.example.org のポート 389 に接続する場合</li></ul>
+<pre>
+java -jar s2-directory-generator-X.X.X.jar ldap.example.org 389
+</pre>
+
+</div>
+
+<div class="section">
+	<h2 id="annotation">アノテーション</h2>
+
+	<p>S2Directoryで使用するエンティティに定義可能なフィールドによるアノテーション(フィールドアノテーション)の一覧です。</p>
+
+	<h3 id="OBJECTCLASSES">OBJECTCLASSESアノテーション</h3>
+	<p>エンティティとオブジェクトクラスとの関連付けを明示的に指定する場合はOBJECTCLASSESアノテーションを使用します。OBJECTCLASSESアノテーションを明示的に指定しなかった場合、エンティティクラス名をオブジェクトクラス名として使用します。ここで登場するオブジェクトクラスは、DaoインタフェースのARGSアノテーションが定義されていない検索関数を実行される場合に使用するフィルタとなります。</p>
+
+	<ul><li>posixAccountの例 (クラス名がPosixAccountの場合、省略可)</li></ul>
+<pre>
+public static final String OBJECTCLASSES = "posixAccount";
+</pre>
+	<ul><li>posixAccountとinetOrgPersonのオブジェクトクラスを指定する例</li></ul>
+<pre>
+public static final String OBJECTCLASSES = "posixAccount, inetOrgPerson";
+</pre>
+
+</div>
+
+</div><!-- article -->
+
+</div><!-- contents_center -->
+
+<div id="footer">
+<address>Copyright &#169; 2005-2006 the Seasar Project and the others. all rights reserved.</address>
+<div class="line"><span class="hide">spacer</span></div>
+</div><!-- footer -->
+
+</div><!-- wrapper -->
+
+</body>
+</html>

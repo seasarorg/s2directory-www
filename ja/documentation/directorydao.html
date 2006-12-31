@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="author" content="Jun Futagawa" />
+<link rev="made" href="mailto:jfut ___＠___ featia.net" />
+<link rel="index" title="index" href="http://s2directory.sandbox.seasar.org/" />
+<link rel="stylesheet" type="text/css" href="../../theme/main.css" />
+<link rel="stylesheet" type="text/css" href="../../theme/print.css" media="print" />
+<title>S2Directory - DirectoryDao</title>
+</head>
+
+<body>
+
+<div id="wrapper">
+
+<div id="header">
+
+<div class="line"><span class="hide">spacer</span></div>
+
+<div id="logo"><h2 id="h01" class="hide">S2Directory - DirectoryDao</h2><img src="../../images/seasar_logo_blue.gif" alt="The Seasar Project" width="390" height="180" /></div>
+
+<div id="tool">
+
+<h2><a href="http://search.seasar.org/">Seasar Search</a></h2>
+
+<form id="search" name="search" action="http://search.seasar.org/">
+<div>
+	<input id="search_phrase" type="text" name="phrase" size="20" />
+	<input type="hidden" name="perpage" value="30" />
+	<input type="hidden" name="enc" value="UTF-8" />
+	<input id="search_go" type="submit" value="Search" />
+</div>
+</form>
+
+<h2>Seasar Banner</h2>
+
+<p><a href="../../images/seasar_banner.gif"><img src="../../images/seasar_banner.gif" alt="Seasar Banner" title="Seasar Banner" width="146" height="33" /></a></p>
+
+</div>
+
+<div class="line"><span class="hide">spacer</span></div>
+
+<div id="navi">
+<p><a href="../../en/">English</a> | Japanese</p>
+</div>
+
+</div><!-- header -->
+
+<div id="contents_left">
+
+<h2>Menu</h2>
+
+<ul><li><a href="../">Home</a></li>
+	<li><a href="../news.html">News</a></li>
+	<li><a href="../license.html">License</a></li>
+	<li><a href="../downloads.html">Downloads</a></li>
+	<li>SVN Repository
+		<ul><li><a href="https://www.seasar.org/svn/sandbox/s2directory/">SVN</a></li>
+			<li><a href="http://svn.seasar.org/browse/?root=sandbox.s2directory">Browse</a></li>
+		</ul>
+	</li>
+	<li><a href="https://www.seasar.org/issues/browse/DIRECTORY">Tracking</a></li>
+	<li><a href="http://www.seasar.org/feed/">RSS Feed</a></li>
+	<li><a href="http://maven.seasar.org/">Maven Repository</a></li>
+</ul>
+
+<h2>Documentation</h2>
+
+<ul><li><a href="./">Introduction</a></li>
+	<li><a href="tutorial.html">Tutorial</a></li>
+	<li><a href="demo.html">Demo</a></li>
+	<li><a href="setup.html">Setup</a></li>
+	<li><a href="configuration.html">Configuration</a></li>
+	<li><a href="smart_deploy.html">SMART Deploy</a></li>
+	<li><a href="entity.html">Entity</a></li>
+	<li>[DirectoryDao]</li>
+	<li><a href="digest.html">Digest</a></li>
+</ul>
+
+</div><!-- contents_left -->
+
+<div id="contents_center">
+
+<div id="article">
+
+<div class="section">
+	<h2 id="entity">DirectoryDao</h2>
+
+	<div class="update">最終更新日時: $Date::                           $</div>
+
+	<p>S2Direcotryでは、ディレクトリにアクセスするDao(Data Access Object)として、インタフェース(以下、Daoインタフェースと呼ぶ)を利用します。Daoインタフェースにメソッドを書いておくだけで、データアクセスのロジックはS2Directoryにより自動生成されるため、実装部分を作る必要はありません。ディレクトリに対しての読み出し、書き込み、認証といった処理は、規約に従ってメソッドを定義することで機能が組み込まれます。Daoインタフェースを作成するには、次のことが必要になります。</p>
+
+	<ul>
+		<li>Entityとの関連付けの定数宣言 (<a href="#BEAN">BEANアノテーション</a>)</li>
+		<li><a href="#method">規約に従ったメソッドの定義</a></li>
+	</ul>
+
+	<p>また、メソッドの引数を検索フィルタをで参照したり、自動的に生成される検索フィルタに条件を追加したい場合、次のアノテーションを定義することで、それぞれの処理に対して追加情報を与えることができます。</p>
+
+	<ul>
+		<li><a href="#ARGS">ARGSアノテーション</a></li>
+		<li><a href="#QUERY">QUERYアノテーション</a></li>
+		<li><a href="#OBJECTCLASSES">OBJECTCLASSESアノテーション</a></li>
+	</ul>
+
+	<p>リレーショナルデータベースを永続化する<a href="http://s2dao.seasar.org/ja/">S2Dao</a>と大きく異なる点は、ディレクトリに特化した次の点です。</p>
+
+	<ul>
+		<li>認証処理の規約がある</li>
+		<li><a href="#usermode">ユーザモード実行</a></li>
+	</ul>
+
+</div><!-- entity -->
+
+
+<div class="section">
+	<h2 id="annotation">アノテーション</h2>
+
+	<p>S2Directoryで使用するDaoインタフェースに定義可能なフィールドによるアノテーション(フィールドアノテーション)の一覧です。</p>
+
+	<h3 id="BEAN">BEANアノテーション</h3>
+	<p>Daoがどのエンティティに関連付けられるのかを指定します。BEANアノテーションは1Daoインタフェースに対して必ず1つ定義する必要があります。</p>
+
+	<ul><li>BEANアノテーションの形式</li></ul>
+<pre>
+public static final Class BEAN = エンティティ名.class;
+</pre>
+
+	<ul><li>posixAccountの例 (エンティティがPosixAccountの場合、省略可)</li></ul>
+<pre>
+public static final Class BEAN = PosixAccount.class;
+</pre>
+
+	<h3 id="ARGS">ARGSアノテーション</h3>
+	<p>メソッドの引数を検索フィルタで参照できるようにするアノテーションです。これはメソッドの引数名は、通常リフレクションAPIで取得できないためです。ARGSアノテーションは、エンティティを使用しないで引数のあるメソッドを定義する場合、必要になります。</p>
+
+	<ul><li>ARGSアノテーションの形式</li></ul>
+<pre>
+public static final String メソッド名_ARGS = "引数名";
+</pre>
+
+	<ul><li>public PosixAccountDto getUserByUid(String uid);というメソッドがDaoインタフェースに定義されていた場合</li></ul>
+<pre>
+public static final String getUserByUid_ARGS = "uid";
+</pre>
+
+	<ul><li>public PosixAccountDto getUserByUidAndUidNumber(String uid, int uidNumber);というメソッドがDaoインタフェースに定義されていた場合</li></ul>
+<pre>
+public static final String getUserByUidAndUidNumber_ARGS = "uid, uidNumber";
+</pre>
+
+	<h3 id="QUERY">QUERYアノテーション</h3>
+	<p>自動的に生成される検索フィルタに条件を追加するアノテーションです。多くの場合、QUERYアノテーションは必要ありません。</p>
+
+	<ul><li>QUERYアノテーションの形式</li></ul>
+<pre>
+public static final String メソッド名_QUERY = "検索フィルタ条件";
+</pre>
+
+	<ul><li>public List getUserByFilter();というメソッドに検索条件uid=user2,ou=Users,dc=seasar,dc=orgを追加する場合</li></ul>
+<pre>
+public static final String getUserByFilter_QUERY = "uid=user2,ou=Users,dc=seasar,dc=org";
+</pre>
+
+	<h3 id="OBJECTCLASSES">OBJECTCLASSESアノテーション</h3>
+	<p>エンティティとオブジェクトクラスとの関連付けを明示的に指定する場合はOBJECTCLASSESアノテーションを使用します。OBJECTCLASSESアノテーションを明示的に指定しなかった場合、エンティティクラス名をオブジェクトクラス名として使用します。ここで登場するオブジェクトクラスは、DaoインタフェースのARGSアノテーションが定義されていない検索関数を実行される場合に使用するフィルタとなります。</p>
+
+	<ul><li>posixAccountの例 (クラス名がPosixAccountの場合、省略可)</li></ul>
+<pre>
+public static final String OBJECTCLASSES = "posixAccount";
+</pre>
+	<ul><li>posixAccountとinetOrgPersonのオブジェクトクラスを指定する例</li></ul>
+<pre>
+public static final String OBJECTCLASSES = "posixAccount, inetOrgPerson";
+</pre>
+
+</div><!-- annotation -->
+
+<div class="section">
+	<h2 id="method">規約に従ったメソッドの定義</h2>
+
+	<p>Daoインタフェースに定義するメソッド名とディレクトリに対しての処理の規約は次の表のとおりです。</p>
+
+	<table class="list" summary="S2Directoryのためのdiconファイル一覧">
+		<tr>
+			<th>機能</th>
+			<th>メソッド定義の規約</th>
+		</tr>
+		<tr class="a">
+			<td><a href="#auth">認証処理</a></td>
+			<td>auth で始まるメソッド名</td>
+		</tr>
+		<tr class="b">
+			<td><a href="#insert">挿入処理</a></td>
+			<td>insert, create, add のいずれかで始まるメソッド名</td>
+		</tr>
+		<tr class="a">
+			<td><a href="#update">更新処理</a></td>
+			<td>update, modify, store のいずれかで始まるメソッド名</td>
+		</tr>
+		<tr class="b">
+			<td><a href="#delete">削除処理</a></td>
+			<td>delete, remove のいずれかで始まるメソッド名</td>
+		</tr>
+		<tr class="a">
+			<td><a href="#select">検索、読み込み処理</a></td>
+			<td>上記規約以外すべて</td>
+		</tr>
+	</table>
+
+	<h3 id="auth">認証処理</h3>
+	<p>ディレクトリサーバの持つSimple Authentication and Security Layer (SASL)機構を用いて、ディレクトリの保持するユーザエントリに保存されたユーザ名とパスワードに対して認証処理を行いたい場合、メソッド名を<strong>auth</strong>で始めるメソッド名で定義し、引数にDirectoryControlPropertyを指定します。DirectoryControlPropertyは、認証に使うユーザ名やパスワードなどのサーバ接続情報を保持するオブジェクトです。認証処理はDirectoryControlPropertyの保持する値のみを参照し、BEANアノテーションで指定されたエンティティとは無関係に処理を実行します。</p>
+
+	<ul><li>認証処理のためのメソッド定義例</li></ul>
+<pre>
+/** ユーザ認証を行います。 */
+public boolean authenticate(DirectoryControlProperty user);
+public boolean authenticateByUserMode(DirectoryControlProperty user);
+</pre>
+
+	<ul><li>ユーザ名: user1 パスワード: secret で認証する例
+		<ul><li>S2Container: container (初期化済みであること)</li>
+			<li>Daoインタフェース: posixAccountDirectoryDao</li>
+		</ul></li>
+	</ul>
+<pre>
+PosixAccountDirectoryDao posixAccountDao = (PosixAccountDirectoryDao)container
+    .getComponent(PosixAccountDirectoryDao.class);
+DirectoryControlProperty property = (DirectoryControlProperty)container
+    .getComponent(DirectoryControlProperty.class);
+property.setUser("user1");
+property.setPassword("secret");
+if (posixAccountDao.authenticate(property)) {
+    // succeed authentication
+} else {
+    // failed authentication
+}
+</pre>
+<!-- id=auth -->
+
+	<h3 id="insert">挿入処理</h3>
+	<p>挿入処理を行いたい場合は、<strong>insert, create, add</strong> のいずれかで始まるメソッド名をもつメソッドを定義します。引数には、挿入するエントリ情報を持つエンティティを指定します。この時、このエントリをディレクトリインフォメーションツリー上のどこにエンティティを挿入するかを指し示すために、必ず<strong>dn</strong>フィールドにそのエントリを挿入する位置を指し示すDNを設定しておく必要があります。戻り値には、voidあるいはintを指定できます。intにした場合、挿入した行数が戻り値となります。</p>
+
+	<p>標準設定の場合、userPassword属性に対応する値は自動的にdirectory.diconで設定した暗号化ハッシュ形式に変換され保存されます。この挙動を変更したい、もしくは、属性に応じて保存する値を変換したい場合は、専用のAttributeHandlerを作成し、directorydao.diconで定義することで実現できます。</p>
+
+	<ul class="see"><li>See Also: [S2Directory] <a href="configuration.html">Configuration</a></li></ul>
+
+	<ul><li>挿入処理のためのメソッド定義例</li></ul>
+<pre>
+/** エントリを新規に追加します。 */
+public int insert(PosixAccount account);
+public int createUser(PosixAccount user);
+public void addUser(PosixAccount user);
+</pre>
+
+	<ul><li>ユーザエントリ user1 を挿入する例
+		<ul><li>S2Container: container (初期化済みであること)</li>
+			<li>Daoインタフェース: posixAccountDirectoryDao</li>
+		</ul></li>
+	</ul>
+<pre>
+PosixAccountDirectoryDao posixAccountDao = (PosixAccountDirectoryDao)container
+    .getComponent(PosixAccountDirectoryDao.class);
+PosixAccount account = new PosixAccount();
+// 挿入する位置を指定
+account.setDn("uid=user1,ou=Users,dc=seasar,dc=org");
+// エントリの持つ属性値を設定
+account.setUid("user1");
+account.setUserPassword("secret");
+account.setLoginShell("/bin/bash");
+account.setUid("user1");
+account.setUidNumber("10001");
+account.setGidNumber("1000");
+account.setGecos("System User");
+account.setHomeDirectory("/home/users/user1");
+account.setDescription("System User");
+// 挿入
+posixAccountDao.insert(account);
+</pre>
+<!-- id=insert -->
+
+	<h3 id="update">更新処理</h3>
+	<p>更新処理を行いたい場合は、<strong>update, modify, store</strong> のいずれかで始まるメソッド名をもつメソッドを定義します。引数には、更新するエントリ情報を持つエンティティを指定します。この時、エンティティは既にディレクトリサーバから更新対象のエントリの値を取得した永続化された状態であり、その状態に対して更新する値をセットしてある必要があります。また、このエントリがディレクトリインフォメーションツリー上のどのエンティティを永続化しているかを指し示している<strong>dn</strong>フィールドを更新することは出来ません。戻り値には、voidあるいはintを指定できます。intにした場合、更新した行数が戻り値となります。なお、エンティティの特定のフィールドに<strong>null, 空文字列</strong>を指定した場合、そのフィールドに対応する属性は削除されます。</p>
+
+	<p>標準設定の場合、userPassword属性に対応する値は自動的にdirectory.diconで設定した暗号化ハッシュ形式で検証され、値が更新されている場合のみ保存されます。この挙動を変更したい、もしくは、属性に応じて保存する値を変換したい場合は、専用のAttributeHandlerを作成し、directorydao.diconで定義することで実現できます。</p>
+
+	<ul class="see"><li>See Also: [S2Directory] <a href="configuration.html">Configuration</a></li></ul>
+
+	<ul><li>更新処理のためのメソッド定義例</li></ul>
+<pre>
+/** エントリを更新します。 */
+public int update(PosixAccount account);
+public int modifyUser(PosixAccount account);
+public void storeUser(PosixAccount user);
+</pre>
+
+	<ul><li>ユーザエントリ user1 を追加する例
+		<ul><li>S2Container: container (初期化済みであること)</li>
+			<li>Daoインタフェース: posixAccountDirectoryDao</li>
+			<li><a href="#select">エントリの取得方法については後述</a></li>
+		</ul></li>
+	</ul>
+<pre>
+PosixAccountDirectoryDao posixAccountDao = (PosixAccountDirectoryDao)container
+    .getComponent(PosixAccountDirectoryDao.class);
+// user1エントリを取得
+PosixAccount account = posixAccountDao.getUserByUid("user1");
+// 更新したい属性値を設定
+account.setUserPassword("secret2");
+account.setLoginShell("/bin/zsh");
+account.setGecos("");
+account.setDescription(null);
+// 挿入
+posixAccountDao.update(account);
+</pre>
+<!-- id=update -->
+
+	<h3 id="delete">削除処理</h3>
+	<p>削除処理を行いたい場合は、<strong>delete, remove</strong> のいずれかで始まるメソッド名をもつメソッドを定義します。引数には、削除するエントリのDN情報を持つエンティティを指定します。戻り値には、voidあるいはintを指定できます。intにした場合、更新した行数が戻り値となります。なお、Daoインタフェースで指定されているBEANアノテーションのエンティティが対応するオブジェクトクラスを持つエントリと削除したいエントリが一致する必要はありません。</p>
+
+	<ul><li>削除処理のためのメソッド定義例</li></ul>
+<pre>
+/** エントリを削除します。 */
+public int delete(PosixAccount account);
+public void removeUser(PosixAccount user);
+</pre>
+
+	<ul><li>ユーザエントリ user1 を追加する例
+		<ul><li>S2Container: container (初期化済みであること)</li>
+			<li>Daoインタフェース: posixAccountDirectoryDao</li>
+			<li><a href="#select">エントリの取得方法については後述</a></li>
+		</ul></li>
+	</ul>
+<pre>
+PosixAccountDirectoryDao posixAccountDao = (PosixAccountDirectoryDao)container
+    .getComponent(PosixAccountDirectoryDao.class);
+// user1エントリを取得
+PosixAccount account = posixAccountDao.getUserByUid("user1");
+// 削除
+posixAccountDao.delete(account);
+// 直接DNを指定して削除
+account = new PosixAccount();
+account.setDn("uid=group1,ou=Groups,dc=seasar,dc=org");
+posixAccountDao.delete(account);
+</pre>
+<!-- id=delete -->
+
+	<h3 id="select">検索、読み込み処理</h3>
+	<p>検索、読み込み処理を行いたい場合は、認証処理、挿入処理、更新処理、削除処理のメソッド定義の規約に当てはまらないメソッド名をもつメソッドを定義します。引数には、検索条件となる任意の型の変数を任意の数、もしくは、エンティティを指定します。戻り値には、エンティティの型あるいはjava.util.Listを指定できます。エンティティの型にしたメソッドの検索結果が複数ある場合、1つのエントリの値が返ります。java.utilListにした場合、複数の検索結果を追加された状態が返ります。なお、Daoインタフェースで指定されているBEANアノテーションのエンティティが対応するオブジェクトクラスを持つエントリと削除したいエントリが一致する必要はありません。</p>
+
+	<ul><li>検索、読み込み処理のためのメソッド定義例</li></ul>
+<pre>
+/** uidで検索し、結果をエンティティで取得します。 */
+public static final String getUserByUid_ARGS = "uid";
+public PosixAccount getUserByUid(String uid);
+
+/** uidとuidNumberで検索し、結果をエンティティで取得します。 */
+public static final String getUserByUidAndUidNumber_ARGS = "uid, uidNumber";
+public PosixAccount getUserByUidAndUidNumber(String uid, int uidNumber);
+
+/** エンティティからフィルタを組み立てて検索し、結果をエンティティで取得します。 */
+public PosixAccount getUser(PosixAccount account);
+
+/** エンティティからフィルタを組み立てて検索し、結果をエンティティのリストで取得します。 */
+public List getUserList(PosixAccount account);
+
+/** OBJECTCLASSESアノテーションで指定したオブジェクトクラスを持つすべてのエントリを取得します。 */
+public List getAllUser();
+</pre>
+
+	<ul><li>ユーザエントリ user1 を検索する例
+		<ul><li>S2Container: container (初期化済みであること)</li>
+			<li>Daoインタフェース: posixAccountDirectoryDao</li>
+		</ul></li>
+	</ul>
+<pre>
+PosixAccountDirectoryDao posixAccountDao = (PosixAccountDirectoryDao)container
+    .getComponent(PosixAccountDirectoryDao.class);
+// uidで検索し、結果をエンティティで取得
+PosixAccount account1 = posixAccountDao.getUserByUid("user1");
+
+// uidとuidNumberで検索し、結果をエンティティで取得
+PosixAccount account2 = posixAccountDao.getUserByUidAndUidNumber("user1", 1000);
+
+// エンティティからフィルタを組み立てて検索し、結果をエンティティで取得
+PosixAccount search1 = new PosixAccount();
+search1.setUid("user1");
+PosixAccount account3 = posixAccountDao.getUser(search1);
+
+// エンティティからフィルタを組み立てて検索し、結果をエンティティのリストで取得
+PosixAccount search2 = new PosixAccount();
+search2.setGidNumber("1000");
+List list1 = posixAccountDao.getUserList(search2);
+
+// OBJECTCLASSESアノテーションで指定したオブジェクトクラスを持つすべてのエントリを取得
+List list2 = posixAccountDao.getAllUser();
+</pre>
+<!-- id=select -->
+
+</div><!-- method -->
+
+<div class="section">
+	<h2 id="usermode">ユーザモード実行</h2>
+
+	<p>多くのディレクトリサーバではそのディレクトリインフォメーションツリーのエントリに対してACLを設定することで細かいアクセス制御を設定することが出来、より安全なデータ管理を行うことが可能です。S2Direcotryでは、ディレクトリサーバの保持するユーザエントリに保存されたユーザ名とパスワードを利用してACLに従ったユーザモードでの処理実行を行うことができます。ユーザモードで実行したい場合、メソッド定義の第一引数にDirectoryControlPropertyを指定します。DirectoryControlPropertyは認証処理で利用したものと同じ型です。第一引数にDirectoryControlPropertyを指定する以外、各処理の定義、実行の仕方は同じです。</p>
+
+	<ul><li>各処理をユーザモードで実行するための実行例</li></ul>
+
+<pre>
+/** ユーザモードでuidを検索し、結果をエンティティで取得します。 */
+public static final String getUserByUidWithUser_ARGS = "user, uid";
+public PosixAccount getUserByUidWithUserMode(DirectoryControlProperty user, String uid);
+
+/** エンティティからフィルタを組み立ててユーザモードで検索し、結果をエンティティで取得します。 */
+public PosixAccount getUserWithUserMode(DirectoryControlProperty user, PosixAccount account);
+
+/** エントリを新規にユーザモードで追加します。 */
+public int insertWithUserMode(DirectoryControlProperty user, PosixAccount account);
+
+/** エントリをユーザモードで更新します。 */
+public int updateWithUserMode(DirectoryControlProperty user, PosixAccount account);
+
+/** エントリをユーザモードで削除します。 */
+public int deleteWithUserMode(DirectoryControlProperty user, PosixAccount account);
+</pre>
+
+	<ul><li>ユーザエントリ user1 を検索する例
+		<ul><li>S2Container: container (初期化済みであること)</li>
+			<li>Daoインタフェース: posixAccountDirectoryDao</li>
+			<li>ユーザモード: user1 で実行 (ユーザエントリ user1 が既にあること)</li>
+		</ul></li>
+	</ul>
+<pre>
+PosixAccountDirectoryDao posixAccountDao = (PosixAccountDirectoryDao)container
+    .getComponent(PosixAccountDirectoryDao.class);
+DirectoryControlProperty property = (DirectoryControlProperty)container
+    .getComponent(DirectoryControlProperty.class);
+property.setUser("user1");
+property.setPassword("secret");
+... 以降このpropertyを第一引数に指定し、各処理の実行の仕方と同じ ...
+</pre>
+
+</div><!-- entity -->
+
+</div><!-- article -->
+
+</div><!-- contents_center -->
+
+<div id="footer">
+<address>Copyright &#169; 2005-2006 the Seasar Project and the others. all rights reserved.</address>
+<div class="line"><span class="hide">spacer</span></div>
+</div><!-- footer -->
+
+</div><!-- wrapper -->
+
+</body>
+</html>

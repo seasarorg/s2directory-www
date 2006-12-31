@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="author" content="Jun Futagawa" />
+<link rev="made" href="mailto:jfut ___＠___ featia.net" />
+<link rel="index" title="index" href="http://s2directory.sandbox.seasar.org/" />
+<link rel="stylesheet" type="text/css" href="../../theme/main.css" />
+<link rel="stylesheet" type="text/css" href="../../theme/print.css" media="print" />
+<title>S2Directory - Demo</title>
+</head>
+
+<body>
+
+<div id="wrapper">
+
+<div id="header">
+
+<div class="line"><span class="hide">spacer</span></div>
+
+<div id="logo"><h2 id="h01" class="hide">S2Directory - Demo</h2><img src="../../images/seasar_logo_blue.gif" alt="The Seasar Project" width="390" height="180" /></div>
+
+<div id="tool">
+
+<h2><a href="http://search.seasar.org/">Seasar Search</a></h2>
+
+<form id="search" name="search" action="http://search.seasar.org/">
+<div>
+	<input id="search_phrase" type="text" name="phrase" size="20" />
+	<input type="hidden" name="perpage" value="30" />
+	<input type="hidden" name="enc" value="UTF-8" />
+	<input id="search_go" type="submit" value="Search" />
+</div>
+</form>
+
+<h2>Seasar Banner</h2>
+
+<p><a href="../../images/seasar_banner.gif"><img src="../../images/seasar_banner.gif" alt="Seasar Banner" title="Seasar Banner" width="146" height="33" /></a></p>
+
+</div>
+
+<div class="line"><span class="hide">spacer</span></div>
+
+<div id="navi">
+<p><a href="../../en/">English</a> | Japanese</p>
+</div>
+
+</div><!-- header -->
+
+<div id="contents_left">
+
+<h2>Menu</h2>
+
+<ul><li><a href="../">Home</a></li>
+	<li><a href="../news.html">News</a></li>
+	<li><a href="../license.html">License</a></li>
+	<li><a href="../downloads.html">Downloads</a></li>
+	<li>SVN Repository
+		<ul><li><a href="https://www.seasar.org/svn/sandbox/s2directory/">SVN</a></li>
+			<li><a href="http://svn.seasar.org/browse/?root=sandbox.s2directory">Browse</a></li>
+		</ul>
+	</li>
+	<li><a href="https://www.seasar.org/issues/browse/DIRECTORY">Tracking</a></li>
+	<li><a href="http://www.seasar.org/feed/">RSS Feed</a></li>
+	<li><a href="http://maven.seasar.org/">Maven Repository</a></li>
+</ul>
+
+<h2>Documentation</h2>
+
+<ul><li><a href="./">Introduction</a></li>
+	<li><a href="tutorial.html">Tutorial</a></li>
+	<li>[Demo]</li>
+	<li><a href="setup.html">Setup</a></li>
+	<li><a href="configuration.html">Configuration</a></li>
+	<li><a href="smart_deploy.html">SMART Deploy</a></li>
+	<li><a href="entity.html">Entity</a></li>
+	<li><a href="directorydao.html">DirectoryDao</a></li>
+	<li><a href="digest.html">Digest</a></li>
+</ul>
+
+</div><!-- contents_left -->
+
+<div id="contents_center">
+
+<div id="article">
+
+<div class="section">
+	<h2 id="h02">Demonstration</h2>
+
+	<div class="update">最終更新日時: $Date::                           $</div>
+
+	<p>S2Directoryに付属するS2Directoryの機能を一通り実行するExampleをApacheDSで実行する方法を紹介します。ExampleはLDAPv3以降に対応したディレクトリサーバ(JNDI APIで操作できるサーバ)であれば、ApacheDS以外のディレクトリサーバでも稼働します。</p>
+
+	<h3>Exampleを動かすのに必要なもの</h3>
+
+	<ul><li>S2Directory (任意のバージョン)</li>
+		<li><a href="http://s2container.seasar.org/ja/">S2Container</a> (任意のバージョン)</li>
+		<li><a href="http://directory.apache.org/subprojects/apacheds/">ApacheDS</a> 1.0.0 RC3以下
+			<ul><li>ApacheDS 1.0.0 RC4およびApacheDS 1.0.0には<a href="http://issues.apache.org/jira/browse/DIRSERVER-782">認証情報のキャッシュにバグ</a>があり正常に動作しません。</li>
+			</ul>
+		</li>
+	</ul>
+
+	<h3>本手順でExampleを動かすのに必要なもの</h3>
+	<p>以下は本ドキュメントで説明する手順で実行する場合に必要なものです。</p>
+	<ul><li><a href="http://www.eclipse.org/">Eclipse</a> (適当なバージョン)</li>
+		<li><a href="http://maven.apache.org/">Maven2</a> (適当なバージョン)
+			<ul><li><a href="http://maven.apache.org/eclipse-plugin.html">Maven 2.x Plug-in for Eclipse</a> (適当なバージョン)</li>
+			</ul>
+		</li>
+	</ul>
+
+</div>
+
+<div class="section">
+	<h2>ApacheDSのインストール</h2>
+
+	<p><a href="http://directory.apache.org/subprojects/apacheds/">ApacheDS</a>のサイトより1.0.0 RC3以下のパッケージをダウンロードし、インストールします。</p>
+
+	<h3>表記説明</h3>
+	<table class="list" summary="省略表記の説明">
+		<tr>
+			<th>項目</th>
+			<th>説明</th>
+			<th colspan="2">例</th>
+		</tr>
+		<tr class="a">
+			<td rowspan="2">$APACHEDS_HOME</td>
+			<td rowspan="2">ApacheDSのインストール先ディレクトリ</td>
+			<td>Windows</td>
+			<td>C:\Software\ApacheDS</td>
+		</tr>
+		<tr class="a">
+			<td>Unix</td>
+			<td>/usr/local/java/apacheds</td>
+		</td>
+	</table>
+
+	<h4>Windowsの場合</h4>
+	<p>インストーラを使用してインストールする場合、インストールの最後にサービスとして起動するか聞かれますが、サービスとして起動しない選択をしてください。
+
+	<ul><li>Runs the configration manager for the apacheds windows services
+			<ul><li>チェックを外す</li></ul>
+		</li>
+	</ul>
+
+	<p>サービスとして起動した場合は、次の設定ファイル変更後、設定を反映するのに該当サービスの再起動もしくはWindowsを再起動をしてください。</p>
+</div>
+
+<div class="section">
+	<h2>ApacheDSの設定</h2>
+
+	<p>S2Direcotryのパッケージ内に付属されているApacheDSの設定ファイルを$APACHEDS_HOME/conf/server.xmlに上書きします。</p>
+
+	<h3>設定ファイル説明</h3>
+	<table class="list" summary="設定ファイルの説明">
+		<tr>
+			<th>ファイル名</th>
+			<th>説明</th>
+		</tr>
+		<tr class="a">
+			<td>s2-directory-examples/src/main/resources/apacheds/server.1.0-RC3.xml</td>
+			<td>ApacheDS 1.0 RC3用の設定ファイル</td>
+		</tr>
+	</table>
+
+<pre>
+cp -a s2-directory-examples/src/main/resources/apacheds/server.1.0-RC3.xml \
+  $APACHEDS_HOME/conf/server.xml
+</pre>
+</div>
+
+<div class="section">
+	<h2>ApacheDSの起動</h2>
+
+	<h3>Windowsの場合の起動方法</h3>
+	<p>ApacheDSをインストーラでインストールしている場合、Tray Monitorから起動するのが便利です。</p>
+
+	<pre>[スタート] -> [プログラム] -> [ApacheDS] -> [Tray Monitor]</pre>
+
+	<p>起動するとタスクトレイにApacheDSの起動・停止を制御するプログラムのアイコンが表示され、[Start service]を選択するとApacheDSが起動します。</p>
+
+	<h3>Unixの場合の起動方法</h3>
+	<pre>/etc/init.d/apacheds start</pre>
+</div>
+
+<div class="section">
+	<h2>Exampleの実行</h2>
+
+	<p>ここではEclipseにインポートしてデモプログラムを実行する例を紹介します。Eclipse以外でデモプログラムを実行したい場合は、必要なライブラリを揃えて、s2-direcotry-examples/src/test/java/org/seasar/directory/examples/client/AllTestsを実行してください。</p>
+
+	<h3>S2DirecotryプロジェクトをEclipseにインポート</h3>
+	<p>Eclipseを起動し、S2DirectoryのパッケージをImportします。</p>
+
+<pre>[Package Explorerを右クリック] -> [Import] -> [General]
+  -> [Existing Projects into Workspace] -> S2Directoryのアーカイブを選択</pre>
+
+	<img src="../../images/documentation/demo_eclipse_import.png"/>
+
+	<h3>実行</h3>
+
+	<p>s2-direcotry-examples/src/test/java/org/seasar/directory/examples/client/AllTests を選択し、[Run As] の [JUnit Test] を実行するとすべてのExampleが実行されます。</p>
+
+	<p>なお、実行する際、対象となるディレクトリのDIT（Directory Information Tree）は初期状態である必要があります。既に何らかのエントリを追加している場合は、一旦すべてのエントリを削除してください。ApacheDSのDITを初期化したい場合は、$APACHEDS_HOME/var/partitions/seasar ディレクトリを削除し、ApacheDSを再起動すると初期化されます。</p>
+
+	<img src="../../images/documentation/demo_eclipse_run.png"/>
+
+	<h3>Exampleの説明</h3>
+
+	<p>Exampleで実行される各テストを説明します。各ソースプログラムを読んでS2Directoryが出来ることを見てみてください。</p>
+
+	<table class="list" summary="Exampleの説明一覧">
+		<tr>
+			<th>ファイル名</th>
+			<th>説明</th>
+			<th>対象オブジェクトクラス</th>
+		</tr>
+		<tr class="a">
+			<td>AllTests</td>
+			<td>すべてのExampleを実行する</td>
+			<td>-</td>
+		</tr>
+		<tr class="b">
+			<td>PosixAccountConnectionTest</td>
+			<td>ディレクトリサーバへの接続を実行する</td>
+			<td>-</td>
+		</tr>
+		<tr class="a">
+			<td>PosixAccountDeleteTest</td>
+			<td>ユーザエントリを標準の接続権限、ユーザ権限で削除する</td>
+			<td>posixAccount</td>
+		</tr>
+		<tr class="b">
+			<td>PosixAccountInsertTest</td>
+			<td>ユーザエントリを新規作成、検索する</td>
+			<td>posixAccount</td>
+		</tr>
+		<tr class="a">
+			<td>PosixAccountPasswordUpdateTest</td>
+			<td>ユーザエントリのuserPassowrd属性を標準の接続権限、ユーザ権限で更新する</td>
+			<td>posixAccount</td>
+		</tr>
+		<tr class="b">
+			<td>PosixAccountUpdateTest</td>
+			<td>ユーザエントリのもつ属性を更新、追加する</td>
+			<td>posixAccount</td>
+		</tr>
+		<tr class="a">
+			<td>PosixGroupDtoTest</td>
+			<td>グループエントリをDto（Data Transfer Object）を使用して検索、更新する</td>
+			<td>posixGroup</td>
+		</tr>
+		<tr class="b">
+			<td>PosixGroupInsertTest</td>
+			<td>グループエントリを新規作成、検索する</td>
+			<td>posixGroup</td>
+		</tr>
+		<tr class="a">
+			<td>PosixGroupUpdateTest</td>
+			<td>グループエントリのもつ多重属性を含む属性をString型のEntityで更新する</td>
+			<td>posixGroup</td>
+		</tr>
+		<tr class="b">
+			<td>PosixGroupWithListInsertTest</td>
+			<td>グループエントリのもつ多重属性を含む属性をList型のEntityで更新する</td>
+			<td>posixGroup</td>
+		</tr>
+	</table>
+</div>
+
+<div class="section">
+	<h2 id="digest">Digest</h2>
+
+	<p>S2Directoryには暗号化ハッシュを生成、検証する便利な機能があります。この機能はディレクトリサーバを使わない環境においても、独立して使うことで簡単に暗号化ハッシュを生成、検証することが出来ます。</p>
+</div>
+
+</div><!-- article -->
+
+</div><!-- contents_center -->
+
+<div id="footer">
+<address>Copyright &#169; 2005-2006 the Seasar Project and the others. all rights reserved.</address>
+<div class="line"><span class="hide">spacer</span></div>
+</div><!-- footer -->
+
+</div><!-- wrapper -->
+
+</body>
+</html>
