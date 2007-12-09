@@ -110,8 +110,12 @@
 			<td>任意の名前 + DirectoryDao</td>
 			<td>ディレクトリにアクセスするためのインタフェースです。インタフェースにメソッドを書いておくだけで、データアクセスのロジックは、アスペクトが自動生成します。実装部分を作る必要はありません。</td>
 		</tr>
-
 	</table>
+
+	<div class="notice">
+		<p>S2Container 2.4.14 - 2.4.17と一緒にS2Directoryを利用する場合、個別パッケージ名をdirectoryDaoとしないと正常に動作しません。<br />
+		この問題は2.4.13以前、および、2.4.18以降では発生しません。</p>
+	</div>
 
 	<h3>例</h3>
 	<ul><li>org.example.directorydao.PosixAccountDirectoryDao</li>
