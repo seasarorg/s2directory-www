@@ -90,7 +90,7 @@
 
 	<div class="update">最終更新日時: $Date::                           $</div>
 
-	<p>S2Direcotryでは、ディレクトリのエントリを写像するエンティティを利用してエントリの値を読み書きします。エンティティはフィールドとsetter/getterメソッドを定義した単純なPOJO(Plain Old Java Object)で構成されます。また、エンティティにS2Directoryのための情報を定義しておきたい場合はアノテーションを書くことが出来ます。</p>
+	<p>S2Direcotryでは、ディレクトリのエントリを写像するエンティティを利用してエントリの値を読み書きします。エンティティはフィールドとsetter/getterメソッドを定義した単純なPOJO(Plain Old Java Object)で構成されます。また、エンティティにS2Directoryのための情報を定義しておきたい場合はアノテーションを書くことが出来ます。生成されたPOJOは、アプリケーションで利用するエンティティに応じて、カスタマイズするなどして利用してください。</p>
 </div>
 
 <div class="section">
@@ -118,18 +118,66 @@ java -jar s2-directory-generator-X.X.X.jar ldap.example.org 389
 
 	<p>S2Directoryで使用するエンティティに定義可能なフィールドによるアノテーション(フィールドアノテーション)の一覧です。</p>
 
+	<ul>
+		<li><a href="#OBJECTCLASSES">OBJECTCLASSESアノテーション</a></li>
+		<li><a href="#ATTRIBUTE">ATTRIBUTE/COLUMNアノテーション</a></li>
+	</ul>
+
 	<h3 id="OBJECTCLASSES">OBJECTCLASSESアノテーション</h3>
 	<p>エンティティとオブジェクトクラスとの関連付けを明示的に指定する場合はOBJECTCLASSESアノテーションを使用します。OBJECTCLASSESアノテーションを明示的に指定しなかった場合、エンティティクラス名をオブジェクトクラス名として使用します。ここで登場するオブジェクトクラスは、DaoインタフェースのARGSアノテーションが定義されていない検索関数を実行される場合に使用するフィルタとなります。</p>
 
+	<h4>フィールドアノテーションの場合</h4>
 	<ul><li>posixAccountの例 (クラス名がPosixAccountの場合、省略可)</li></ul>
 <pre>
-public static final String OBJECTCLASSES = "posixAccount";
-</pre>
-	<ul><li>posixAccountとinetOrgPersonのオブジェクトクラスを指定する例</li></ul>
-<pre>
-public static final String OBJECTCLASSES = "posixAccount, inetOrgPerson";
+public class PosixAccount implements Serializable {
+    public static final String OBJECTCLASSES = "posixAccount, inetOrgPerson";
+    ... 省略 ...
+}
 </pre>
 
+	<h4>Tigerアノテーションの場合 (S2DirectoryTiger必須)</h4>
+	<ul><li>posixAccountとinetOrgPersonのオブジェクトクラスを指定する例</li></ul>
+<pre>
+@ObjectClasses( { "posixAccount", "inetOrgPerson" })
+public class PosixAccount implements Serializable {
+    ... 省略 ...
+}
+</pre>
+
+	<h3 id="ATTRIBUTE">ATTRIBUTE/COLUMNアノテーション</h3>
+	<p>エンティティに定義されたフィールドとエントリの属性との関連付けを明示的に指定する場合はATTRIBUTE/COLUMNアノテーションを使用します。ATTRIBUTE/COLUMNアノテーションを明示的に指定しなかった場合、フィールド名を属性名として使用します。</p>
+
+	<p>なお、ATTRIBUTEアノテーションとCOLUMNアノテーションが同時に指定されている場合、ATTRIBUTEアノテーションの値が優先して利用されます。</p>
+
+	<h4>フィールドアノテーションの場合</h4>
+	<ul><li>フィールドhomeに対応する属性名をhomeDirectoryにする例</li></ul>
+<pre>
+public static final String home_ATTRIBUTE = "homeDirectory";
+private String home;
+</pre>
+
+	<ul><li>フィールドgidに対応する属性名をgidNumberにする例 (ATTRIBUTEアノテーションの値が優先されます)</li></ul>
+<pre>
+public static final String gid_ATTRIBUTE = "gidNumber";
+public static final String gid_COLUMN = "gidDummy";
+</pre>
+
+	<h4>Tigerアノテーションの場合 (S2DirectoryTiger必須)</h4>
+	<p>Columnアノテーションは、S2Dao Tigerの持つアノテーションも利用できます。</p>
+
+	<ul><li>フィールドhomeに対応する属性名をhomeDirectoryにする例</li></ul>
+<pre>
+@Attribute("homeDirectory")
+private String home;
+</pre>
+
+	<ul><li>フィールドgidに対応する属性名をgidNumberにする例 (ATTRIBUTEアノテーション > S2DirectoryのColumnアノテーション > S2DaoのColumnアノテーションの順で値が優先されます)</li></ul>
+<pre>
+@Attribute("homeDirectory")
+@Column("homeDummy")
+@org.seasar.dao.annotation.tiger.Column("gidNumber")
+private String gid;
+</pre>
 </div>
 
 </div><!-- article -->
@@ -137,7 +185,7 @@ public static final String OBJECTCLASSES = "posixAccount, inetOrgPerson";
 </div><!-- contents_center -->
 
 <div id="footer">
-<address>Copyright &#169; 2005-2006 the Seasar Project and the others. all rights reserved.</address>
+<address>Copyright &#169; 2005-2007 the Seasar Project and the others. all rights reserved.</address>
 <div class="line"><span class="hide">spacer</span></div>
 </div><!-- footer -->
 

@@ -123,57 +123,136 @@
 	<h3 id="BEAN">BEANアノテーション</h3>
 	<p>Daoがどのエンティティに関連付けられるのかを指定します。BEANアノテーションは1Daoインタフェースに対して必ず1つ定義する必要があります。</p>
 
+	<h4>フィールドアノテーションの場合</h4>
 	<ul><li>BEANアノテーションの形式</li></ul>
 <pre>
-public static final Class BEAN = エンティティ名.class;
+public static final Class BEAN = エンティティクラス名.class;
 </pre>
 
 	<ul><li>posixAccountの例 (エンティティがPosixAccountの場合、省略可)</li></ul>
 <pre>
-public static final Class BEAN = PosixAccount.class;
+public interface PosixAccountDirectoryDao {
+    public static final Class BEAN = PosixAccount.class;
+    ... 省略 ...
+}
+</pre>
+
+	<h4>Tigerアノテーションの場合 (S2DirectoryTiger必須)</h4>
+	<ul><li>BEANアノテーションの形式</li></ul>
+<pre>
+@S2Directory(bean = エンティティクラス名.class)
+</pre>
+
+	<ul><li>posixAccountの例 (エンティティがPosixAccountの場合、省略可)</li></ul>
+<pre>
+@S2Directory(bean = PosixAccount.class)
+public interface PosixAccountDirectoryDao {
+    ... 省略 ...
+}
 </pre>
 
 	<h3 id="ARGS">ARGSアノテーション</h3>
 	<p>メソッドの引数を検索フィルタで参照できるようにするアノテーションです。これはメソッドの引数名は、通常リフレクションAPIで取得できないためです。ARGSアノテーションは、エンティティを使用しないで引数のあるメソッドを定義する場合、必要になります。</p>
 
+	<h4>フィールドアノテーションの場合</h4>
 	<ul><li>ARGSアノテーションの形式</li></ul>
 <pre>
 public static final String メソッド名_ARGS = "引数名";
+public static final String メソッド名_ARGS = "引数名1, 引数名2, ...";
 </pre>
 
 	<ul><li>public PosixAccountDto getUserByUid(String uid);というメソッドがDaoインタフェースに定義されていた場合</li></ul>
 <pre>
 public static final String getUserByUid_ARGS = "uid";
+public PosixAccountDto getUserByUid(String uid);
 </pre>
 
 	<ul><li>public PosixAccountDto getUserByUidAndUidNumber(String uid, int uidNumber);というメソッドがDaoインタフェースに定義されていた場合</li></ul>
 <pre>
 public static final String getUserByUidAndUidNumber_ARGS = "uid, uidNumber";
+public PosixAccountDto getUserByUidAndUidNumber(String uid, int uidNumber);
+</pre>
+
+	<h4>Tigerアノテーションの場合 (S2DirectoryTiger必須)</h4>
+	<ul><li>ARGSアノテーションの形式</li></ul>
+<pre>
+@Arguments("引数名")
+@Arguments( {"引数名1", "引数名2", ... })
+</pre>
+
+	<ul><li>public PosixAccountDto getUserByUid(String uid);というメソッドがDaoインタフェースに定義されていた場合</li></ul>
+<pre>
+@Arguments("uid")
+public PosixAccountDto getUserByUid(String uid);
+</pre>
+
+	<ul><li>public PosixAccountDto getUserByUidAndUidNumber(String uid, int uidNumber);というメソッドがDaoインタフェースに定義されていた場合</li></ul>
+<pre>
+@Arguments( { "uid", "uidNumber" })
+public PosixAccountDto getUserByUidAndUidNumber(String uid, int uidNumber);
 </pre>
 
 	<h3 id="QUERY">QUERYアノテーション</h3>
 	<p>自動的に生成される検索フィルタに条件を追加するアノテーションです。多くの場合、QUERYアノテーションは必要ありません。</p>
 
+	<h4>フィールドアノテーションの場合</h4>
 	<ul><li>QUERYアノテーションの形式</li></ul>
 <pre>
-public static final String メソッド名_QUERY = "検索フィルタ条件";
+public static final String メソッド名_QUERY = "検索フィルタ";
 </pre>
 
 	<ul><li>public List getUserByFilter();というメソッドに検索条件uid=user2,ou=Users,dc=seasar,dc=orgを追加する場合</li></ul>
 <pre>
 public static final String getUserByFilter_QUERY = "uid=user2,ou=Users,dc=seasar,dc=org";
+public List getUserByFilter();
+</pre>
+
+<h4>Tigerアノテーションの場合 (S2DirectoryTiger必須)</h4>
+	<ul><li>QUERYアノテーションの形式</li></ul>
+<pre>
+@Query("検索フィルタ")
+</pre>
+
+	<ul><li>public List getUserByFilter();というメソッドに検索条件uid=user2,ou=Users,dc=seasar,dc=orgを追加する場合</li></ul>
+<pre>
+@Query("uid=user2,ou=Users,dc=seasar,dc=org")
+public List getUserByFilter();
 </pre>
 
 	<h3 id="OBJECTCLASSES">OBJECTCLASSESアノテーション</h3>
 	<p>エンティティとオブジェクトクラスとの関連付けを明示的に指定する場合はOBJECTCLASSESアノテーションを使用します。OBJECTCLASSESアノテーションを明示的に指定しなかった場合、エンティティクラス名をオブジェクトクラス名として使用します。ここで登場するオブジェクトクラスは、DaoインタフェースのARGSアノテーションが定義されていない検索関数を実行される場合に使用するフィルタとなります。</p>
 
+	<h4>フィールドアノテーションの場合</h4>
 	<ul><li>posixAccountの例 (クラス名がPosixAccountの場合、省略可)</li></ul>
 <pre>
-public static final String OBJECTCLASSES = "posixAccount";
+public static final String OBJECTCLASSES = "オブジェクトクラス名";
+public static final String OBJECTCLASSES = "オブジェクトクラス名1, オブジェクトクラス名2, ... ";
 </pre>
 	<ul><li>posixAccountとinetOrgPersonのオブジェクトクラスを指定する例</li></ul>
 <pre>
-public static final String OBJECTCLASSES = "posixAccount, inetOrgPerson";
+public interface PosixAccountDirectoryDao {
+    public static final Class BEAN = PosixAccount.class;
+    public static final String OBJECTCLASSES = "posixAccount, inetOrgPerson";
+    ... 省略 ...
+}
+</pre>
+
+	<h4>Tigerアノテーションの場合 (S2DirectoryTiger必須)</h4>
+	<h3 id="OBJECTCLASSES">OBJECTCLASSESアノテーション</h3>
+	<p>エンティティとオブジェクトクラスとの関連付けを明示的に指定する場合はOBJECTCLASSESアノテーションを使用します。OBJECTCLASSESアノテーションを明示的に指定しなかった場合、エンティティクラス名をオブジェクトクラス名として使用します。ここで登場するオブジェクトクラスは、DaoインタフェースのARGSアノテーションが定義されていない検索関数を実行される場合に使用するフィルタとなります。</p>
+
+	<ul><li>posixAccountの例 (クラス名がPosixAccountの場合、省略可)</li></ul>
+<pre>
+@ObjectClasses("オブジェクトクラス名")
+@ObjectClasses( { "オブジェクトクラス名1", "オブジェクトクラス名2", ... } )
+</pre>
+	<ul><li>posixAccountとinetOrgPersonのオブジェクトクラスを指定する例</li></ul>
+<pre>
+@S2Directory(bean = PosixAccount.class)
+@ObjectClasses( { "posixAccount", "inetOrgPerson" })
+public interface PosixAccountDirectoryDao {
+    ... 省略 ...
+}
 </pre>
 
 </div><!-- annotation -->
@@ -449,7 +528,7 @@ property.setPassword("secret");
 </div><!-- contents_center -->
 
 <div id="footer">
-<address>Copyright &#169; 2005-2006 the Seasar Project and the others. all rights reserved.</address>
+<address>Copyright &#169; 2005-2007 the Seasar Project and the others. all rights reserved.</address>
 <div class="line"><span class="hide">spacer</span></div>
 </div><!-- footer -->
 

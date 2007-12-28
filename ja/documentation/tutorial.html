@@ -197,30 +197,52 @@ description: (empty)
 
 <pre>
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;!DOCTYPE components PUBLIC "-//SEASAR2.1//DTD S2Container//EN"
-    "http://www.seasar.org/dtd/components21.dtd"&gt;
+&lt;!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container//EN"
+	"http://www.seasar.org/dtd/components.dtd"&gt;
 &lt;components namespace="directory"&gt;
-    &lt;component name="directoryControlProperty"
-        class="org.seasar.directory.impl.DirectoryControlPropertyImpl"
-        instance="prototype"&gt;
-        &lt;property name="initialContextFactory"&gt;
-            "com.sun.jndi.ldap.LdapCtxFactory"
-        &lt;/property&gt;
-        &lt;property name="url"&gt;
-            "ldap://localhost:389"
-        &lt;/property&gt;
-        &lt;property name="baseDn"&gt;"dc=seasar,dc=org"&lt;/property&gt;
-        &lt;property name="user"&gt;"cn=Manager"&lt;/property&gt;
-        &lt;property name="password"&gt;"secret"&lt;/property&gt;
-        &lt;!-- Other options and each default value.
-        &lt;property name="passwordAlgorithm"&gt;"SSHA"&lt;/property&gt;
-        &lt;property name="userSuffix"&gt;"ou=Users"&lt;/property&gt;
-        &lt;property name="userAttributeName"&gt;"uid"&lt;/property&gt;
-        &lt;property name="groupSuffix"&gt;"ou=Groups"&lt;/property&gt;
-        &lt;property name="groupAttributeName"&gt;"memberUid"&lt;/property&gt;
-        &lt;property name="multipleValueDelimiter"&gt;","&lt;/property&gt;
-        --&gt;
-    &lt;/component&gt;
+&lt;!--
+	# Directory Configuration
+--&gt;
+	&lt;component name="directoryControlProperty"
+		class="org.seasar.directory.impl.DirectoryControlPropertyImpl"
+			instance="prototype"&gt;
+
+		&lt;property name="initialContextFactory"&gt;
+			"com.sun.jndi.ldap.LdapCtxFactory"
+		&lt;/property&gt;
+
+	&lt;!--
+		# PermissiveSSLSocketFactory is not strictly secure.
+		# But, it can connect to the server having the SSL certificate signed by own CA.
+		# default value:
+		&lt;property name="sslSocketFactory"&gt;
+			"javax.net.ssl.SSLSocketFactory"
+		&lt;/property&gt;
+	--&gt;
+		&lt;property name="sslSocketFactory"&gt;
+			"org.seasar.directory.impl.PermissiveSSLSocketFactory"
+		&lt;/property&gt;
+		&lt;property name="enableTLS"&gt;false&lt;/property&gt;
+
+		&lt;property name="url"&gt;
+			"ldap://localhost:389"
+		&lt;/property&gt;
+		&lt;property name="baseDn"&gt;"dc=seasar,dc=org"&lt;/property&gt;
+		&lt;property name="user"&gt;"cn=Manager"&lt;/property&gt;
+		&lt;property name="password"&gt;"secret"&lt;/property&gt;
+		&lt;property name="passwordAlgorithm"&gt;"SHA"&lt;/property&gt;
+		&lt;property name="multipleValueDelimiter"&gt;"__"&lt;/property&gt;
+
+	&lt;!--
+		# Other options and each default value.
+		&lt;property name="passwordAlgorithm"&gt;"SSHA"&lt;/property&gt;
+		&lt;property name="userSuffix"&gt;"ou=Users"&lt;/property&gt;
+		&lt;property name="userAttributeName"&gt;"uid"&lt;/property&gt;
+		&lt;property name="groupSuffix"&gt;"ou=Groups"&lt;/property&gt;
+		&lt;property name="groupAttributeName"&gt;"memberUid"&lt;/property&gt;
+		&lt;property name="multipleValueDelimiter"&gt;","&lt;/property&gt;
+	--&gt;
+	&lt;/component&gt;
 &lt;/components&gt;
 </pre>
 
@@ -544,7 +566,7 @@ null
 </div><!-- contents_center -->
 
 <div id="footer">
-<address>Copyright &#169; 2005-2006 the Seasar Project and the others. all rights reserved.</address>
+<address>Copyright &#169; 2005-2007 the Seasar Project and the others. all rights reserved.</address>
 <div class="line"><span class="hide">spacer</span></div>
 </div><!-- footer -->
 

@@ -129,34 +129,56 @@
 	<h3>設定例</h3>
 <pre>
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;!DOCTYPE components PUBLIC "-//SEASAR2.1//DTD S2Container//EN"
-    "http://www.seasar.org/dtd/components21.dtd"&gt;
+&lt;!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container//EN"
+	"http://www.seasar.org/dtd/components.dtd"&gt;
 &lt;components namespace="directory"&gt;
-    &lt;component name="directoryControlProperty"
-        class="org.seasar.directory.impl.DirectoryControlPropertyImpl"
-        instance="prototype"&gt;
-        &lt;property name="initialContextFactory"&gt;
-            "com.sun.jndi.ldap.LdapCtxFactory"
-        &lt;/property&gt;
-        &lt;property name="url"&gt;
-            "ldap://localhost:389"
-        &lt;/property&gt;
-        &lt;property name="baseDn"&gt;"dc=seasar,dc=org"&lt;/property&gt;
-        &lt;property name="user"&gt;"cn=Manager"&lt;/property&gt;
-        &lt;property name="password"&gt;"secret"&lt;/property&gt;
-        &lt;!-- Other options and each default value.
-        &lt;property name="passwordAlgorithm"&gt;"SSHA"&lt;/property&gt;
-        &lt;property name="userSuffix"&gt;"ou=Users"&lt;/property&gt;
-        &lt;property name="userAttributeName"&gt;"uid"&lt;/property&gt;
-        &lt;property name="groupSuffix"&gt;"ou=Groups"&lt;/property&gt;
-        &lt;property name="groupAttributeName"&gt;"memberUid"&lt;/property&gt;
-        &lt;property name="multipleValueDelimiter"&gt;","&lt;/property&gt;
-        --&gt;
-    &lt;/component&gt;
+&lt;!--
+	# Directory Configuration
+--&gt;
+	&lt;component name="directoryControlProperty"
+		class="org.seasar.directory.impl.DirectoryControlPropertyImpl"
+			instance="prototype"&gt;
+
+		&lt;property name="initialContextFactory"&gt;
+			"com.sun.jndi.ldap.LdapCtxFactory"
+		&lt;/property&gt;
+
+	&lt;!--
+		# PermissiveSSLSocketFactory is not strictly secure.
+		# But, it can connect to the server having the SSL certificate signed by own CA.
+		# default value:
+		&lt;property name="sslSocketFactory"&gt;
+			"javax.net.ssl.SSLSocketFactory"
+		&lt;/property&gt;
+	--&gt;
+		&lt;property name="sslSocketFactory"&gt;
+			"org.seasar.directory.impl.PermissiveSSLSocketFactory"
+		&lt;/property&gt;
+		&lt;property name="enableTLS"&gt;false&lt;/property&gt;
+
+		&lt;property name="url"&gt;
+			"ldap://localhost:389"
+		&lt;/property&gt;
+		&lt;property name="baseDn"&gt;"dc=seasar,dc=org"&lt;/property&gt;
+		&lt;property name="user"&gt;"cn=Manager"&lt;/property&gt;
+		&lt;property name="password"&gt;"secret"&lt;/property&gt;
+		&lt;property name="passwordAlgorithm"&gt;"SHA"&lt;/property&gt;
+		&lt;property name="multipleValueDelimiter"&gt;"__"&lt;/property&gt;
+
+	&lt;!--
+		# Other options and each default value.
+		&lt;property name="passwordAlgorithm"&gt;"SSHA"&lt;/property&gt;
+		&lt;property name="userSuffix"&gt;"ou=Users"&lt;/property&gt;
+		&lt;property name="userAttributeName"&gt;"uid"&lt;/property&gt;
+		&lt;property name="groupSuffix"&gt;"ou=Groups"&lt;/property&gt;
+		&lt;property name="groupAttributeName"&gt;"memberUid"&lt;/property&gt;
+		&lt;property name="multipleValueDelimiter"&gt;","&lt;/property&gt;
+	--&gt;
+	&lt;/component&gt;
 &lt;/components&gt;
 </pre>
 
-	<h4>設定例の説明</h4>
+	<h4>directoryControlPropertyコンポーネントに関する設定の説明</h4>
 	<table class="list" summary="directory.diconの設定例の説明">
 		<tr>
 			<th>設定項目</th>
@@ -173,6 +195,20 @@
 				(Sun JDK標準付属)</td>
 			<td>com.sun.jndi.ldap.LdapCtxFactory<br />
 				(Sun JDK標準付属)</td>
+		</tr>
+		<tr class="b">
+			<td>sslSocketFactory</td>
+			<td>SSL接続を利用するための設定</td>
+			<td>任意</td>
+			<td>javax.net.ssl.SSLSocketFactory もしくは org.seasar.directory.impl.PermissiveSSLSocketFactory</td>
+			<td>javax.net.ssl.SSLSocketFactory</td>
+		</tr>
+		<tr class="a">
+			<td>enableTLS</td>
+			<td>TLS接続を利用するための設定</td>
+			<td>任意</td>
+			<td>true もしくは false</td>
+			<td>false</td>
 		</tr>
 		<tr class="b">
 			<td>url</td>
@@ -251,44 +287,136 @@
 	</table>
 </div>
 
+
+<div class="section">
+	<h2 id="sslSocketFactory">SSL/TLS接続利用時のsslSocketFactoryについて</h2>
+
+	<p>S2Directory 0.6以降、ディレクトリサーバへの接続にSSL接続、もしくは、STARTTLS接続を利用した暗号化通信を行うことができます。<br />
+	関連する設定項目である sslSocketFactory には、javax.net.ssl.SSLSocketFactory もしくは org.seasar.directory.impl.PermissiveSSLSocketFactory を利用することができます。<br />
+	どちらであっても暗号化通信を行うことは出来ますが、下記のような違いがあります。</p>
+
+	<h3>sslSocketFactoryの設定値の説明</h3>
+	<table class="list" summary="sslSocketFactoryの設定値の説明">
+		<tr>
+			<th>設定値</th>
+			<th>説明</th>
+		</tr>
+		<tr class="a">
+			<td>javax.net.ssl.SSLSocketFactory<br />
+				(JDK標準付属)</td>
+			<td>利用するJDKに予めインポートされている認証局によって署名されたSSL証明書を持つディレクトリサーバのみと通信できます</td>
+		</tr>
+		<tr class="b">
+			<td>org.seasar.directory.impl.PermissiveSSLSocketFactory</td>
+			<td>いわゆる独自認証局によって署名されたSSL証明書を含む、あらゆるSSL証明書を持つディレクトリサーバと通信できます</td>
+		</tr>
+	</table>
+
+	<h3>org.seasar.directory.impl.PermissiveSSLSocketFactory 使用時の注意事項</h3>
+	<div class="notice">
+		<ul><li>正当な第3者機関によって署名された信頼されるSSL証明書を持つディレクトリサーバ以外に接続したくない場合は利用しないでください。</li>
+			<li>directory.diconのurlに設定したFQDNとディレクトリサーバが持つSSL証明書に記入されたCommon Nameが異なっている場合でも暗号化通信を行います。</li>
+		</ul>
+	</div>
+
+</div>
+
+<div class="section">
+	<h2 id="connectionPool">コネクションプールを利用するための設定</h2>
+
+	<p>S2Directory 0.6以降、JDKが提供するコネクションプールの利用が実験的にサポートされました。<br />
+	コネクションプーリングを利用する場合、directory.diconに次の設定を足すことで利用することができます。</p>
+
+	<h3>コネクションプーリング使用時の注意事項</h3>
+	<div class="notice">
+		<ul><li>コネクションプーリングの設定はアプリケーション動作中に動的に変更することはできません。</li>
+			<li>物理コネクションが正常にcloseされない時がある DIRECTORY-21</li>
+			<li>コネクションの識別方法が、java.naming.security.principalとjava.naming.security.credentialsなため、前回コネクション作成時に存在したユーザエントリを、ディレクトリ上から削除した場合、同じユーザ名・パスワードでコネクションを取得するとプーリングされていたコネクションを取得できてしまう。
+				<ul><li>ユーザモード利用時は起こりやすいので要注意</li></ul>
+			</li>
+		</ul>
+	</div>
+
+	<h3>directory.diconへの追加設定例</h3>
+<pre>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container//EN"
+	"http://www.seasar.org/dtd/components.dtd"&gt;
+&lt;components namespace="directory"&gt;
+&lt;!--
+	# Connection Pooling Configuration
+		Connection pooling is supported only on the Java 2 SDK, v 1.4.1, and later releases.
+		http://java.sun.com/products/jndi/tutorial/ldap/connect/config.html
+		http://java.sun.com/j2se/1.5.0/ja/docs/ja/guide/jndi/jndi-ldap.html#POOL
+--&gt;
+	&lt;component name="connectionPool"
+		class="org.seasar.directory.impl.DirectoryConnectionPoolImpl"&gt;
+		&lt;property name="authentication"&gt;"none simple DIGEST-MD5"&lt;/property&gt;
+		&lt;property name="debug"&gt;"fine"&lt;/property&gt;
+		&lt;property name="initSize"&gt;1&lt;/property&gt;
+		&lt;property name="maxSize"&gt;10&lt;/property&gt;
+		&lt;property name="prefSize"&gt;5&lt;/property&gt;
+		&lt;property name="protocol"&gt;"plain ssl"&lt;/property&gt;
+		&lt;property name="timeout"&gt;3000&lt;/property&gt;
+	&lt;/component&gt;
+
+&lt;!--
+	# Directory Configuration
+--&gt;
+	&lt;component name="directoryControlProperty"
+		class="org.seasar.directory.impl.DirectoryControlPropertyImpl"
+			instance="prototype"&gt;
+		... コネクションプーリングを利用しない場合と同じため省略 ...
+	&lt;/component&gt;
+&lt;/components&gt;
+</pre>
+</div>
+
 <div class="section">
 	<h2 id="directorydao.dicon">directorydao.dicon: S2Directoryの基本機能を提供するためのシステム設定</h2>
 
 	<p>directorydao.diconは、S2Directoryの基本機能を提供するためのシステム設定を定義するdiconファイルです。独自定義することでS2Direcotryを拡張することが出来ます。S2Directoryの機能を拡張したい方以外はこの設定ファイルの詳細を知る必要はありません。</p>
 
-<pre>
-* S2Directoryの標準機能を使う場合はこのファイルを用意する必要はありません。
-* 独自に用意されていない場合、s2-directory-X.X.X.jar ファイル内の標準設定が自動的に使われます。
-</pre>
+	<h3>directorydao.dicon に関する注意事項</h3>
+	<div class="notice">
+		<ul><li>S2Directoryの標準機能を使う場合はこのファイルを用意する必要はありません。</li>
+			<li>独自に用意されていない場合、s2-directory-X.X.X.jar ファイル内の標準設定が自動的に使われます。</li>
+			<li>directorydao.diconはバージョンアップ時に仕様が変更されることがあります。そのため、独自にカスタマイズする場合、S2Directory自体をバージョンアップする際に、変更があるかどうか必ず確認してください。</li>
+		</ul>
+	</div>
 
 	<h3>標準設定</h3>
 <pre>
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;!DOCTYPE components PUBLIC "-//SEASAR2.1//DTD S2Container//EN"
-    "http://www.seasar.org/dtd/components21.dtd"&gt;
+	"http://www.seasar.org/dtd/components21.dtd"&gt;
 &lt;components namespace="directorydao"&gt;
-    &lt;include path="directory.dicon"/&gt;
-    &lt;!-- value type --&gt;
-    &lt;component class="org.seasar.directory.impl.DirectoryValueTypeFactoryImpl"/&gt;
-    &lt;!-- attribute handlers --&gt;
-    &lt;component name="defaultHandler" class="org.seasar.directory.attribute.DefaultAttributeHandler"/&gt;
-    &lt;component class="org.seasar.directory.attribute.DistinguishedNameAttributeHandler"&gt;
-        &lt;property name="attributeNameList"&gt;{"dn"}&lt;/property&gt;
-    &lt;/component&gt;
-    &lt;component class="org.seasar.directory.attribute.UserPasswordAttributeHandler"&gt;
-        &lt;property name="attributeNameList"&gt;{"userPassword", "alternativeUserPassword"}&lt;/property&gt;
-    &lt;/component&gt;
-    &lt;component class="org.seasar.directory.impl.DirectoryAttributeHandlerFactoryImpl"&gt;
-        &lt;property name="ignoreCase"&gt;true&lt;/property&gt;
-        &lt;property name="defaultAttributeHandler"&gt;defaultHandler&lt;/property&gt;
-        &lt;property name="attributeHandlers"&gt;
-            container.findComponents(@org.seasar.directory.attribute.AttributeHandler@class)
-        &lt;/property&gt;
-    &lt;/component&gt;
-    &lt;component class="org.seasar.directory.dao.impl.DirectoryAnnotationReaderFactoryImpl"/&gt;
-    &lt;component class="org.seasar.directory.dao.impl.DirectoryDaoMetaDataFactoryImpl"/&gt;
-    &lt;component name="interceptor"
-        class="org.seasar.directory.dao.interceptors.S2DirectoryDaoInterceptor"/&gt;
+	&lt;include path="directory.dicon"/&gt;
+
+	&lt;!-- attribute handlers --&gt;
+	&lt;component name="defaultHandler" class="org.seasar.directory.attribute.DefaultAttributeHandler"/&gt;
+	&lt;component class="org.seasar.directory.attribute.DistinguishedNameAttributeHandler"&gt;
+		&lt;property name="attributeNameList"&gt;{"dn"}&lt;/property&gt;
+	&lt;/component&gt;
+	&lt;component class="org.seasar.directory.attribute.UserPasswordAttributeHandler"&gt;
+		&lt;property name="attributeNameList"&gt;{"userPassword", "alternativeUserPassword"}&lt;/property&gt;
+	&lt;/component&gt;
+
+	&lt;!-- factory --&gt;
+	&lt;component class="org.seasar.directory.impl.DirectoryDataSourceFactoryImpl"/&gt;
+	&lt;component class="org.seasar.directory.impl.DirectoryAttributeHandlerFactoryImpl"&gt;
+		&lt;property name="ignoreCase"&gt;true&lt;/property&gt;
+		&lt;property name="defaultAttributeHandler"&gt;defaultHandler&lt;/property&gt;
+		&lt;property name="attributeHandlers"&gt;container.findComponents( @org.seasar.directory.attribute.AttributeHandler@class)&lt;/property&gt;
+	&lt;/component&gt;
+	&lt;component class="org.seasar.directory.impl.DirectoryValueTypeFactoryImpl"/&gt;
+	&lt;component class="org.seasar.directory.dao.impl.DirectoryAnnotationReaderFactoryImpl"/&gt;
+	&lt;component class="org.seasar.directory.dao.impl.DirectoryDaoMetaDataFactoryImpl"/&gt;
+	&lt;component class="org.seasar.directory.dao.impl.DirectoryDaoNamingConventionImpl"/&gt;
+
+	&lt;!-- interceptor --&gt;
+	&lt;component name="interceptor"
+		class="org.seasar.directory.dao.interceptors.S2DirectoryDaoInterceptor"/&gt;
 &lt;/components&gt;
 </pre>
 
@@ -303,33 +431,41 @@
 			<td>ディレクトリサーバ接続情報が書かれた設定ファイルを読み込む</td>
 		</tr>
 		<tr class="b">
-			<td>org.seasar.directory.impl.DirectoryValueTypeFactoryImpl</td>
-			<td>属性値を読み書きする際の型変換ファクトリ</td>
-		</tr>
-		<tr class="a">
 			<td>org.seasar.directory.attribute.DefaultAttributeHandler</td>
 			<td>属性名に応じて属性値を比較、変換する際の標準属性ハンドラ</td>
 		</tr>
-		<tr class="b">
+		<tr class="a">
 			<td>org.seasar.directory.attribute.DistinguishedNameAttributeHandler</td>
 			<td>属性DNのための属性値を比較、変換する際の属性ハンドラ</td>
 		</tr>
-		<tr class="a">
+		<tr class="b">
 			<td>org.seasar.directory.attribute.UserPasswordAttributeHandler</td>
 			<td>属性userPasswordのための属性値を比較、変換する際の属性ハンドラ<br />
 				暗号化されているパスワードの検証や、暗号化パスワードを生成します</td>
+		</tr>
+		<tr class="a">
+			<td>org.seasar.directory.impl.DirectoryDataSourceFactoryImpl</td>
+			<td>ディレクトリへ接続するためのコネクションデータソースファクトリ</td>
 		</tr>
 		<tr class="b">
 			<td>org.seasar.directory.impl.DirectoryAttributeHandlerFactoryImpl</td>
 			<td>属性名に応じて属性値を比較、変換する際の属性ハンドラファクトリ</td>
 		</tr>
 		<tr class="a">
+			<td>org.seasar.directory.impl.DirectoryValueTypeFactoryImpl</td>
+			<td>属性値を読み書きする際の型変換ファクトリ</td>
+		</tr>
+		<tr class="b">
 			<td>org.seasar.directory.dao.impl.DirectoryAnnotationReaderFactoryImpl</td>
 			<td>アノテーションリーダファクトリ</td>
 		</tr>
-		<tr class="b">
+		<tr class="a">
 			<td>org.seasar.directory.dao.impl.DirectoryDaoMetaDataFactoryImpl</td>
 			<td>メタオブジェクトファクトリ</td>
+		</tr>
+		<tr class="b">
+			<td>org.seasar.directory.dao.impl.DirectoryDaoNamingConventionImpl</td>
+			<td>DirectoryDaoのための命名規則</td>
 		</tr>
 		<tr class="a">
 			<td>org.seasar.directory.dao.interceptors.S2DirectoryDaoInterceptor</td>
@@ -343,7 +479,7 @@
 </div><!-- contents_center -->
 
 <div id="footer">
-<address>Copyright &#169; 2005-2006 the Seasar Project and the others. all rights reserved.</address>
+<address>Copyright &#169; 2005-2007 the Seasar Project and the others. all rights reserved.</address>
 <div class="line"><span class="hide">spacer</span></div>
 </div><!-- footer -->
 
