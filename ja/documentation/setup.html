@@ -54,13 +54,8 @@
 	<li><a href="../news.html">News</a></li>
 	<li><a href="../license.html">License</a></li>
 	<li><a href="../downloads.html">Downloads</a></li>
-	<li>SVN Repository
-		<ul><li><a href="https://www.seasar.org/svn/sandbox/s2directory/">SVN</a></li>
-			<li><a href="http://svn.seasar.org/browse/?root=sandbox.s2directory">Browse</a></li>
-		</ul>
-	</li>
+	<li><a href="https://github.com/seasarorg/s2directory">Repository</a></li>
 	<li><a href="https://www.seasar.org/issues/browse/DIRECTORY">Tracking</a></li>
-	<li><a href="http://www.seasar.org/feed/">RSS Feed</a></li>
 	<li><a href="http://maven.seasar.org/">Maven Repository</a></li>
 </ul>
 
@@ -84,37 +79,96 @@
 <div id="article">
 
 <div class="section">
-	<h2 id="h02">S2Directoryを動かすのに必要なライブラリ</h2>
+	<h2 id="h02">S2Directory を動かすのに必要なライブラリ</h2>
 
-	<p>S2Directoryを動かすには次のライブラリが必要です。また、S2DirectoryはJDK/JRE 1.4以降で動作します。</p>
+	<p>S2Directory は、Maven リポジトリ、もしくは、リリースファイルをダウンロードして利用することができます。<br />
+	S2Directory は JDK/JRE 1.4 以降で動作し、S2DirectoryTiger は JDK/JRE 1.5 以降で動作します。</p>
+</div>
+
+<div class="section">
+	<h2 id="maven">Maven を使用した利用方法 (推奨)</h2>
+
+	<p>pom.xml の簡単なテンプレートは次のとおりです。</p>
+
+<pre>
+&lt;project&gt;
+  ... 他の設定 ...
+
+  &lt;repositories&gt;
+    ... 他のリポジトリ設定 ...
+    &lt;repository&gt;
+      &lt;id&gt;maven.seasar.org&lt;/id&gt;
+      &lt;name&gt;The Seasar Foundation Maven Repository&lt;/name&gt;
+      &lt;url&gt;http://maven.seasar.org/maven2&lt;/url&gt;
+      &lt;snapshots&gt;
+        &lt;enabled>false&lt;/enabled&gt;
+      &lt;/snapshots&gt;
+    &lt;/repository&gt;
+    &lt;repository&gt;
+      &lt;id&gt;maven-snapshot.seasar.org&lt;/id&gt;
+      &lt;name&gt;The Seasar Foundation Maven Snapshot Repository&lt;/name&gt;
+      &lt;url&gt;http://maven.seasar.org/maven2-snapshot&lt;/url&gt;
+      &lt;releases&gt;
+        &lt;enabled>false&lt;/enabled&gt;
+      &lt;/releases&gt;
+      &lt;snapshots&gt;
+        &lt;enabled>true&lt;/enabled&gt;
+        &lt;updatePolicy>always&lt;/updatePolicy&gt;
+      &lt;/snapshots>
+    &lt;/repository&gt;
+    ... 他のリポジトリ設定 ...
+  &lt;/repositories&gt;
+
+  &lt;dependencies&gt;
+    ... 他の依存ライブラリ設定 ...
+    &lt;dependency&gt;
+      &lt;groupId&gt;org.seasar.directory&lt;/groupId&gt;
+      &lt;artifactId&gt;s2-directory&lt;/artifactId&gt;
+      &lt;version&gt;使用したいバージョン(例: 0.7.0)&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;org.seasar.directory&lt;/groupId&gt;
+      &lt;artifactId&gt;s2-directory-tiger&lt;/artifactId&gt;
+      &lt;version&gt;使用したいバージョン(例: 0.7.0)&lt;/version&gt;
+    &lt;/dependency&gt;
+    ... 他の依存ライブラリ設定 ...
+  &lt;/dependencies&gt;
+
+&lt;/project&gt;
+</pre>
+</div><!-- section -->
+
+<div class="section">
+	<h2 id="h02">ライブラリをダウンロードする利用方法</h2>
+
+	<p>ライブラリをダウンロードして利用したい場合は、下記のファイルが必要です。</p>
 
 	<h3>s2-directory-X.X.X.jar</h3>
-	<p><a href="../downloads.html">ダウンロード</a>からs2-directory-X.X.X.zipをダウンロードして解凍してください。解凍すると <strong>s2directory</strong> というディレクトリが作成されるので、 <strong>lib\s2-directory-X.X.X.jar</strong> をS2Directoryを使うあなたのプロジェクトのライブラリ置き場にコピーしてください。</p>
+	<p><a href="../downloads.html">ダウンロード</a>から s2-directory-X.X.X.zip をダウンロードして解凍してください。解凍すると <strong>s2directory</strong> というディレクトリが作成されるので、 <strong>lib\s2-directory-X.X.X.jar</strong> をS2Directoryを使うあなたのプロジェクトのライブラリ置き場にコピーしてください。</p>
 
 	<h3>s2-directory-tiger-X.X.X.jar (任意、JDK 5以降の環境が必要)</h3>
-	<p>JDK 5以降の環境でS2DirectoryにS2DirectoryTigerを併用すると、<a href="entity.html">エンティティ</a>と<a href="directorydao.html">DirectoryDao</a>でTigerアノテーションを利用することができます。<br />
-		<a href="../downloads.html">ダウンロード</a>からs2-directory-tiger-X.X.X.zipをダウンロードして解凍してください。解凍すると <strong>s2directory-tiger</strong> というディレクトリが作成されるので、 <strong>lib\s2-directory-tiger-X.X.X.jar</strong> をS2DirectoryTigerを使うあなたのプロジェクトのライブラリ置き場にコピーしてください。</p>
+	<p>JDK 5 以降の環境で S2Directory に S2DirectoryTiger を併用すると、<a href="entity.html">エンティティ</a>と<a href="directorydao.html">DirectoryDao</a> で Tiger アノテーションを利用することができます。<br />
+		<a href="../downloads.html">ダウンロード</a>から s2-directory-tiger-X.X.X.zip をダウンロードして解凍してください。解凍すると <strong>s2directory-tiger</strong> というディレクトリが作成されるので、 <strong>lib\s2-directory-tiger-X.X.X.jar</strong> を S2DirectoryTiger を使うあなたのプロジェクトのライブラリ置き場にコピーしてください。</p>
 
-	<h3>S2Container (未付属)</h3>
-	<p>S2Directoryは<a href="http://s2container.seasar.org/ja/">S2Container</a>に付属するDIやAOPなどの様々な機能を利用してその機能を実現しています。<a href="http://s2container.seasar.org/ja/">S2Container</a>のサイトより必要なライブラリをダウンロードし、あなたのプロジェクトのライブラリ置き場にコピーしてください。</p>
+	<h3>S2Container</h3>
+	<p>S2Directory は<a href="http://s2container.seasar.org/ja/">S2Container</a>に付属する DI や AOP などの様々な機能を利用してその機能を実現しています。
+	<a href="http://s2container.seasar.org/ja/">S2Container</a> のサイトより必要なライブラリをダウンロードし、あなたのプロジェクトのライブラリ置き場にコピーしてください。</p>
 
-	<h4>最低限必要なライブラリ: S2Container 2.4.6の場合</h4>
+	<h4>最低限必要なライブラリ: S2Container 2.4.47 の場合</h4>
 	<ul>
 		<li>aopalliance-1.0.jar</li>
 		<li>commons-logging-1.1.jar</li>
-		<li>geronimo-jta_1.0.1B_spec-1.0.jar</li>
-		<li>javassist-3.3.ga.jar</li>
-		<li>log4j-1.2.13.jar</li>
+		<li>javassist-3.4.ga.jar</li>
 		<li>ognl-2.6.7.jar</li>
-		<li>s2-extension-2.4.6.jar</li>
-		<li>s2-framework-2.4.6.jar</li>
+		<li>s2-extension-2.4.47.jar</li>
+		<li>s2-framework-2.4.47.jar</li>
 	</ul>
 </div>
 
 <div class="section">
-	<h2 id="h02">S2Directoryを動かすのに必要な設定</h2>
+	<h2 id="h02">S2Directory を動かすのに必要な設定</h2>
 
-	<p>S2Directoryに必要な設定ファイルの詳細を学ぶには、<a href="configuration.html">Configuration</a>を読んでください。</p>
+	<p>S2Directory に必要な設定ファイルの詳細を学ぶには、<a href="configuration.html">Configuration</a>を読んでください。</p>
 </div>
 
 </div><!-- article -->

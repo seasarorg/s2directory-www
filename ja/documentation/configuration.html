@@ -54,13 +54,8 @@
 	<li><a href="../news.html">News</a></li>
 	<li><a href="../license.html">License</a></li>
 	<li><a href="../downloads.html">Downloads</a></li>
-	<li>SVN Repository
-		<ul><li><a href="https://www.seasar.org/svn/sandbox/s2directory/">SVN</a></li>
-			<li><a href="http://svn.seasar.org/browse/?root=sandbox.s2directory">Browse</a></li>
-		</ul>
-	</li>
+	<li><a href="https://github.com/seasarorg/s2directory">Repository</a></li>
 	<li><a href="https://www.seasar.org/issues/browse/DIRECTORY">Tracking</a></li>
-	<li><a href="http://www.seasar.org/feed/">RSS Feed</a></li>
 	<li><a href="http://maven.seasar.org/">Maven Repository</a></li>
 </ul>
 
@@ -122,11 +117,20 @@
 
 	<p>directory.diconは、ディレクトリサーバに接続するための各種設定情報を定義するdiconファイルです。</p>
 
+	<h3>S2Directory 0.6.1 以前から 0.7.0 以降へ更新する場合の注意</h3>
+	<div class="notice">
+		<ul>
+			<li>匿名接続を行いたい場合は、明示的に authentication へ <strong>none</strong> を設定してください。</li>
+			<li>user の代わりに bindDn の使用を推奨します。user は<a href="directorydao.html#usermode">ユーザモード実行</a>を行いたい時のみにプログラム中から値を設定して使用してください。</li>
+			<li>multipleValueDelimiter の初期値が <strong>,</strong> から <strong>DEFAULT_MULTIPLE_VALUE_DELIMITER</strong> へ変更されています。</li>
+		</ul>
+	</div>
+
 	<h3>設定例</h3>
 <pre>
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container//EN"
-	"http://www.seasar.org/dtd/components.dtd"&gt;
+&lt;!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN"
+	"http://www.seasar.org/dtd/components24.dtd"&gt;
 &lt;components namespace="directory"&gt;
 &lt;!--
 	# Directory Configuration
@@ -222,18 +226,32 @@
 			<td>null</td>
 		</tr>
 		<tr class="b">
-			<td>user</td>
-			<td>標準で使用するディレクトリツリーへの接続ユーザ</td>
-			<td>必須</td>
-			<td>cn=Manager<br />
-				(cn=Manager,dc=seasar,dc=orgと同意)</td>
+			<td>bindDn</td>
+			<td>標準で使用するディレクトリツリーへの接続のための管理者DN</td>
+			<td>任意</td>
+			<td>cn=Manager,dc=seasar,dc=org</td>
 			<td>null</td>
 		</tr>
 		<tr class="a">
 			<td>password</td>
 			<td>標準で使用するディレクトリツリーへの接続ユーザのパスワード</td>
-			<td>必須</td>
+			<td>任意</td>
 			<td>secret</td>
+			<td>null</td>
+		</tr>
+		<tr class="b">
+			<td>authentication</td>
+			<td>コネクション取得時の認証メソッド</td>
+			<td>任意</td>
+			<td>simple: 通常の認証機構を使用します<br />
+				none: 認証を使用しません (匿名接続)</td>
+			<td>simple</td>
+		</tr>
+		<tr class="a">
+			<td>user</td>
+			<td>ディレクトリツリーへの接続ユーザ</td>
+			<td>任意</td>
+			<td>user1<br />(DN の代わりにユーザ名を指定した場合、userSuffix が補完されます)</td>
 			<td>null</td>
 		</tr>
 		<tr class="b">
@@ -279,7 +297,7 @@
 			<td>複数値のための区切り文字</td>
 			<td>任意</td>
 			<td>デフォルトの値</td>
-			<td>, (カンマ)</td>
+			<td>DEFAULT_MULTIPLE_VALUE_DELIMITER</td>
 		</tr>
 	</table>
 </div>
@@ -337,8 +355,8 @@
 	<h3>directory.diconへの追加設定例</h3>
 <pre>
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container//EN"
-	"http://www.seasar.org/dtd/components.dtd"&gt;
+&lt;!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN"
+	"http://www.seasar.org/dtd/components24.dtd"&gt;
 &lt;components namespace="directory"&gt;
 &lt;!--
 	# Connection Pooling Configuration
@@ -385,8 +403,8 @@
 	<h3>標準設定</h3>
 <pre>
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;!DOCTYPE components PUBLIC "-//SEASAR2.1//DTD S2Container//EN"
-	"http://www.seasar.org/dtd/components21.dtd"&gt;
+&lt;!DOCTYPE components PUBLIC "-//SEASAR2.1//DTD S2Container 2.4//EN"
+	"http://www.seasar.org/dtd/components24.dtd"&gt;
 &lt;components namespace="directorydao"&gt;
 	&lt;include path="directory.dicon"/&gt;
 

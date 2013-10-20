@@ -54,13 +54,8 @@
 	<li><a href="../news.html">News</a></li>
 	<li><a href="../license.html">License</a></li>
 	<li><a href="../downloads.html">Downloads</a></li>
-	<li>SVN Repository
-		<ul><li><a href="https://www.seasar.org/svn/sandbox/s2directory/">SVN</a></li>
-			<li><a href="http://svn.seasar.org/browse/?root=sandbox.s2directory">Browse</a></li>
-		</ul>
-	</li>
+	<li><a href="https://github.com/seasarorg/s2directory">Repository</a></li>
 	<li><a href="https://www.seasar.org/issues/browse/DIRECTORY">Tracking</a></li>
-	<li><a href="http://www.seasar.org/feed/">RSS Feed</a></li>
 	<li><a href="http://maven.seasar.org/">Maven Repository</a></li>
 </ul>
 
@@ -148,8 +143,8 @@ description: (empty)
 	<p>アプリケーションを構成するルートとなるdiconファイルです。S2Directoryの基本機能を提供するためのシステム設定(DI設定、AOP定義)を有効にするためにdirectorydao.diconファイルをincludeします。また、DaoインタフェースにS2DirectoryのAOPのためのインタセプターを適用する設定を記述したalldao.diconをincludeします。</p>
 <pre>
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;!DOCTYPE components PUBLIC "-//SEASAR2.1//DTD S2Container//EN"
-    "http://www.seasar.org/dtd/components21.dtd"&gt;
+&lt;!DOCTYPE components PUBLIC "-//SEASAR2.4//DTD S2Container 2.4//EN"
+    "http://www.seasar.org/dtd/components24.dtd"&gt;
 &lt;components&gt;
     &lt;include path="alldao.dicon" /&gt;
 &lt;/components&gt;
@@ -159,8 +154,8 @@ description: (empty)
 	<p>S2Directoryのインタセプターのためのインタセプタチェインの定義とその適用先とするDaoインタフェースを指定します。下記の設定では、org.seasar.directory.examples.directorydaoパッケージ以下にある*DirectoryDaoクラスに適用しています。</p>
 <pre>
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;!DOCTYPE components PUBLIC "-//SEASAR2.1//DTD S2Container//EN"
-    "http://www.seasar.org/dtd/components21.dtd"&gt;
+&lt;!DOCTYPE components PUBLIC "-//SEASAR2.4//DTD S2Container 2.4//EN"
+    "http://www.seasar.org/dtd/components24.dtd"&gt;
 &lt;components&gt;
     &lt;include path="directorydao.dicon"/&gt;
 
@@ -196,7 +191,7 @@ description: (empty)
 
 <pre>
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container//EN"
+&lt;!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN"
 	"http://www.seasar.org/dtd/components.dtd"&gt;
 &lt;components namespace="directory"&gt;
 &lt;!--

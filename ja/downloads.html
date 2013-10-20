@@ -54,13 +54,8 @@
 	<li><a href="news.html">News</a></li>
 	<li><a href="license.html">License</a></li>
 	<li>Downloads</li>
-	<li>SVN Repository
-		<ul><li><a href="https://www.seasar.org/svn/sandbox/s2directory/">SVN</a></li>
-			<li><a href="http://svn.seasar.org/browse/?root=sandbox.s2directory">Browse</a></li>
-		</ul>
-	</li>
+	<li><a href="https://github.com/seasarorg/s2directory">Repository</a></li>
 	<li><a href="https://www.seasar.org/issues/browse/DIRECTORY">Tracking</a></li>
-	<li><a href="http://www.seasar.org/feed/">RSS Feed</a></li>
 	<li><a href="http://maven.seasar.org/">Maven Repository</a></li>
 </ul>
 
@@ -77,18 +72,16 @@
 <div class="section">
 	<h2 id="latest">Latest Download</h2>
 
-	<p>s2-directory-X.X.X.zipを解凍したlibディレクトリ以下のファイルを利用するプロジェクトへコピーしてください。</p>
+	<p>S2Directory は、Maven リポジトリ、もしくは、リリースファイルをダウンロードして利用することができます。<br />
+	S2Directory は JDK/JRE 1.4 以降で動作し、S2DirectoryTiger は JDK/JRE 1.5 以降で動作します。</p>
 
 	<h3>Latest Release (stable)</h3>
 	<ul>
-		<li>2008-03-17: <a href="../downloads/s2-directory-0.6.1.zip">S2Directory 0.6.1</a>
-			(<a href="https://www.seasar.org/issues/secure/ReleaseNote.jspa?projectId=10016&styleName=Html&version=10671">Release Notes</a>)
-			<p>認証処理実行時に、認証失敗以外の例外発生時は例外をthrowするように修正しました。</p>
+		<li>2013-10-20: <a href="../downloads/s2-directory-0.7.0.zip">S2Directory 0.7.0</a>
+			(<a href="https://www.seasar.org/issues/secure/ReleaseNote.jspa?projectId=10016&version=10591">Release Notes</a>)
+			<p>S2Directory 0.6.1 から設定ファイルの初期値に変更があります。0.6.1 から更新する場合は、<a href="documentation/configuration.html">設定ファイル</a>を再設定してください。</p>
 		</li>
-		<li>2008-03-17: <a href="../downloads/s2-directory-tiger-0.6.1.zip">S2DirectoryTiger 0.6.1</a>
-			<p>S2Directoryと併用することでTigerアノテーションを利用できるようにします。<br />
-			前回のリリースからの追加点・変更点は特にありません。(S2Directory 0.6.1とバージョン番号を合わせています)</p>
-		</li>
+		<li>2013-10-20: <a href="../downloads/s2-directory-tiger-0.7.0.zip">S2DirectoryTiger 0.7.0</a></li>
 	</ul>
 
 	<h3>必須ライブラリ</h3>
@@ -98,25 +91,77 @@
 </div><!-- section -->
 
 <div class="section">
+	<h2 id="maven">Maven を使用した利用方法 (推奨)</h2>
+
+	<p>pom.xml の簡単なテンプレートは次のとおりです。</p>
+
+<pre>
+&lt;project&gt;
+  ... 他の設定 ...
+
+  &lt;repositories&gt;
+    ... 他のリポジトリ設定 ...
+    &lt;repository&gt;
+      &lt;id&gt;maven.seasar.org&lt;/id&gt;
+      &lt;name&gt;The Seasar Foundation Maven Repository&lt;/name&gt;
+      &lt;url&gt;http://maven.seasar.org/maven2&lt;/url&gt;
+      &lt;snapshots&gt;
+        &lt;enabled>false&lt;/enabled&gt;
+      &lt;/snapshots&gt;
+    &lt;/repository&gt;
+    &lt;repository&gt;
+      &lt;id&gt;maven-snapshot.seasar.org&lt;/id&gt;
+      &lt;name&gt;The Seasar Foundation Maven Snapshot Repository&lt;/name&gt;
+      &lt;url&gt;http://maven.seasar.org/maven2-snapshot&lt;/url&gt;
+      &lt;releases&gt;
+        &lt;enabled>false&lt;/enabled&gt;
+      &lt;/releases&gt;
+      &lt;snapshots&gt;
+        &lt;enabled>true&lt;/enabled&gt;
+        &lt;updatePolicy>always&lt;/updatePolicy&gt;
+      &lt;/snapshots>
+    &lt;/repository&gt;
+    ... 他のリポジトリ設定 ...
+  &lt;/repositories&gt;
+
+  &lt;dependencies&gt;
+    ... 他の依存ライブラリ設定 ...
+    &lt;dependency&gt;
+      &lt;groupId&gt;org.seasar.directory&lt;/groupId&gt;
+      &lt;artifactId&gt;s2-directory&lt;/artifactId&gt;
+      &lt;version&gt;使用したいバージョン(例: 0.7.0)&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;org.seasar.directory&lt;/groupId&gt;
+      &lt;artifactId&gt;s2-directory-tiger&lt;/artifactId&gt;
+      &lt;version&gt;使用したいバージョン(例: 0.7.0)&lt;/version&gt;
+    &lt;/dependency&gt;
+    ... 他の依存ライブラリ設定 ...
+  &lt;/dependencies&gt;
+
+&lt;/project&gt;
+</pre>
+</div><!-- section -->
+
+<div class="section">
 	<h2 id="old">Old Download</h2>
 
 	<h3>Old Release</h3>
 	<ul>
+		<li>2013-03-17: <a href="../downloads/s2-directory-0.6.1.zip">S2Directory 0.6.1</a>
+			(<a href="https://www.seasar.org/issues/secure/ReleaseNote.jspa?projectId=10016&styleName=Html&version=10671">Release Notes</a>)
+		</li>
+		<li>2008-03-17: <a href="../downloads/s2-directory-tiger-0.6.1.zip">S2DirectoryTiger 0.6.1</a></li>
 		<li>2007-12-29: <a href="../downloads/s2-directory-0.6.zip">S2Directory 0.6</a>
 			(<a href="https://www.seasar.org/issues/secure/ReleaseNote.jspa?projectId=10016&styleName=Html&version=10486">Release Notes</a>)
-			<p>S2Directory 0.5 以前はコネクションの解放に問題があるため、今回リリースした 0.6 を利用することをお奨めします。<br />
-		今回のリリースによる大きな機能追加として、SSL/TLS接続とATTRIBUTE/COLUMNアノテーションが利用できるようになりました。<br />
-		また、実験的にコネクションプーリング機能を追加しました。</p>
 		</li>
 		<li>2007-12-29: <a href="../downloads/s2-directory-tiger-0.6.zip">S2DirectoryTiger 0.6</a>
 			(<a href="https://www.seasar.org/issues/secure/ReleaseNote.jspa?projectId=10016&styleName=Html&version=10569">Release Notes</a>)
-			<p>S2Directoryと併用することでTigerアノテーションを利用できるようにするS2DirectoryTigerの初めてのバージョンです。</p>
 		</li>
-		<li>2007-07-17: <a href="../downloads/s2-directory-0.5.1.zip">S2Directory 0.5.1</a> (stable)
-			<ul><li><a href="https://www.seasar.org/issues/secure/ReleaseNote.jspa?projectId=10016&styleName=Html&version=10487">S2Directory 0.5.1 Release Notes</a></li>
-			</ul>
+		<li>2007-07-17: <a href="../downloads/s2-directory-0.5.1.zip">S2Directory 0.5.1</a>
+			(<a href="https://www.seasar.org/issues/secure/ReleaseNote.jspa?projectId=10016&styleName=Html&version=10487">Release Notes</a>)</li>
 		</li>
-		<li>2006-12-31: <a href="../downloads/s2-directory-0.5.zip">S2Directory 0.5</a> (stable)</li>
+		<li>2006-12-31: <a href="../downloads/s2-directory-0.5.zip">S2Directory 0.5</a></li>
 		<li>2006-12-11: <a href="../downloads/s2-directory-0.4.zip">S2Directory 0.4</a> (beta)</li>
 		<li>2006-09-22: <a href="../downloads/s2-directory-0.3.1.zip">S2Directory 0.3.1</a> (beta)</li>
 		<li>2006-09-22: <a href="../downloads/s2-directory-0.3.zip">S2Directory 0.3</a> (beta)</li>
@@ -126,91 +171,12 @@
 		<li>2005-12-30: <a href="../downloads/s2-directory-0.1.zip">S2Directory 0.1</a> (unstable)</li>
 	</ul>
 
-<!--
-	<h4>0.4 -> 0.5</h4>
-	<ul>
-		<li>ドキュメント整備</li>
-		<li>サンプルを整理</li>
-	</ul>
-	<h4>0.3.1 -> 0.4</h4>
-	<ul>
-		<li>認証時にコネクションを閉じ忘れていたバグを修正</li>
-		<li>例外メッセージを整備</li>
-		<li>属性名に応じて属性値の比較、書き込む値を変えられるハンドラを追加</li>
-		<li>その他、パッケージの整理</li>
-	</ul>
-	<h5>注意</h5>
-	<ul>
-		<li>jarファイル内のdirectorydao.diconファイルを更新しました
-			<ul>
-				<li>明示的にdirectorydao.diconファイルを作成している場合のみ、新しい形式に併せて修正する必要があります</li>
-			</ul>
-		</li>
-		<li>SMART deploy用のCreatorクラスのパッケージを変更しました。
-			<ul>
-				<li>New: org.seasar.directory.dao.creator.DirectoryDaoCreator</li>
-			</ul>
-		</li>
-	</ul>
-	<h4>0.3 -> 0.3.1</h4>
-	<ul>
-		<li>型を判別する際にインターフェイスも調べるように修正</li>
-	</ul>
-	<h4>0.2.2 -> 0.3</h4>
-	<ul>
-		<li>Maven 2.x に対応しました</li>
-		<li>拡張用にDirectoryAnnotationReaderFactoryを追加しました</li>
-		<li>拡張用にDirectoryValueTypeFactoryを追加しました</li>
-		<li>commons-codecの依存関係を無くしました</li>
-		<li>S2Container 2.4.0 rc 2に対応しました
-			<ul>
-				<li>S2Container 2.3.11でも動作します</li>
-			</ul>
-		</li>
-		<li>S2Container 2.4.x 用 Creator を追加しました</li>
-		<li>directorydao.dicon ファイルをjarファイルに含めるようにしました
-			<ul>
-				<li>現在お使いの directorydao.dicon ファイルを削除する(推奨)か、新しいものに入れ替える必要があります。</li>
-			</ul>
-		</li>
-		<li>型を判別する際にスーパークラスも調べるように修正</li>
-	</ul>
-	<h4>0.2.1 -> 0.2.2</h4>
-	<ul>
-		<li>DN指定がないDTOによる検索時のバグ修正</li>
-		<li>エンティティに定義された戻り値がString型の属性に対して、List型のDaoクラスを利用した場合のバグ修正</li>
-		<li>フィールドアノテーションファクトリクラスの導入
-			<ul>
-				<li>directorydao.dicon ファイルを入れ替える必要があります。</li>
-			</ul>
-		</li>
-	</ul>
-	<h4>0.2 -> 0.2.1</h4>
-	<ul>
-		<li>更新時に null の場合、文字列 null が入ってしまうバグ修正</li>
-	</ul>
-	<h4>0.1 -> 0.2</h4>
-	<ul>
-		<li>新規エントリ作成機能追加</li>
-		<li>String型での複数の属性値を読み出し機能改善</li>
-		<li>String型で複数の属性値の書き込み機能追加</li>
-		<li>List型での複数の属性値を読み出し機能改善</li>
-		<li>List型で複数の属性値の書き込み機能追加</li>
-		<li>更新時に追加する値が null の場合に更新されなかったバグ修正</li>
-		<li>String型での複数の属性値のための区切り文字設定値追加</li>
-		<li>平文パスワードサポート</li>
-		<li>パスワードの変換方式を表す設定値 passwordType を passwordAlgorithm に設定名変更</li>
-		<li>org.seasar.directory.crypt パッケージを org.seasar.directory.digest に変更</li>
-		<li>一連の動作テスト用サンプルクラス追加</li>
-		<li>その他、ソースコードの整理</li>
-	</ul>
--->
 </div><!-- section -->
 
 <div class="section">
 	<h2 id="generator">S2DirectoryGenerator Latest Download</h2>
-	<p>ディレクトリサーバからスキーマ情報を取得し、POJOクラスを生成するユーティリティです。</p>
-	<ul><li><a href="documentation/entity.html#generator">S2DirectoryGeneratorの使い方はこちら</a></ul>
+	<p>ディレクトリサーバからスキーマ情報を取得し、POJO クラスを生成するユーティリティです。</p>
+	<ul><li><a href="documentation/entity.html#generator">S2DirectoryGenerator の使い方はこちら</a></ul>
 
 	<h3>Latest Release (stable)</h3>
 	<ul>
@@ -235,7 +201,7 @@
 
 	<h3>Old Release Notes</h3>
 	<h4>0.1 -> 0.1.1</h4>
-	<p>toString()関数生成のバグ修正</p>
+	<p>toString() 関数生成のバグ修正</p>
 </div><!-- section -->
 
 </div><!-- article -->
