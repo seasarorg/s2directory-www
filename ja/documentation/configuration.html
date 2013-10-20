@@ -3,8 +3,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta name="author" content="Jun Futagawa" />
-<link rev="made" href="mailto:jfut ___＠___ featia.net" />
 <link rel="index" title="index" href="http://s2directory.sandbox.seasar.org/" />
 <link rel="stylesheet" type="text/css" href="../../theme/main.css" />
 <link rel="stylesheet" type="text/css" href="../../theme/print.css" media="print" />
@@ -88,8 +86,6 @@
 <div class="section">
 	<h2 id="h02">Configuration</h2>
 
-	<div class="update">最終更新日時: $Date::                           $</div>
-
 	<p>S2Directoryを動かすに必要なdiconファイルの詳細について説明します。事前に<a href="setup.html">Setup</a>に従い、必要なライブラリをあなたのプロジェクトに配置しておいてください。</p>
 </div>
 
@@ -160,19 +156,20 @@
 			"ldap://localhost:389"
 		&lt;/property&gt;
 		&lt;property name="baseDn"&gt;"dc=seasar,dc=org"&lt;/property&gt;
-		&lt;property name="user"&gt;"cn=Manager"&lt;/property&gt;
+		&lt;property name="bindDn"&gt;"cn=Manager,dc=seasar,dc=org"&lt;/property&gt;
 		&lt;property name="password"&gt;"secret"&lt;/property&gt;
-		&lt;property name="passwordAlgorithm"&gt;"SHA"&lt;/property&gt;
-		&lt;property name="multipleValueDelimiter"&gt;"__"&lt;/property&gt;
 
 	&lt;!--
 		# Other options and each default value.
+		&lt;property name="authentication">"simple"&lt;/property&gt;
+		&lt;property name="user">&lt;/property&gt;
 		&lt;property name="passwordAlgorithm"&gt;"SSHA"&lt;/property&gt;
+		&lt;property name="passwordSaltLength">"4"&lt;/property&gt;
 		&lt;property name="userSuffix"&gt;"ou=Users"&lt;/property&gt;
 		&lt;property name="userAttributeName"&gt;"uid"&lt;/property&gt;
 		&lt;property name="groupSuffix"&gt;"ou=Groups"&lt;/property&gt;
 		&lt;property name="groupAttributeName"&gt;"memberUid"&lt;/property&gt;
-		&lt;property name="multipleValueDelimiter"&gt;","&lt;/property&gt;
+		&lt;property name="multipleValueDelimiter"&gt;"DEFAULT_MULTIPLE_VALUE_DELIMITER"&lt;/property&gt;
 	--&gt;
 	&lt;/component&gt;
 &lt;/components&gt;
@@ -479,7 +476,7 @@
 </div><!-- contents_center -->
 
 <div id="footer">
-<address>Copyright &#169; 2005-2013 the Seasar Project and the others. all rights reserved.</address>
+<address>Copyright &#169; 2005-2013 The Seasar Project and the others. all rights reserved.</address>
 <div class="line"><span class="hide">spacer</span></div>
 </div><!-- footer -->
 
