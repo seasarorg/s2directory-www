@@ -55,7 +55,7 @@
 	<li><a href="license.html">License</a></li>
 	<li>Downloads</li>
 	<li><a href="https://github.com/seasarorg/s2directory">Repository</a></li>
-	<li><a href="https://www.seasar.org/issues/browse/DIRECTORY">Tracking</a></li>
+	<li><a href="https://github.com/seasarorg/s2directory/issues">Tracking</a></li>
 	<li><a href="http://maven.seasar.org/">Maven Repository</a></li>
 </ul>
 
@@ -77,16 +77,15 @@
 
 	<h3>Latest Release (stable)</h3>
 	<ul>
-		<li>2013-10-20: <a href="../downloads/s2-directory-0.7.0.zip">S2Directory 0.7.0</a>
-			(<a href="https://www.seasar.org/issues/secure/ReleaseNote.jspa?projectId=10016&version=10591">Release Notes</a>)
-			<p>S2Directory 0.6.1 から設定ファイルの初期値に変更があります。0.6.1 から更新する場合は、<a href="documentation/configuration.html">設定ファイル</a>を再設定してください。</p>
+		<li>2014-10-28: <a href="../downloads/s2-directory-0.7.1.zip">S2Directory 0.7.1</a>
+			(<a href="http://www.seasar.org/wiki/index.php?SeasarWhatsNew%2F2014-10-28">Release Notes</a>)
 		</li>
-		<li>2013-10-20: <a href="../downloads/s2-directory-tiger-0.7.0.zip">S2DirectoryTiger 0.7.0</a></li>
+		<li>2014-10-28: <a href="../downloads/s2-directory-tiger-0.7.1.zip">S2DirectoryTiger 0.7.1</a></li>
 	</ul>
 
 	<h3>必須ライブラリ</h3>
 	<ul>
-		<li><a href="http://s2container.seasar.org/">S2Container</a> (未付属)</li>
+		<li><a href="http://s2container.seasar.org/">S2Container</a> (別途用意してください)</li>
 	</ul>
 </div><!-- section -->
 
@@ -97,48 +96,49 @@
 
 <pre>
 &lt;project&gt;
-  ... 他の設定 ...
+    ... 他の設定 ...
 
-  &lt;repositories&gt;
-    ... 他のリポジトリ設定 ...
-    &lt;repository&gt;
-      &lt;id&gt;maven.seasar.org&lt;/id&gt;
-      &lt;name&gt;The Seasar Foundation Maven Repository&lt;/name&gt;
-      &lt;url&gt;http://maven.seasar.org/maven2&lt;/url&gt;
-      &lt;snapshots&gt;
-        &lt;enabled>false&lt;/enabled&gt;
-      &lt;/snapshots&gt;
-    &lt;/repository&gt;
-    &lt;repository&gt;
-      &lt;id&gt;maven-snapshot.seasar.org&lt;/id&gt;
-      &lt;name&gt;The Seasar Foundation Maven Snapshot Repository&lt;/name&gt;
-      &lt;url&gt;http://maven.seasar.org/maven2-snapshot&lt;/url&gt;
-      &lt;releases&gt;
-        &lt;enabled>false&lt;/enabled&gt;
-      &lt;/releases&gt;
-      &lt;snapshots&gt;
-        &lt;enabled>true&lt;/enabled&gt;
-        &lt;updatePolicy>always&lt;/updatePolicy&gt;
-      &lt;/snapshots>
-    &lt;/repository&gt;
-    ... 他のリポジトリ設定 ...
-  &lt;/repositories&gt;
+    &lt;repositories&gt;
+        ... 他のリポジトリ設定 ...
+        &lt;repository&gt;
+            &lt;id&gt;maven.seasar.org&lt;/id&gt;
+            &lt;name&gt;The Seasar Foundation Maven Repository&lt;/name&gt;
+            &lt;url&gt;http://maven.seasar.org/maven2&lt;/url&gt;
+            &lt;snapshots&gt;
+                &lt;enabled>false&lt;/enabled&gt;
+            &lt;/snapshots&gt;
+        &lt;/repository&gt;
+        &lt;repository&gt;
+            &lt;id&gt;maven-snapshot.seasar.org&lt;/id&gt;
+            &lt;name&gt;The Seasar Foundation Maven Snapshot Repository&lt;/name&gt;
+            &lt;url&gt;http://maven.seasar.org/maven2-snapshot&lt;/url&gt;
+            &lt;releases&gt;
+                &lt;enabled>false&lt;/enabled&gt;
+            &lt;/releases&gt;
+            &lt;snapshots&gt;
+                &lt;enabled>true&lt;/enabled&gt;
+                &lt;updatePolicy>always&lt;/updatePolicy&gt;
+            &lt;/snapshots>
+        &lt;/repository&gt;
+        ... 他のリポジトリ設定 ...
+    &lt;/repositories&gt;
 
-  &lt;dependencies&gt;
-    ... 他の依存ライブラリ設定 ...
-    &lt;dependency&gt;
-      &lt;groupId&gt;org.seasar.directory&lt;/groupId&gt;
-      &lt;artifactId&gt;s2-directory&lt;/artifactId&gt;
-      &lt;version&gt;使用したいバージョン(例: 0.7.0)&lt;/version&gt;
-    &lt;/dependency&gt;
-    &lt;dependency&gt;
-      &lt;groupId&gt;org.seasar.directory&lt;/groupId&gt;
-      &lt;artifactId&gt;s2-directory-tiger&lt;/artifactId&gt;
-      &lt;version&gt;使用したいバージョン(例: 0.7.0)&lt;/version&gt;
-    &lt;/dependency&gt;
-    ... 他の依存ライブラリ設定 ...
-  &lt;/dependencies&gt;
+    &lt;dependencies&gt;
+        ... 他の依存ライブラリ設定 ...
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.seasar.directory&lt;/groupId&gt;
+            &lt;artifactId&gt;s2-directory&lt;/artifactId&gt;
+            &lt;version&gt;使用したいバージョン(例: 0.7.1)&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.seasar.directory&lt;/groupId&gt;
+            &lt;artifactId&gt;s2-directory-tiger&lt;/artifactId&gt;
+            &lt;version&gt;使用したいバージョン(例: 0.7.1)&lt;/version&gt;
+        &lt;/dependency&gt;
+        ... 他の依存ライブラリ設定 ...
+    &lt;/dependencies&gt;
 
+    ... 他の設定 ...
 &lt;/project&gt;
 </pre>
 </div><!-- section -->
@@ -148,6 +148,10 @@
 
 	<h3>Old Release</h3>
 	<ul>
+		<li>2013-10-20: <a href="../downloads/s2-directory-0.7.0.zip">S2Directory 0.7.0</a>
+			(<a href="http://www.seasar.org/wiki/index.php?SeasarWhatsNew%2F2013-10-20">Release Notes</a>)
+		</li>
+		<li>2013-10-20: <a href="../downloads/s2-directory-tiger-0.7.0.zip">S2DirectoryTiger 0.7.0</a></li>
 		<li>2008-03-17: <a href="../downloads/s2-directory-0.6.1.zip">S2Directory 0.6.1</a>
 			(<a href="https://www.seasar.org/issues/secure/ReleaseNote.jspa?projectId=10016&styleName=Html&version=10671">Release Notes</a>)
 		</li>
