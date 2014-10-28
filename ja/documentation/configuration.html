@@ -81,15 +81,29 @@
 <div class="section">
 	<h2 id="h02">Configuration</h2>
 
-	<p>S2Directoryを動かすに必要なdiconファイルの詳細について説明します。事前に<a href="setup.html">Setup</a>に従い、必要なライブラリをあなたのプロジェクトに配置しておいてください。</p>
+	<p>S2Directory を動かすに必要な dicon ファイルの詳細について説明します。事前に <a href="setup.html">Setup</a> に従い、必要なライブラリをあなたのプロジェクトに配置しておいてください。</p>
+
+	<ul>
+		<li>目次<ul>
+			<li><a href="#dicon">S2Directory を動かすのに必要なdiconファイル</a></li>
+			<li><a href="#directory.dicon">directory.dicon: ディレクトリサーバに接続するための各種設定</a></li>
+			<li><a href="#sslSocketFactory">[オプション] SSL/TLS 接続利用時の sslSocketFactory 設定</a></li>
+			<li><a href="#defaultEnvironment">[オプション] コネクション作成時の環境プロパティ設定</a></li>
+			<li><a href="#defaultSearchControls">[オプション] SearchControls 設定</a></li>
+			<li><a href="#defaultSearchControls">[オプション] 抽象オブジェクトクラス設定</a></li>
+			<li><a href="#connectionPool">[オプション] コネクションプール設定</a></li>
+			<li><a href="#directorydao.dicon">[オプション] directorydao.dicon: S2Directory の基本機能を提供するためのシステム設定</a></li>
+		</ul></li>
+	</ul>
+
 </div>
 
 <div class="section">
-	<h2>S2Directoryを動かすのに必要なdiconファイル</h2>
+	<h2 id="dicon">S2Directory を動かすのに必要な dicon ファイル</h2>
 
-	<p>S2Directoryのためのdiconファイルには次のものがあります。</p>
+	<p>S2Directory のための dicon ファイルには次のものがあります。</p>
 
-	<table class="list" summary="S2Directoryのためのdiconファイル一覧">
+	<table class="list" summary="S2Directory のための dicon ファイル一覧">
 		<tr>
 			<th>ファイル名</th>
 			<th>説明</th>
@@ -102,20 +116,20 @@
 		</tr>
 		<tr class="b">
 			<td><a href="#directorydao.dicon">directorydao.dicon</a></td>
-			<td>S2Directoryの基本機能を提供するためのシステム設定を記載します。独自定義することでS2Direcotryを拡張することが出来ます。</td>
+			<td>S2Directory の基本機能を提供するためのシステム設定を記載します。独自定義することで S2Direcotry を拡張することが出来ます。</td>
 			<td>機能拡張時に必要</td>
 		</tr>
 	</table>
 
-<pre>* diconファイル(ダイコンファイル)とはS2Containerで使用する設定ファイルです。
-* diconファイルの詳細については、<a href="http://s2container.seasar.org/ja/">S2Container</a>のドキュメントを見てください。</pre>
+<pre>* diconファイル(ダイコンファイル)とは S2Container で使用する設定ファイルです。
+* diconファイルの詳細については、<a href="http://s2container.seasar.org/ja/">S2Container</a> のドキュメントを見てください。</pre>
 
 </div>
 
 <div class="section">
 	<h2 id="directory.dicon">directory.dicon: ディレクトリサーバに接続するための各種設定</h2>
 
-	<p>directory.diconは、ディレクトリサーバに接続するための各種設定情報を定義するdiconファイルです。</p>
+	<p>directory.diconは、ディレクトリサーバに接続するための各種設定情報を定義する dicon ファイルです。</p>
 
 	<h3>S2Directory 0.6.1 以前から 0.7.0 以降へ更新する場合の注意</h3>
 	<div class="notice">
@@ -179,8 +193,8 @@
 &lt;/components&gt;
 </pre>
 
-	<h4>directoryControlPropertyコンポーネントに関する設定の説明</h4>
-	<table class="list" summary="directory.diconの設定例の説明">
+	<h4>directoryControlProperty コンポーネントに関する設定の説明</h4>
+	<table class="list" summary="directory.dicon の設定例の説明">
 		<tr>
 			<th>設定項目</th>
 			<th>説明</th>
@@ -199,14 +213,14 @@
 		</tr>
 		<tr class="b">
 			<td>sslSocketFactory</td>
-			<td>SSL接続を利用するための設定</td>
+			<td>SSL 接続を利用するための設定</td>
 			<td>任意</td>
 			<td>javax.net.ssl.SSLSocketFactory もしくは org.seasar.directory.impl.PermissiveSSLSocketFactory</td>
 			<td>javax.net.ssl.SSLSocketFactory</td>
 		</tr>
 		<tr class="a">
 			<td>enableTLS</td>
-			<td>TLS接続を利用するための設定</td>
+			<td>TLS 接続を利用するための設定</td>
 			<td>任意</td>
 			<td>true もしくは false</td>
 			<td>false</td>
@@ -220,14 +234,14 @@
 		</tr>
 		<tr class="a">
 			<td>baseDn</td>
-			<td>ディレクトリツリーのベースDN</td>
+			<td>ディレクトリツリーのベース DN</td>
 			<td>必須</td>
 			<td>dc=seasar,dc=org</td>
 			<td>null</td>
 		</tr>
 		<tr class="b">
 			<td>bindDn</td>
-			<td>標準で使用するディレクトリツリーへの接続のための管理者DN</td>
+			<td>標準で使用するディレクトリツリーへの接続のための管理者 DN</td>
 			<td>任意</td>
 			<td>cn=Manager,dc=seasar,dc=org</td>
 			<td>null</td>
@@ -264,11 +278,11 @@
 		</tr>
 		<tr class="a">
 			<td>userSuffix</td>
-			<td>ユーザエントリのルートとなるDN。baseDnを含まない場合、自動的に補完されます。</td>
+			<td>ユーザエントリのルートとなる DN。baseDn を含まない場合、自動的に補完されます。</td>
 			<td>任意</td>
 			<td>デフォルトの値</td>
 			<td>ou=Users<br />
-				(ou=Users,dc=seasar,dc=orgと同意)</td>
+				(ou=Users,dc=seasar,dc=org と同意)</td>
 		</tr>
 		<tr class="b">
 			<td>userAttributeName</td>
@@ -279,11 +293,11 @@
 		</tr>
 		<tr class="a">
 			<td>groupSuffix</td>
-			<td>グループエントリのルートとなるDN。baseDnを含まない場合、自動的に補完されます。</td>
+			<td>グループエントリのルートとなる DN。baseDn を含まない場合、自動的に補完されます。</td>
 			<td>任意</td>
 			<td>デフォルトの値</td>
 			<td>ou=Groups<br />
-				(ou=Groups,dc=seasar,dc=orgと同意)</td>
+				(ou=Groups,dc=seasar,dc=org と同意)</td>
 		</tr>
 		<tr class="b">
 			<td>groupAttributeName</td>
@@ -304,9 +318,9 @@
 
 
 <div class="section">
-	<h2 id="sslSocketFactory">SSL/TLS接続利用時のsslSocketFactoryについて</h2>
+	<h2 id="sslSocketFactory">[オプション] SSL/TLS 接続利用時の sslSocketFactory 設定</h2>
 
-	<p>S2Directory 0.6以降、ディレクトリサーバへの接続にSSL接続、もしくは、STARTTLS接続を利用した暗号化通信を行うことができます。<br />
+	<p>S2Directory 0.6 以降、ディレクトリサーバへの接続に SSL 接続、もしくは、STARTTLS 接続を利用した暗号化通信を行うことができます。<br />
 	関連する設定項目である sslSocketFactory には、javax.net.ssl.SSLSocketFactory もしくは org.seasar.directory.impl.PermissiveSSLSocketFactory を利用することができます。<br />
 	どちらであっても暗号化通信を行うことは出来ますが、下記のような違いがあります。</p>
 
@@ -318,41 +332,165 @@
 		</tr>
 		<tr class="a">
 			<td>javax.net.ssl.SSLSocketFactory<br />
-				(JDK標準付属)</td>
-			<td>利用するJDKに予めインポートされている認証局によって署名されたSSL証明書を持つディレクトリサーバのみと通信できます</td>
+				(JDK 標準付属)</td>
+			<td>利用する JDK に予めインポートされている認証局によって署名された SSL 証明書を持つディレクトリサーバのみと通信できます</td>
 		</tr>
 		<tr class="b">
 			<td>org.seasar.directory.impl.PermissiveSSLSocketFactory</td>
-			<td>いわゆる独自認証局によって署名されたSSL証明書を含む、あらゆるSSL証明書を持つディレクトリサーバと通信できます</td>
+			<td>いわゆる独自認証局によって署名された SSL 証明書を含む、あらゆる SSL 証明書を持つディレクトリサーバと通信できます</td>
 		</tr>
 	</table>
 
 	<h3>org.seasar.directory.impl.PermissiveSSLSocketFactory 使用時の注意事項</h3>
 	<div class="notice">
-		<ul><li>正当な第3者機関によって署名された信頼されるSSL証明書を持つディレクトリサーバ以外に接続したくない場合は利用しないでください。</li>
-			<li>directory.diconのurlに設定したFQDNとディレクトリサーバが持つSSL証明書に記入されたCommon Nameが異なっている場合でも暗号化通信を行います。</li>
+		<ul><li>正当な第3者機関によって署名された信頼される SSL 証明書を持つディレクトリサーバ以外に接続したくない場合は利用しないでください。</li>
+			<li>directory.dicon の url に設定した FQDN とディレクトリサーバが持つ SSL 証明書に記入された Common Name が異なっている場合でも暗号化通信を行います。</li>
 		</ul>
 	</div>
 
 </div>
 
 <div class="section">
-	<h2 id="connectionPool">コネクションプールを利用するための設定</h2>
+	<h2 id="defaultEnvironment">[オプション] コネクション作成時の環境プロパティ設定</h2>
 
-	<p>S2Directory 0.6以降、JDKが提供するコネクションプールの利用が実験的にサポートされました。<br />
-	コネクションプーリングを利用する場合、directory.diconに次の設定を足すことで利用することができます。</p>
+	<p>S2Directory 0.7.1 以降、コネクション作成時に任意のプロパティを設定できます。
+	指定可能な項目や値は LDAP Naming Service Provider のドキュメントを参照してください。</p>
+
+	<ul>
+		<li><a href="http://docs.oracle.com/javase/6/docs/technotes/guides/jndi/jndi-ldap.html" target="_blank">
+		LDAP Naming Service Provider for the
+Java Naming and Directory InterfaceTM (JNDI)</a></li>
+	</ul>
+
+	<h3>使用時の注意事項</h3>
+	<div class="notice">
+		<ul><li>この機能により設定した値は初期値として扱われます。
+		DirectoryControlProperty に設定可能でありコネクション作成時に同じ項目が設定される場合、
+		DirectoryControlProperty の値が優先的に使われます。</li>
+		</ul>
+	</div>
+
+	<h3>directory.diconへの追加設定例</h3>
+<pre>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN"
+	"http://www.seasar.org/dtd/components24.dtd"&gt;
+&lt;components namespace="directory"&gt;
+
+&lt;!--
+	# Default Environment Properties
+	http://docs.oracle.com/javase/6/docs/technotes/guides/jndi/jndi-ldap.html
+--&gt;
+	<strong>&lt;component name="directoryDefaultEnvironment" class="java.util.Hashtable"
+		instance="prototype"&gt;
+		&lt;initMethod&gt;#self.put("com.sun.jndi.ldap.connect.timeout", "500")&lt;/initMethod&gt;
+		&lt;initMethod&gt;#self.put("com.sun.jndi.ldap.read.timeout", "5000")&lt;/initMethod&gt;
+	&lt;/component&gt;</strong>
+
+&lt;!--
+	# Directory Configuration
+--&gt;
+	&lt;component name="directoryControlProperty"
+		class="org.seasar.directory.impl.DirectoryControlPropertyImpl"
+			instance="prototype"&gt;
+		<strong>&lt;property name="defaultEnvironment"&gt;directoryDefaultEnvironment&lt;/property&gt;</strong>
+		... 環境プロパティ設定を指定しない場合と同じため省略 ...
+	&lt;/component&gt;
+&lt;/components&gt;
+</pre>
+</div>
+
+<div class="section">
+	<h2 id="defaultSearchControls">[オプション] SearchControls 設定</h2>
+
+	<p>S2Directory 0.7.1 以降、検索時に使用される SearchControls のオプション値を設定できます。
+	指定可能な項目や値は SearchControls の JavaDoc ドキュメントを参照してください。</p>
+
+	<ul>
+		<li><a href="http://docs.oracle.com/javase/jp/6/api/javax/naming/directory/SearchControls.html" target="_blank">
+		SearchControls (Java Platform SE 6)</a></li>
+	</ul>
+
+	<h3>directory.diconへの追加設定例</h3>
+<pre>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN"
+	"http://www.seasar.org/dtd/components24.dtd"&gt;
+&lt;components namespace="directory"&gt;
+
+&lt;!--
+	# Default SearchControls
+	http://docs.oracle.com/javase/1.5.0/docs/api/javax/naming/directory/SearchControls.html
+--&gt;
+	<strong>&lt;component name="directoryDefaultSearchControls" class="javax.naming.directory.SearchControls"
+		instance="prototype"&gt;
+		&lt;property name="countLimit"&gt;1000&lt;/property&gt;
+		&lt;property name="searchScope"&gt;@javax.naming.directory.SearchControls@SUBTREE_SCOPE&lt;/property&gt;
+		&lt;property name="timeLimit"&gt;5000&lt;/property&gt;
+	&lt;/component&gt;</strong>
+
+&lt;!--
+	# Directory Configuration
+--&gt;
+	&lt;component name="directoryControlProperty"
+		class="org.seasar.directory.impl.DirectoryControlPropertyImpl"
+			instance="prototype"&gt;
+		<strong>&lt;property name="defaultSearchControls"&gt;directoryDefaultSearchControls&lt;/property&gt;</strong>
+		... SearchControl 設定を指定しない場合と同じため省略 ...
+	&lt;/component&gt;
+&lt;/components&gt;
+</pre>
+</div>
+
+<div class="section">
+	<h2 id="defaultSearchControls">[オプション] 抽象オブジェクトクラス設定</h2>
+
+	<p>S2Directory 0.7.1 以降、エントリ作成時に自動的に追加される抽象オブジェクトクラスを設定できます。<br />
+	このオプション設定を指定しなかった場合は、S2Directory 0.7.0 以前同様、top が設定されています。</p>
+
+	<h3>使用時の注意事項</h3>
+	<div class="notice">
+		<ul><li>top を含め何も追加して欲しくない場合は、<code>&lt;property name="abstractObjectClasses"&gt;new String[] {""}&lt;/property&gt;</code> を指定します。</li>
+		</ul>
+	</div>
+
+	<h3>directory.diconへの追加設定例</h3>
+<pre>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN"
+	"http://www.seasar.org/dtd/components24.dtd"&gt;
+&lt;components namespace="directory"&gt;
+
+&lt;!--
+	# Directory Configuration
+--&gt;
+	&lt;component name="directoryControlProperty"
+		class="org.seasar.directory.impl.DirectoryControlPropertyImpl"
+			instance="prototype"&gt;
+		<strong>&lt;property name="abstractObjectClasses"&gt;new String[] {"top", "alias"}&lt;/property&gt;</strong>
+		... 抽象オブジェクトクラス設定を指定しない場合と同じため省略 ...
+	&lt;/component&gt;
+&lt;/components&gt;
+</pre>
+</div>
+
+<div class="section">
+	<h2 id="connectionPool">[オプション] コネクションプール設定</h2>
+
+	<p>S2Directory 0.6 以降、JDK が提供するコネクションプールの利用が実験的にサポートされました。<br />
+	コネクションプーリングを利用する場合、directory.dicon に次の設定を足すことで利用することができます。</p>
 
 	<h3>コネクションプーリング使用時の注意事項</h3>
 	<div class="notice">
 		<ul><li>コネクションプーリングの設定はアプリケーション動作中に動的に変更することはできません。</li>
-			<li>物理コネクションが正常にcloseされない時がある DIRECTORY-21</li>
-			<li>コネクションの識別方法が、java.naming.security.principalとjava.naming.security.credentialsなため、前回コネクション作成時に存在したユーザエントリを、ディレクトリ上から削除した場合、同じユーザ名・パスワードでコネクションを取得するとプーリングされていたコネクションを取得できてしまう。
+			<li>物理コネクションが正常に close されない時がある DIRECTORY-21</li>
+			<li>コネクションの識別方法が、java.naming.security.principalとjava.naming.security.credentials なため、前回コネクション作成時に存在したユーザエントリを、ディレクトリ上から削除した場合、同じユーザ名・パスワードでコネクションを取得するとプーリングされていたコネクションを取得できてしまう。
 				<ul><li>ユーザモード利用時は起こりやすいので要注意</li></ul>
 			</li>
 		</ul>
 	</div>
 
-	<h3>directory.diconへの追加設定例</h3>
+	<h3>directory.dicon への追加設定例</h3>
 <pre>
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN"
@@ -364,7 +502,7 @@
 		http://java.sun.com/products/jndi/tutorial/ldap/connect/config.html
 		http://java.sun.com/j2se/1.5.0/ja/docs/ja/guide/jndi/jndi-ldap.html#POOL
 --&gt;
-	&lt;component name="connectionPool"
+	<strong>&lt;component name="connectionPool"
 		class="org.seasar.directory.impl.DirectoryConnectionPoolImpl"&gt;
 		&lt;property name="authentication"&gt;"none simple DIGEST-MD5"&lt;/property&gt;
 		&lt;property name="debug"&gt;"fine"&lt;/property&gt;
@@ -373,7 +511,7 @@
 		&lt;property name="prefSize"&gt;5&lt;/property&gt;
 		&lt;property name="protocol"&gt;"plain ssl"&lt;/property&gt;
 		&lt;property name="timeout"&gt;3000&lt;/property&gt;
-	&lt;/component&gt;
+	&lt;/component&gt;</strong>
 
 &lt;!--
 	# Directory Configuration
@@ -388,15 +526,18 @@
 </div>
 
 <div class="section">
-	<h2 id="directorydao.dicon">directorydao.dicon: S2Directoryの基本機能を提供するためのシステム設定</h2>
+	<h2 id="directorydao.dicon">[オプション] directorydao.dicon: S2Directory の基本機能を提供するためのシステム設定</h2>
 
-	<p>directorydao.diconは、S2Directoryの基本機能を提供するためのシステム設定を定義するdiconファイルです。独自定義することでS2Direcotryを拡張することが出来ます。S2Directoryの機能を拡張したい方以外はこの設定ファイルの詳細を知る必要はありません。</p>
+	<p>directorydao.dicon は、S2Directory の基本機能を提供するためのシステム設定を定義する dicon ファイルです。
+	独自定義することで S2Direcotry を拡張することが出来ます。
+	S2Directory の機能を拡張したい方以外はこの設定ファイルの詳細を知る必要はありません。</p>
 
 	<h3>directorydao.dicon に関する注意事項</h3>
 	<div class="notice">
-		<ul><li>S2Directoryの標準機能を使う場合はこのファイルを用意する必要はありません。</li>
+		<ul><li>S2Directory の標準機能を使う場合はこのファイルを用意する必要はありません。</li>
 			<li>独自に用意されていない場合、s2-directory-X.X.X.jar ファイル内の標準設定が自動的に使われます。</li>
-			<li>directorydao.diconはバージョンアップ時に仕様が変更されることがあります。そのため、独自にカスタマイズする場合、S2Directory自体をバージョンアップする際に、変更があるかどうか必ず確認してください。</li>
+			<li>directorydao.dicon はバージョンアップ時に仕様が変更されることがあります。
+			そのため、独自にカスタマイズする場合、S2Directory 自体をバージョンアップする際に、変更があるかどうか必ず確認してください。</li>
 		</ul>
 	</div>
 
@@ -480,7 +621,7 @@
 		</tr>
 		<tr class="b">
 			<td>org.seasar.directory.dao.impl.DirectoryDaoNamingConventionImpl</td>
-			<td>DirectoryDaoのための命名規則</td>
+			<td>DirectoryDao のための命名規則</td>
 		</tr>
 		<tr class="a">
 			<td>org.seasar.directory.dao.interceptors.S2DirectoryDaoInterceptor</td>
